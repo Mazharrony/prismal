@@ -1,0 +1,31 @@
+.form { display: grid; gap: var(--s-6); max-width: 34rem; margin-top: var(--s-8); }
+.field { display: grid; gap: var(--s-2); }
+
+.field input, .field textarea {
+  background: var(--ink-050);
+  border: var(--line);
+  border-radius: var(--r-sm);
+  color: var(--paper-100);
+  font: inherit;
+  padding: var(--s-3);
+  transition: border-color var(--t-control) var(--ease);
+}
+.field input:focus, .field textarea:focus { border-color: var(--accent); }
+
+.trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+.submit {
+  justify-self: start;
+  background: var(--accent);
+  color: var(--ink-000);
+  border: 0; border-radius: var(--r-sm);
+  font: inherit; font-weight: 560;
+  padding: var(--s-3) var(--s-8);
+  cursor: pointer;
+  transition: filter var(--t-control) var(--ease);
+}
+.submit:hover:not(:disabled) { filter: brightness(1.08); }
+.submit:disabled { opacity: 0.6; cursor: progress; }
+
+.error { color: #ff8f6b; font-size: var(--step--1); }
+.sent { border-left: var(--line-accent); padding-left: var(--s-4); margin-top: var(--s-8); }

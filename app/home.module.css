@@ -1,0 +1,65 @@
+.hero { padding: var(--s-32) 0 var(--s-24); border-bottom: var(--line); }
+.h1 { font-size: var(--step-4); margin: var(--s-4) 0 var(--s-6); }
+.lede { font-size: var(--step-1); color: var(--paper-200); max-width: 48ch; }
+
+.actions { display: flex; flex-wrap: wrap; gap: var(--s-4); margin-top: var(--s-8); }
+
+.primary {
+  background: var(--accent); color: var(--ink-000);
+  border-radius: var(--r-sm); padding: var(--s-3) var(--s-6);
+  text-decoration: none; font-weight: 560;
+  transition: filter var(--t-control) var(--ease);
+}
+.primary:hover { filter: brightness(1.08); }
+
+.secondary {
+  border: var(--line-strong); border-radius: var(--r-sm);
+  padding: var(--s-3) var(--s-6); text-decoration: none;
+  transition: border-color var(--t-control) var(--ease);
+}
+.secondary:hover { border-color: var(--accent); }
+
+/* Warm-paper interlude — inverts the page */
+.interlude {
+  background: var(--interlude-bg);
+  color: var(--interlude-ink);
+  padding: var(--s-24) 0;
+}
+.interlude .label { color: color-mix(in srgb, var(--interlude-ink) 55%, transparent); }
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: var(--s-8);
+  margin: var(--s-8) 0 var(--s-6);
+}
+.metrics dt {
+  font-family: var(--font-mono); font-size: var(--step--1);
+  text-transform: uppercase; letter-spacing: 0.1em;
+  color: color-mix(in srgb, var(--interlude-ink) 55%, transparent);
+}
+.metrics dd { margin: var(--s-3) 0 0; font-size: var(--step-3); font-variant-numeric: tabular-nums; }
+
+.interludeNote {
+  font-size: var(--step--1);
+  color: color-mix(in srgb, var(--interlude-ink) 60%, transparent);
+  border-top: 1px solid color-mix(in srgb, var(--interlude-ink) 15%, transparent);
+  padding-top: var(--s-4);
+}
+
+.chapter { padding: var(--s-24) 0; border-bottom: var(--line); }
+.chapterTitle { font-size: var(--step-3); margin: var(--s-3) 0 var(--s-4); }
+.chapterLede { font-size: var(--step-1); color: var(--paper-200); max-width: 46ch; }
+
+.points { margin: var(--s-8) 0 var(--s-8); padding: 0; list-style: none; display: grid; gap: var(--s-3); }
+.points li { padding-left: var(--s-6); position: relative; max-width: var(--measure); }
+.points li::before {
+  content: ''; position: absolute; left: 0; top: 0.75em;
+  width: var(--s-3); height: 1px; background: var(--accent);
+}
+
+.more { font-size: var(--step--1); text-decoration-color: var(--accent-dim); }
+
+.close { padding: var(--s-32) 0; display: grid; gap: var(--s-6); }
+.closeTitle { font-size: var(--step-3); }
+.close .primary { justify-self: start; margin-top: var(--s-4); }

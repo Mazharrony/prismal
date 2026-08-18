@@ -1,0 +1,19 @@
+.mark {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--s-2);
+  border: 1px dashed var(--accent);
+  border-radius: var(--r-sm);
+  padding: 0.15em 0.5em;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  line-height: 1.4;
+}
+
+.tag {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.72em;
+  opacity: 0.75;
+}

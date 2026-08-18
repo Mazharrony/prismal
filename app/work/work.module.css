@@ -1,0 +1,16 @@
+.head { padding: var(--s-24) 0 var(--s-12); border-bottom: var(--line); }
+.title { font-size: var(--step-4); margin: var(--s-3) 0 var(--s-4); }
+.lede { font-size: var(--step-1); color: var(--paper-200); }
+
+.empty { padding: var(--s-16) 0; display: grid; gap: var(--s-6); justify-items: start; }
+
+.list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.list li { border-bottom: var(--line); }
+
+.card {
+  display: grid; gap: var(--s-3);
+  padding: var(--s-8) 0; text-decoration: none;
+  transition: padding-left var(--t-control) var(--ease);
+}
+.card:hover { padding-left: var(--s-4); }
+.cardTitle { font-size: var(--step-2); }
