@@ -9,7 +9,7 @@ export type CaseStudy = {
   title: string
   client: string
   year: number
-  capability: 'ship' | 'automate' | 'decide'
+  capability: 'websites' | 'custom-software' | 'ai-automation'
   summary: string
   outcome: string
   draft: boolean
@@ -38,7 +38,7 @@ export function readCaseStudy(slug: string): CaseStudy | null {
     title: data.title ?? slug,
     client: data.client ?? '',
     year: Number(data.year) || 0,
-    capability: data.capability ?? 'ship',
+    capability: data.capability ?? 'custom-software',
     summary: data.summary ?? '',
     outcome: data.outcome ?? '',
     draft: data.draft !== false,

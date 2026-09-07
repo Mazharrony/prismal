@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     template: `%s — ${site.name}`,
   },
   description:
-    'Prismal builds, automates and adds intelligence to the software Dubai companies run on. Product delivery, workflow automation and applied AI.',
+    'Prismal is a software studio in Dubai. We do web development in Next.js, custom software, and AI automation for quoting, invoicing and leads, usually a CRM.',
   openGraph: {
     type: 'website',
     locale: 'en_AE',
@@ -30,7 +30,7 @@ const orgJsonLd = {
   '@type': 'Organization',
   name: site.legalName,
   url: site.domain,
-  email: site.email,
+  telephone: site.whatsapp,
   address: { '@type': 'PostalAddress', addressLocality: site.city, addressCountry: site.country },
 }
 

@@ -1,16 +1,192 @@
-.head { padding: var(--s-24) 0 var(--s-12); border-bottom: var(--line); }
-.title { font-size: var(--step-4); margin: var(--s-3) 0 var(--s-4); }
-.lede { font-size: var(--step-1); color: var(--paper-200); }
+/* Work index — the live-site grid and, when there are any, case studies.
+ *
+ * Each card leads with a screenshot of the real site, captured headless at
+ * 1440x900 and served at 800x500. Two consequences to keep in mind: the shots
+ * date the moment a client changes their hero, so they need re-capturing when a
+ * site is redesigned, and they are the heaviest thing on the page, which is why
+ * they are JPEG rather than PNG and why next/image handles the sizing.
+ */
 
-.empty { padding: var(--s-16) 0; display: grid; gap: var(--s-6); justify-items: start; }
+.head {
+  padding: var(--s-24) 0 var(--s-12);
+}
 
-.list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
-.list li { border-bottom: var(--line); }
+.title {
+  font-size: var(--step-4);
+  line-height: 1.02;
+  letter-spacing: var(--display-tracking);
+  text-transform: uppercase;
+  font-weight: 520;
+  margin: var(--s-4) 0 var(--s-6);
+}
+
+.lede {
+  font-size: var(--step-1);
+  color: var(--paper-200);
+  font-weight: 300;
+  max-width: 44ch;
+}
+
+.section {
+  padding: var(--s-12) 0 var(--s-16);
+  border-top: 1px solid var(--ink-300);
+}
+
+.sectionHead {
+  display: flex;
+  align-items: center;
+  gap: var(--s-6);
+  margin-bottom: var(--s-8);
+}
+
+.rule {
+  flex: 1;
+  height: 1px;
+  background: var(--ink-300);
+}
+
+/* ── Live sites ──────────────────────────────────────────────────────────── */
+
+.grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+  gap: 0;
+  border-top: 1px solid var(--ink-300);
+  border-left: 1px solid var(--ink-300);
+}
+
+.grid li {
+  border-bottom: 1px solid var(--ink-300);
+  border-right: 1px solid var(--ink-300);
+}
+
+.site {
+  display: grid;
+  gap: var(--s-2);
+  align-content: start;
+  padding: 0 0 var(--s-6);
+  text-decoration: none;
+  transition: background-color var(--t-control) var(--ease),
+    color var(--t-control) var(--ease);
+}
+
+.site:hover {
+  background: var(--ink-050);
+}
+
+.siteName {
+  font-size: var(--step-1);
+  letter-spacing: -0.01em;
+  color: var(--paper-100);
+}
+
+.site:hover .siteName {
+  color: var(--accent);
+}
+
+.siteBuilt {
+  color: var(--gray-400);
+  font-size: var(--step--1);
+  line-height: 1.55;
+}
+
+.siteMeta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-4);
+  margin-top: var(--s-3);
+}
+
+/* The screenshot sits flush to the cell edges: an inset image inside a ruled
+ * grid produces a second, competing rectangle. */
+.shot {
+  display: block;
+  position: relative;
+  aspect-ratio: 8 / 5;
+  overflow: hidden;
+  background: var(--ink-200);
+  border-bottom: 1px solid var(--ink-300);
+  margin-bottom: var(--s-5);
+}
+
+.shot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  /* Held back so eight screenshots do not overpower the page, then brought up
+   * on hover to confirm the card is the thing being pointed at. */
+  opacity: 0.72;
+  transform: scale(1.01);
+  transition: opacity var(--t-control) var(--ease), transform 480ms var(--ease-out);
+}
+
+.site:hover .shot img {
+  opacity: 1;
+  transform: scale(1.04);
+}
+
+.siteName,
+.siteBuilt,
+.siteMeta {
+  padding-inline: var(--s-6);
+}
+
+/* The arrow only leans out on hover, so a grid of eight does not read as eight
+ * arrows competing for attention. */
+.arrow {
+  font-style: normal;
+  color: var(--ink-400);
+  transition: transform var(--t-control) var(--ease), color var(--t-control) var(--ease);
+}
+
+.site:hover .arrow {
+  color: var(--accent);
+  transform: translate(2px, -2px);
+}
+
+/* ── Case studies ────────────────────────────────────────────────────────── */
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--ink-300);
+}
+
+.list li {
+  border-bottom: 1px solid var(--ink-300);
+}
 
 .card {
-  display: grid; gap: var(--s-3);
-  padding: var(--s-8) 0; text-decoration: none;
+  display: grid;
+  gap: var(--s-3);
+  padding: var(--s-8) 0;
+  text-decoration: none;
   transition: padding-left var(--t-control) var(--ease);
 }
-.card:hover { padding-left: var(--s-4); }
-.cardTitle { font-size: var(--step-2); }
+
+.card:hover {
+  padding-left: var(--s-4);
+}
+
+.cardTitle {
+  font-size: var(--step-2);
+  font-weight: 400;
+}
+
+@media (max-width: 640px) {
+  .head {
+    padding: var(--s-16) 0 var(--s-8);
+  }
+  .site {
+    padding: 0 0 var(--s-6);
+  }
+}

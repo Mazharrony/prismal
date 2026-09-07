@@ -1,10 +1,16 @@
 /* The three service lines, framed outcome-first.
  *
- * "AI, Software, Automation" are categories, not reasons to buy. Each entry leads
- * with what the client gets; the capability is the mechanism underneath.
+ * "Websites, custom software, AI operations" are categories, not reasons to buy.
+ * Each entry leads with what the client gets; the capability is the mechanism
+ * underneath.
  *
- * Ordered as a maturity ladder — build it, run it without you, make it decide.
- * That ladder is the scroll journey, the customer journey, and the upsell path.
+ * Ordered by how much of the business the work touches — the page your customers
+ * land on, the system your team works in, then the daily operation itself. That
+ * order is the scroll journey, the customer journey, and the upsell path.
+ *
+ * The third line is built per client, not licensed. A CRM is the usual shape it
+ * takes, but nothing here is a product with seats and tiers — if the copy ever
+ * starts reading that way, it has drifted.
  */
 
 export type Service = {
@@ -17,70 +23,85 @@ export type Service = {
   promise: string
   /** Who this is actually for — helps SME buyers self-qualify fast */
   forWhom: string[]
+  /** The concrete things that get built — named, so nobody has to infer them */
+  deliverables: string[]
   /** What the engagement involves */
   includes: { step: string; detail: string }[]
-  /** TODO(prismal): real ranges required before launch */
-  timeline: string
-  priceFrom: string
 }
 
 export const services: Service[] = [
   {
-    slug: 'ship',
-    title: 'Ship it',
-    capability: 'Software',
-    promise: 'From an idea to a product your customers can actually use.',
+    slug: 'websites',
+    title: 'Websites and web apps',
+    capability: 'Websites',
+    promise: 'You own the site, and anyone on your team can change the words on it. It loads in about a second on a phone.',
     forWhom: [
-      'Founders with a validated idea and no engineering team',
-      'Companies whose internal tool has outgrown spreadsheets',
-      'Teams who need a second product built while the first keeps running',
+      'Marketing teams who email an agency and wait three days to change one price',
+      'Companies paying for ads that send people to a page taking eight seconds to open on a phone',
+      'Clinics, shops and offices whose customers need to book a slot or pay a deposit on the site',
+    ],
+    deliverables: [
+      'E-commerce',
+      'Booking and payments',
+      'Landing pages',
+      'Customer logins',
+      'A CMS your team can edit',
     ],
     includes: [
-      { step: 'Scope', detail: 'We agree what the first version does — and what it deliberately does not.' },
-      { step: 'Architecture', detail: 'Choices you can live with for three years, not three months.' },
-      { step: 'Build', detail: 'Working software in front of you every week, not at the end.' },
-      { step: 'Launch', detail: 'Deployed, monitored, and handed over with the keys.' },
+      { step: 'Pages', detail: 'We list every page, what it\'s for, and what a visitor should be able to do on it before any design starts.' },
+      { step: 'Build', detail: 'Next.js and React. The pages render on the server, so Google gets the same HTML a visitor gets.' },
+      { step: 'Speed', detail: 'We test on a mid-range Android over 4G, not a laptop on fibre.' },
+      { step: 'Handover', detail: 'On launch day the domain, the code and the CMS logins move into your accounts. If you hire a different developer next year, there\'s nothing you\'d have to ask us for.' },
     ],
-    timeline: 'TODO(prismal): typical delivery window',
-    priceFrom: 'TODO(prismal): starting engagement size',
   },
   {
-    slug: 'automate',
-    title: 'Run it without you',
-    capability: 'Automation',
-    promise: 'The manual work disappears. The process keeps running.',
+    slug: 'custom-software',
+    title: 'Software made to order',
+    capability: 'Custom software',
+    promise: 'Software written for one company. It has to fit how your team already works, including the parts of the job that are awkward.',
     forWhom: [
-      'Ops teams re-keying the same data between systems',
-      'Businesses where one person is the bottleneck for a daily task',
-      'Companies whose tools do not talk to each other',
+      'Companies that renew a licence every January for a tool doing about half the job, then do the other half in Excel',
+      'Businesses whose real process lives in a spreadsheet because no product matches it',
+      'Founders sitting on half-finished code from a developer who stopped replying',
+    ],
+    deliverables: [
+      'Dashboards',
+      'Client portals',
+      'Internal tools',
+      'Mobile apps',
+      'Integrations between systems you already run',
     ],
     includes: [
-      { step: 'Map', detail: 'We follow the work as it actually happens, not as the SOP describes it.' },
-      { step: 'Connect', detail: 'Your existing systems, integrated — no rip and replace.' },
-      { step: 'Automate', detail: 'The repetitive path runs itself; the exceptions come to a human.' },
-      { step: 'Verify', detail: 'You see what ran, what did not, and why.' },
+      { step: 'Scope', detail: 'We write down what version one does and what\'s waiting until later, and we both sign that off before anyone writes code.' },
+      { step: 'Records', detail: 'We build around the records you already keep and the way you already file them. If you do something odd for one client every March, that goes in too.' },
+      { step: 'Weekly builds', detail: 'You get something you can click through every week. Most of what we get wrong turns up in those sessions.' },
+      { step: 'Ownership', detail: 'The code sits in your GitHub account from the first commit.' },
     ],
-    timeline: 'TODO(prismal): typical delivery window',
-    priceFrom: 'TODO(prismal): starting engagement size',
   },
   {
-    slug: 'decide',
-    title: 'Make it decide',
-    capability: 'AI',
-    promise: 'Systems that judge, not just execute.',
+    slug: 'ai-automation',
+    title: 'AI that runs the admin',
+    capability: 'AI operations',
+    promise: 'Quotes go out and invoices get chased without anyone sitting there doing it. It usually ends up as a CRM, built for your business alone.',
     forWhom: [
-      'Teams whose rules have too many exceptions to hard-code',
-      'Businesses sitting on documents, tickets, or messages nobody reads',
-      'Companies who tried a chatbot and got something they could not trust',
+      'Sales teams whose leads are spread across WhatsApp, a shared inbox and someone\'s phone',
+      'Businesses where the first two hours of the day go on writing quotes and chasing invoices that were due in June',
+      'Companies who tried a chatbot once and wouldn\'t let it near a customer again',
+    ],
+    deliverables: [
+      'CRM',
+      'Lead capture and routing',
+      'Automated quoting',
+      'Invoice chasing',
+      'Document processing',
+      'Support triage',
     ],
     includes: [
-      { step: 'Frame', detail: 'We define the decision, and what a wrong answer costs.' },
-      { step: 'Evaluate', detail: 'Measured against your real data before anything ships.' },
-      { step: 'Integrate', detail: 'It lives inside the workflow people already use.' },
-      { step: 'Guard', detail: 'Limits, fallbacks, and a human path when confidence drops.' },
+      { step: 'A week of watching', detail: 'We sit with your team for a week and watch how the work actually gets done. Most of what we build comes out of that week.' },
+      { step: 'What gets built', detail: 'A lead comes in, it goes to the right person, the quote goes out the same day, and the follow-up happens on day three whether anyone remembers or not. Usually that\'s a CRM with the invoice chasing wired into it.' },
+      { step: 'Limits', detail: 'You set the limits it works inside. When it isn\'t sure, it stops and hands the job to a person.' },
+      { step: 'Testing', detail: 'Before it goes live we run it against last year\'s enquiries and compare what it says to what your team said at the time.' },
     ],
-    timeline: 'TODO(prismal): typical delivery window',
-    priceFrom: 'TODO(prismal): starting engagement size',
   },
 ]
 

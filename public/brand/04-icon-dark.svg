@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <title>Prismal app icon</title>
+  <rect width="512" height="512" rx="112" fill="#1C1C1A"/>
+  
+  <g transform="translate(81.92,135.94) scale(1.5007)">
+    <path d="M0 160 L88 0 L112 45 L88 90 L176 160 Z" fill="#FFFFFF"/>
+    <path d="M92 92 L232 84 L232 104 Z" fill="#FFFFFF"/>
+  </g>
+</svg>

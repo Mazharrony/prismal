@@ -21,7 +21,11 @@ export default function Careers() {
           <Placeholder note="current openings, or state plainly that there are none" />
         </p>
         <p className="muted">
-          Nothing listed that fits? Write to <a href={`mailto:${site.email}`}>{site.email}</a>.
+          Nothing listed that fits? Message us on{' '}
+          <a href={site.whatsappUrl} target="_blank" rel="noreferrer noopener">
+            WhatsApp
+          </a>
+          .
         </p>
       </section>
     </div>

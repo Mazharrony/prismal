@@ -1,0 +1,90 @@
+/* Plates are parked inside their section and only become a fixed floor layer
+ * while that chapter holds the viewport. Parking them rather than leaving them
+ * fixed is what keeps two chapters' plates from ever painting at once. */
+
+.stage {
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-foreground);
+  overflow: visible;
+  pointer-events: none;
+}
+
+.stage.active,
+.stage.retiring {
+  position: fixed;
+  inset: auto 0 0 0;
+  block-size: min(42svh, 460px);
+  z-index: var(--z-foreground);
+  overflow: visible;
+  pointer-events: none;
+}
+
+.plate {
+  position: absolute;
+  bottom: 0;
+  display: block;
+  opacity: 0;
+  /* Near-black rather than a tinted silhouette: these read as unlit mass in
+   * front of the camera, so they take colour from the scrim, not the palette. */
+  color: var(--ink-000);
+}
+
+.plate svg {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.plate[data-enter='up'] { transform: translate3d(0, 13%, 0); }
+.plate[data-enter='left'] { transform: translate3d(-11%, 6%, 0); }
+.plate[data-enter='right'] { transform: translate3d(11%, 6%, 0); }
+
+.active .plate {
+  opacity: 1;
+  transform: none;
+  transition: opacity 1.2s var(--ease-out), transform 1.5s var(--ease-out);
+  transition-delay: var(--fg-delay, 0ms);
+}
+
+/* The handoff: lift, shrink fractionally, and blur out of frame. The blur is
+ * what sells it as a defocus rather than a fade. */
+.retiring .plate {
+  opacity: 0;
+  transform: translate3d(0, 8vh, 0) scale(0.98);
+  filter: blur(18px);
+  transition: opacity 0.68s var(--ease-out), transform 0.78s var(--ease-out),
+    filter 0.78s var(--ease-out);
+}
+
+.left {
+  left: -4%;
+  inline-size: clamp(320px, 42vw, 720px);
+  block-size: clamp(120px, 20vh, 260px);
+}
+
+.centre {
+  left: 32%;
+  inline-size: clamp(200px, 24vw, 420px);
+  block-size: clamp(80px, 13vh, 170px);
+}
+
+.right {
+  right: -4%;
+  inline-size: clamp(300px, 38vw, 640px);
+  block-size: clamp(110px, 18vh, 240px);
+}
+
+/* One anchor per side on a phone: three plates at this scale leave no room for
+ * the chapter itself. */
+@media (max-width: 820px) {
+  .stage.active,
+  .stage.retiring { block-size: min(30svh, 300px); }
+  .centre { display: none; }
+  .left { inline-size: min(72vw, 380px); block-size: clamp(90px, 14vh, 160px); }
+  .right { inline-size: min(66vw, 340px); block-size: clamp(80px, 12vh, 150px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .retiring .plate { transition: none; filter: none; }
+}

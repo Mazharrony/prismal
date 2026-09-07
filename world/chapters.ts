@@ -45,10 +45,10 @@ export const chapters: Chapter[] = [
       fov: 38,
       mobile: { position: [0, 16, 128], fov: 50 },
     },
-    world: { key: 0.35, practicals: 0.55, fog: 0.0075, build: 0.18, gridEnergy: 0.05 },
+    world: { key: 0.35, practicals: 0.55, fog: 0.006, build: 0.62, gridEnergy: 0.05 },
   },
   {
-    id: 'proof',
+    id: 'catalogue',
     cam: 1,
     camera: {
       position: [-26, 30, 74],
@@ -56,10 +56,10 @@ export const chapters: Chapter[] = [
       fov: 40,
       mobile: { position: [-14, 32, 108], fov: 52 },
     },
-    world: { key: 0.5, practicals: 0.5, fog: 0.009, build: 0.3, gridEnergy: 0.1 },
+    world: { key: 0.5, practicals: 0.5, fog: 0.007, build: 0.72, gridEnergy: 0.1 },
   },
   {
-    id: 'ship',
+    id: 'websites',
     cam: 2,
     camera: {
       position: [-34, 12, 46],
@@ -67,10 +67,10 @@ export const chapters: Chapter[] = [
       fov: 42,
       mobile: { position: [-20, 16, 74], fov: 54 },
     },
-    world: { key: 0.7, practicals: 0.75, fog: 0.011, build: 0.62, gridEnergy: 0.2 },
+    world: { key: 0.7, practicals: 0.75, fog: 0.0085, build: 0.85, gridEnergy: 0.2 },
   },
   {
-    id: 'automate',
+    id: 'custom-software',
     cam: 3,
     camera: {
       position: [30, 9, 34],
@@ -78,10 +78,10 @@ export const chapters: Chapter[] = [
       fov: 44,
       mobile: { position: [22, 14, 62], fov: 56 },
     },
-    world: { key: 0.62, practicals: 0.9, fog: 0.013, build: 0.84, gridEnergy: 0.72 },
+    world: { key: 0.62, practicals: 0.9, fog: 0.0095, build: 0.94, gridEnergy: 0.72 },
   },
   {
-    id: 'decide',
+    id: 'ai-automation',
     cam: 4,
     camera: {
       position: [8, 46, 40],
@@ -89,7 +89,7 @@ export const chapters: Chapter[] = [
       fov: 40,
       mobile: { position: [6, 52, 70], fov: 52 },
     },
-    world: { key: 0.8, practicals: 1, fog: 0.0095, build: 1, gridEnergy: 1 },
+    world: { key: 0.8, practicals: 1, fog: 0.0075, build: 1, gridEnergy: 1 },
   },
   {
     id: 'work',
@@ -100,7 +100,7 @@ export const chapters: Chapter[] = [
       fov: 36,
       mobile: { position: [0, 66, 140], fov: 48 },
     },
-    world: { key: 0.55, practicals: 0.7, fog: 0.008, build: 1, gridEnergy: 0.45 },
+    world: { key: 0.55, practicals: 0.7, fog: 0.0065, build: 1, gridEnergy: 0.45 },
   },
   {
     id: 'close',
@@ -111,7 +111,7 @@ export const chapters: Chapter[] = [
       fov: 38,
       mobile: { position: [0, 20, 146], fov: 50 },
     },
-    world: { key: 0.3, practicals: 0.45, fog: 0.007, build: 1, gridEnergy: 0.15 },
+    world: { key: 0.3, practicals: 0.45, fog: 0.0055, build: 1, gridEnergy: 0.15 },
   },
 ]
 
