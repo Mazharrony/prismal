@@ -189,61 +189,140 @@ export const KITS: readonly Kit[] = [
   },
 ];
 
-/* ── 03 Selected work (PLACEHOLDER) ───────────────────────────────────── */
+/* ── 03 Selected work ─────────────────────────────────────────────────── */
 
 export const WORK_HEAD = {
   eyebrow: "03 / SELECTED WORK",
-  title: "Six builds, one method.",
-  intro:
-    "Names and numbers below are placeholders. Drop a screenshot onto any tile, and send me the real clients and results to swap in.",
-  note: "Placeholder work ↓",
+  title: "Twelve builds, one method.",
+  intro: "Twelve live client sites. Every tile links to the real thing.",
+  note: "All live — click through ↓",
+  swipe: "SWIPE →",
 } as const;
 
+export type Capability = "websites" | "custom-software" | "ai-automation";
+
+export const CAPABILITY_LABEL: Record<Capability, string> = {
+  websites: "WEBSITE",
+  "custom-software": "SOFTWARE",
+  "ai-automation": "AI & AUTOMATION",
+};
+
+/**
+ * Ported from the previous site's `content/portfolio.ts`, which carried three
+ * rules worth keeping: `built` describes the work, not the client's industry,
+ * and lists only features visible on the page; no outcome or metric appears
+ * here because none are verified; and a dead link is worse than a short list,
+ * so re-check a URL before trusting an entry again.
+ */
 export type WorkItem = {
-  category: string;
-  title: string;
-  body: string;
-  metric: string;
-  /** Path under /public to a 4:3 screenshot. Undefined renders the grey slot. */
-  image?: string;
+  name: string;
+  url: string;
+  /** What we built, in features a visitor can see on the page. */
+  built: string;
+  /** Only where the site itself states one. Never inferred from a TLD. */
+  location?: string;
+  capability: Capability;
+  /** 800×500 screenshot under /public/work. */
+  image: string;
 };
 
 export const WORK: readonly WorkItem[] = [
   {
-    category: "01 · SHOPIFY STOREFRONT",
-    title: "Maison Dates",
-    body: "Headless storefront for a Dubai gifting brand, with bundle builder and same-day delivery slots.",
-    metric: "+38% CONVERSION · 0.9s LCP",
+    name: "JNK Nutrition",
+    url: "https://jnknutrition.com",
+    built: "Bilingual supplement store with brand pages, blog and app sign-up",
+    location: "Dubai",
+    capability: "websites",
+    image: "/work/jnk-nutrition.jpg",
   },
   {
-    category: "02 · NEXT.JS COMMERCE",
-    title: "Aster Living",
-    body: "2,400-SKU furniture catalogue with room-based browsing and finance checkout.",
-    metric: "2,400 SKUS · 12 WEEKS",
+    name: "Core Champs",
+    url: "https://corechamps.us",
+    built: "Authentication tool where buyers verify a code printed on the pack",
+    capability: "custom-software",
+    image: "/work/core-champs.jpg",
   },
   {
-    category: "03 · REAL ESTATE",
-    title: "Marasi Properties",
-    body: "Listing portal with map search, off-plan pages and enquiry routing into the agents’ CRM.",
-    metric: "1,100 LISTINGS · CRM SYNCED",
+    name: "Avion Realty",
+    // The apex avionrealty.ae does not resolve; only the www host does.
+    url: "https://www.avionrealty.ae",
+    built: "Property portal with search by type, bedrooms, price and currency",
+    location: "Dubai",
+    capability: "websites",
+    image: "/work/avion-realty.jpg",
   },
   {
-    category: "04 · LOCAL BUSINESS",
-    title: "Clinica Nova",
-    body: "Three-branch clinic site with online booking, doctor profiles and WhatsApp triage.",
-    metric: "−60% PHONE BOOKINGS",
+    name: "Shobkichu",
+    url: "https://www.shobkichu.com.bd",
+    built: "Bengali marketplace with category browsing, deals and cash on delivery",
+    location: "Bangladesh",
+    capability: "websites",
+    image: "/work/shobkichu.jpg",
   },
   {
-    category: "05 · WEB PORTAL",
-    title: "Falcon Freight",
-    body: "Customer portal for live shipment tracking, documents and invoice history.",
-    metric: "24/7 SELF-SERVE",
+    name: "Glow & Lean",
+    url: "https://www.glownlean.com",
+    built: "Cosmetics store with category browsing, timed deals and a journal",
+    location: "Bangladesh",
+    capability: "websites",
+    image: "/work/glow-n-lean.jpg",
   },
   {
-    category: "06 · CAMPAIGN & LANDING",
-    title: "Sabaya Beauty",
-    body: "Launch page and quiz funnel for a skincare drop, shipped in nine days.",
-    metric: "9 DAYS · 4 VARIANTS",
+    name: "Scoops Monster",
+    url: "https://scoopsmonster.com",
+    built: "Supplement brand site with a shop and pack verification",
+    location: "United States",
+    capability: "websites",
+    image: "/work/scoops-monster.jpg",
+  },
+  {
+    name: "HENJ Trading",
+    // henj-uae.com serves a holding page; the finished site is on Vercel.
+    url: "https://henj.vercel.app",
+    built: "Product catalogue with call, WhatsApp and enquiry actions",
+    location: "Dubai",
+    capability: "websites",
+    image: "/work/henj.jpg",
+  },
+  {
+    name: "Distinct Solutions",
+    url: "https://www.distinct-solutions.ae",
+    built: "Maintenance and fit-out site with quote requests and WhatsApp contact",
+    location: "Dubai",
+    capability: "websites",
+    image: "/work/distinct.jpg",
+  },
+  {
+    name: "Eva Design Furniture",
+    url: "https://www.evafurniture.ae",
+    built: "Atelier site with collections, journal and consultation booking",
+    location: "Dubai",
+    capability: "websites",
+    image: "/work/eva-furniture.jpg",
+  },
+  {
+    name: "One Ton Pickup",
+    url: "https://www.onetonpickup.com",
+    built: "Rental site with vehicle specs, coverage areas, FAQ and one-tap calling",
+    location: "Dubai",
+    capability: "websites",
+    image: "/work/one-ton-pickup.jpg",
+  },
+  {
+    name: "Digital Point Real Estate",
+    url: "https://digitalpointrealty-eight.vercel.app",
+    built: "Property site covering leasing, management and sales enquiries",
+    location: "Abu Dhabi",
+    capability: "websites",
+    image: "/work/digital-point.jpg",
+  },
+  {
+    name: "Ravenala Beach Bungalows",
+    url: "https://ravenala-tau.vercel.app",
+    built: "Resort site with rooms, amenities, gallery and booking",
+    location: "Moalboal, Cebu",
+    capability: "websites",
+    image: "/work/ravenala.jpg",
   },
 ];
 

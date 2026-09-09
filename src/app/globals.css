@@ -262,6 +262,15 @@
     }
   }
 
+  /* ── Work strip (desktop paging) ────────────────────────────────────── */
+  .work-strip {
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+  }
+  .work-strip::-webkit-scrollbar {
+    display: none;
+  }
+
   /* ── Method stepper ─────────────────────────────────────────────────── */
   .method-fill {
     transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
