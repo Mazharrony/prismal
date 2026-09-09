@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/design-system-69b9501c-800b-408d-8d13-bf844992ff99/_ds_bundle.css">
+  <link rel="stylesheet" href="_ds/design-system-69b9501c-800b-408d-8d13-bf844992ff99/styles.css">
+  <script src="_ds/design-system-69b9501c-800b-408d-8d13-bf844992ff99/_ds_bundle.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&family=Caveat:wght@500;600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    html,body{margin:0;padding:0;background:#f6f7f9;color:#0b0f14;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+    a{color:#0b0f14;text-decoration:none}a:hover{color:#64748b;text-decoration:underline}
+    *{box-sizing:border-box}
+    @keyframes beam-grow{from{transform:scaleX(0)}}
+    @keyframes fade-in{from{opacity:0}}
+    @keyframes flicker{0%,100%{opacity:.75}8%{opacity:.35}12%{opacity:.8}38%{opacity:.5}42%{opacity:.85}71%{opacity:.4}76%{opacity:.7}}
+    @keyframes particle-run{0%{transform:translateX(0);opacity:0}12%{opacity:1}88%{opacity:1}100%{transform:translateX(430px);opacity:0}}
+    @keyframes ray-pop{from{transform:scale(0)}70%{transform:scale(1.05)}to{transform:scale(1)}}
+    @keyframes spectral-settle{0%{opacity:0}10%{opacity:1}35%{opacity:1}100%{opacity:0}}
+    @keyframes burst{0%{opacity:0;transform:scale(.2)}12%{opacity:.9}100%{opacity:0;transform:scale(16)}}
+    @keyframes jitter{0%,100%{transform:translate(0,0) rotate(var(--r))}50%{transform:translate(2px,-3px) rotate(var(--r))}}
+    @keyframes drift{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    @keyframes pulse{0%,100%{opacity:.35}50%{opacity:1}}
+    @keyframes sp-reveal{from{clip-path:inset(100% 0 0 0)}to{clip-path:inset(0 0 0 0)}}
+    @keyframes sp-ray{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+    @keyframes sp-rule{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+    @keyframes sp-word{from{opacity:0;letter-spacing:.78em}to{opacity:1;letter-spacing:.34em}}
+    @keyframes sp-lift{0%,68%{transform:translateY(0)}100%{transform:translateY(-101%)}}
+    @media (prefers-reduced-motion:reduce){#splash{display:none!important}}
+    @media (max-width:860px){
+      #work{min-height:0;padding:12px 16px 72px}
+      #work>div{padding:24px 20px;border-radius:24px}
+      #work>div>p:first-child{display:none}
+      #work h2{font-size:clamp(28px,7.4vw,40px)}
+      #build{min-height:0;padding:12px 16px 72px}
+      #build>div{padding:24px 20px;border-radius:24px}
+      #build>div>p:first-child{display:none}
+      #build h2{font-size:clamp(28px,7.4vw,40px)}
+      #build h3{font-size:clamp(24px,6vw,30px)}
+    }
+    @media (max-width:520px){
+      #build>div{padding:20px 16px}
+      #build a{padding:18px 16px!important}
+      #build span[style*="letter-spacing:.14em"]{word-break:break-word}
+    }
+  </style>
+  <script src="./image-slot.js"></script>
+</helmet>
+
+<div id="splash" ref="{{ splashRef }}" style="position:fixed;inset:0;z-index:200;pointer-events:none;overflow:hidden">
+  <div style="position:absolute;inset:0;background:#0b0f14;display:grid;place-items:center;animation:sp-lift 1.95s cubic-bezier(.76,0,.24,1) both">
+    <div style="display:grid;gap:26px;justify-items:center;padding:0 24px;transform:translateY(-4%)">
+      <svg viewBox="0 0 232 160" width="clamp(150px,17vw,232px)" style="display:block;height:auto;overflow:visible">
+        <path d="M0 160 L88 0 L112 45 L88 90 L176 160 Z" fill="#fff" style="animation:sp-reveal .62s cubic-bezier(.66,0,.24,1) both"></path>
+        <path d="M92 92 L230 40 L230 62 Z" fill="#f9d20f" style="transform-box:view-box;transform-origin:92px 92px;animation:sp-ray .5s cubic-bezier(.2,.85,.25,1) .5s both"></path>
+        <path d="M92 92 L232 88 L232 100 Z" fill="#fff" style="transform-box:view-box;transform-origin:92px 92px;animation:sp-ray .5s cubic-bezier(.2,.85,.25,1) .58s both"></path>
+        <path d="M92 92 L230 122 L230 144 Z" fill="#64748b" style="transform-box:view-box;transform-origin:92px 92px;animation:sp-ray .5s cubic-bezier(.2,.85,.25,1) .66s both"></path>
+      </svg>
+      <div style="display:grid;gap:16px;justify-items:center">
+        <span style="width:clamp(150px,17vw,232px);height:1px;background:#ffffff2e;transform-origin:left center;animation:sp-rule .7s cubic-bezier(.66,0,.24,1) .62s both"></span>
+        <span style="font-family:'Jost',sans-serif;font-weight:400;font-size:13px;color:#fff;white-space:nowrap;animation:sp-word .8s cubic-bezier(.4,0,.2,1) .68s both">PRISMAL</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="top" style="background-color:#f6f7f9;position:relative">
+
+  <!-- the light follows: fixed scroll beam -->
+  <div style="position:fixed;left:0;top:0;bottom:0;width:4px;z-index:60;background:#e2e8f0">
+    <div ref="{{ beamRef }}" style="width:100%;height:0%;background:#0b0f14"></div>
+  </div>
+
+  <header style="position:sticky;top:0;z-index:50;background:rgba(246,247,249,.85);backdrop-filter:blur(14px);border-bottom:1px solid #e2e8f0">
+    <div style="max-width:1280px;margin:0 auto;padding:14px 28px;display:flex;align-items:center;justify-content:space-between;gap:16px">
+      <a href="#top" style="display:flex;align-items:center;gap:10px;color:#0b0f14;text-decoration:none">
+        <img src="public/01-mark-primary.svg" alt="" style="height:22px;width:auto;display:block">
+        <span style="font-family:'Jost',sans-serif;font-weight:500;letter-spacing:.35em;font-size:14px">PRISMAL</span>
+      </a>
+      <nav style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+        <a href="#services" style="padding:9px 16px;border-radius:999px;background:#fff;border:1px solid #e2e8f0;font-size:13px;font-weight:600;color:#0b0f14;text-decoration:none;white-space:nowrap" style-hover="background:#f6f7f9">What we refract</a>
+        <a href="#build" style="padding:9px 16px;border-radius:999px;background:#fff;border:1px solid #e2e8f0;font-size:13px;font-weight:600;color:#0b0f14;text-decoration:none;white-space:nowrap" style-hover="background:#f6f7f9">What we build</a>
+        <a href="#work" style="padding:9px 16px;border-radius:999px;background:#fff;border:1px solid #e2e8f0;font-size:13px;font-weight:600;color:#0b0f14;text-decoration:none;white-space:nowrap" style-hover="background:#f6f7f9">Work</a>
+        <a href="#method" style="padding:9px 16px;border-radius:999px;background:#fff;border:1px solid #e2e8f0;font-size:13px;font-weight:600;color:#0b0f14;text-decoration:none;white-space:nowrap" style-hover="background:#f6f7f9">Method</a>
+        <a href="#engage" style="padding:9px 16px;border-radius:999px;background:#fff;border:1px solid #e2e8f0;font-size:13px;font-weight:600;color:#0b0f14;text-decoration:none;white-space:nowrap" style-hover="background:#f6f7f9">How we work</a>
+        <a href="#faq" style="padding:9px 16px;border-radius:999px;background:#fff;border:1px solid #e2e8f0;font-size:13px;font-weight:600;color:#0b0f14;text-decoration:none;white-space:nowrap" style-hover="background:#f6f7f9">FAQ</a>
+        <a href="#contact" style="padding:9px 18px;border-radius:999px;background:#0b0f14;font-size:13px;font-weight:700;color:#f9d20f;text-decoration:none;white-space:nowrap" style-hover="background:#64748b">Start a project →</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO: noise → prism → spectrum -->
+  <section data-stack="1" data-screen-label="Hero" style="position:sticky;top:64px;z-index:1;min-height:calc(100vh - 64px);max-width:1280px;margin:0 auto;padding:16px 28px 96px;display:flex;flex-direction:column;justify-content:flex-start">
+    <div style="flex:1 1 auto;position:relative;border-radius:32px;overflow:hidden;background:#fff;border:1px solid #e2e8f0;box-shadow:0 1px 2px 0 #0b0f140f,0 4px 12px -2px #0b0f1414;padding:clamp(36px,5vw,64px) clamp(24px,4vw,56px)">
+      <div style="display:flex;flex-wrap:wrap;gap:32px 40px;align-items:center">
+        <!-- Refraction scene (from the brand repo's Hero.tsx, adapted to light ground) -->
+        <div style="flex:1 1 360px;min-width:0;max-width:640px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;color:#64748b">NOISE IN</span>
+          <svg viewBox="0 150 900 400" width="100%" style="display:block;height:auto;max-height:340px;margin-top:8px;overflow:visible" role="img" aria-label="Operational noise entering a prism and refracting into three rays">
+            <defs>
+              <linearGradient id="spec-top" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#f9d20f"></stop><stop offset="1" stop-color="#f9d20f"></stop></linearGradient>
+              <linearGradient id="spec-mid" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#0b0f14"></stop><stop offset="1" stop-color="#64748b"></stop></linearGradient>
+              <linearGradient id="spec-low" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#64748b"></stop><stop offset="1" stop-color="#64748b"></stop></linearGradient>
+              <filter id="soft-blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"></feGaussianBlur></filter>
+            </defs>
+            <g fill="#64748b" font-size="21" font-family="IBM Plex Mono, monospace">
+              <text x="26" y="208" style="animation:fade-in 1s ease-out both,flicker 4.5s steps(12) 1s infinite">manual everything</text>
+              <text x="128" y="268" style="animation:fade-in 1s ease-out .14s both,flicker 4.5s steps(12) 1.14s infinite">copy · paste · repeat</text>
+              <text x="16" y="330" style="animation:fade-in 1s ease-out .28s both,flicker 4.5s steps(12) 1.28s infinite">17 tools, zero answers</text>
+              <text x="140" y="396" style="animation:fade-in 1s ease-out .42s both,flicker 4.5s steps(12) 1.42s infinite">final_v7_REAL.xlsx</text>
+              <text x="34" y="462" style="animation:fade-in 1s ease-out .56s both,flicker 4.5s steps(12) 1.56s infinite">spreadsheets at midnight</text>
+              <text x="150" y="516" style="animation:fade-in 1s ease-out .7s both,flicker 4.5s steps(12) 1.7s infinite">who owns this?</text>
+            </g>
+            <rect x="0" y="349" width="470" height="4" fill="#0b0f14" filter="url(#soft-blur)" opacity=".35" style="transform-origin:0 50%;transform-box:fill-box;animation:beam-grow 1.1s cubic-bezier(.4,0,.2,1) .25s both"></rect>
+            <rect x="0" y="350.5" width="470" height="1.5" fill="#0b0f14" style="transform-origin:0 50%;transform-box:fill-box;animation:beam-grow 1.1s cubic-bezier(.4,0,.2,1) .25s both"></rect>
+            <circle cx="8" cy="351.5" r="2.4" fill="#0b0f14" style="animation:particle-run 2.4s linear .4s infinite"></circle>
+            <circle cx="8" cy="351.5" r="2.4" fill="#0b0f14" style="animation:particle-run 2.4s linear 1s infinite"></circle>
+            <circle cx="8" cy="351.5" r="2.4" fill="#0b0f14" style="animation:particle-run 2.4s linear 1.6s infinite"></circle>
+            <circle cx="8" cy="351.5" r="2.4" fill="#0b0f14" style="animation:particle-run 2.4s linear 2.2s infinite"></circle>
+            <g transform="translate(360,150) scale(2.2)">
+              <path d="M0 160 L88 0 L112 45 L88 90 L176 160 Z" fill="#0b0f14" style="animation:fade-in .8s ease-out .3s both"></path>
+              <g transform="translate(92,92)">
+                <g style="transform-box:fill-box;transform-origin:left bottom;animation:ray-pop .9s cubic-bezier(.18,1.25,.3,1) 1.45s both">
+                  <polygon points="0,0 138,-52 138,-30" fill="#f9d20f"></polygon>
+                  <polygon points="0,0 138,-52 138,-30" fill="url(#spec-top)" style="animation:spectral-settle 2.2s ease-out 1.45s both"></polygon>
+                </g>
+                <g style="transform-box:fill-box;transform-origin:left 33%;animation:ray-pop .9s cubic-bezier(.18,1.25,.3,1) 1.52s both">
+                  <polygon points="0,0 140,-4 140,8" fill="#0b0f14"></polygon>
+                  <polygon points="0,0 140,-4 140,8" fill="url(#spec-mid)" style="animation:spectral-settle 2.2s ease-out 1.52s both"></polygon>
+                </g>
+                <g style="transform-box:fill-box;transform-origin:left top;animation:ray-pop .9s cubic-bezier(.18,1.25,.3,1) 1.59s both">
+                  <polygon points="0,0 138,30 138,52" fill="#64748b"></polygon>
+                  <polygon points="0,0 138,30 138,52" fill="url(#spec-low)" style="animation:spectral-settle 2.2s ease-out 1.59s both"></polygon>
+                </g>
+              </g>
+            </g>
+            <circle cx="562.4" cy="352.4" r="6" fill="#0b0f14" style="transform-box:fill-box;transform-origin:center;animation:burst 1s ease-out 1.4s both"></circle>
+          </svg>
+        </div>
+        <!-- SPECTRUM side -->
+        <div style="flex:1 1 260px;display:grid;gap:12px;align-content:center">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;color:#64748b">SPECTRUM OUT</span>
+          <a href="#services" style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 22px;border-radius:16px;background:#f9d20f;color:#0b0f14;font-family:'Jost',sans-serif;font-weight:500;font-size:26px;text-decoration:none;transition:transform .2s" style-hover="transform:translateX(8px)">Website<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;white-space:nowrap">RAY 01 →</span></a>
+          <a href="#services" style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 22px;border-radius:16px;background:#f6f7f9;border:1px solid #e2e8f0;color:#0b0f14;font-family:'Jost',sans-serif;font-weight:500;font-size:26px;text-decoration:none;transition:transform .2s" style-hover="transform:translateX(8px)">Software<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;white-space:nowrap">RAY 02 →</span></a>
+          <a href="#services" style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 22px;border-radius:16px;background:#0b0f14;color:#fff;font-family:'Jost',sans-serif;font-weight:500;font-size:26px;text-decoration:none;transition:transform .2s" style-hover="transform:translateX(8px)">AI &amp; Automation<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;color:#e2e8f0;white-space:nowrap">RAY 03 →</span></a>
+        </div>
+      </div>
+      <div style="margin-top:clamp(28px,4vw,52px);display:flex;justify-content:space-between;gap:24px 40px;flex-wrap:wrap;align-items:flex-end;border-top:1px solid #e2e8f0;padding-top:28px">
+        <h1 style="margin:0;font-family:'Jost',sans-serif;font-weight:500;font-size:clamp(48px,7vw,104px);line-height:.95;letter-spacing:-.025em;color:#0b0f14;flex:1 1 420px">Noise in.<br><em style="font-style:italic;color:#0b0f14;box-shadow:inset 0 -.14em 0 #f9d20f">Spectrum out.</em></h1>
+        <div style="flex:0 1 380px;display:grid;gap:18px">
+          <p style="margin:0;font-size:17px;line-height:1.6;color:#0b0f14">We build custom websites and web platforms for businesses across the UAE and GCC — then wire in the AI and automation that make them run themselves.</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <a href="#contact" style="display:inline-flex;align-items:center;gap:8px;padding:15px 26px;border-radius:999px;background:#0b0f14;color:#f9d20f;font-weight:700;font-size:15px;text-decoration:none;white-space:nowrap" style-hover="background:#64748b">Start a project →</a>
+            <a href="#services" style="display:inline-flex;align-items:center;padding:15px 26px;border-radius:999px;background:#fff;color:#0b0f14;border:1px solid #e2e8f0;font-weight:600;font-size:15px;text-decoration:none;white-space:nowrap" style-hover="background:#f6f7f9">See what we refract ↓</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 01 SERVICES: three expanding rays -->
+  <section data-stack="1" id="services" data-screen-label="Services" style="position:sticky;top:78px;z-index:2;min-height:calc(100vh - 78px);max-width:1280px;margin:0 auto;padding:16px 28px 96px;display:flex;flex-direction:column;justify-content:flex-start">
+    <div style="flex:1 1 auto;border-radius:32px;background:#fff;border:1px solid #e2e8f0;box-shadow:0 -16px 48px -12px #0b0f1440;padding:clamp(28px,4vw,48px);overflow:hidden;position:relative">
+      <p style="position:absolute;top:12px;right:28px;margin:0;font-family:'Caveat',cursive;font-size:20px;color:#0b0f14;transform:rotate(-3deg);pointer-events:none">Keep scrollin'…</p>
+      <div style="display:flex;justify-content:space-between;gap:24px 40px;flex-wrap:wrap;align-items:flex-end;margin-bottom:28px">
+        <div style="flex:1 1 380px;min-width:0">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;color:#64748b">01 · WHAT WE REFRACT</span>
+          <h2 style="margin:12px 0 0;font-family:'Jost',sans-serif;font-weight:500;font-size:clamp(36px,4.5vw,64px);line-height:1;letter-spacing:-.02em;color:#0b0f14">Three rays. One firm.</h2>
+        </div>
+        <p style="flex:1 1 300px;max-width:380px;margin:0 0 6px;font-size:16px;line-height:1.6;color:#0b0f14">Every engagement passes through the same prism and splits into the discipline it actually needs.</p>
+      </div>
+      <div style="display:grid;gap:8px">
+        <sc-for list="{{ services }}" as="s" hint-placeholder-count="4">
+          <a href="#contact" style="display:grid;grid-template-columns:48px minmax(0,1fr) 32px;grid-template-rows:auto auto;align-items:start;column-gap:20px;row-gap:8px;background:{{ s.bg }};color:{{ s.fg }};border-radius:18px;padding:24px 28px;text-decoration:none;transition:transform .25s" style-hover="transform:translateX(12px)">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.2em;opacity:.7;line-height:1;padding-top:10px">{{ s.num }}</span>
+            <h3 style="margin:0;font-family:'Jost',sans-serif;font-weight:500;font-size:clamp(26px,2.6vw,36px);line-height:1.1;letter-spacing:-.01em">{{ s.title }}</h3>
+            <span style="font-size:22px;text-align:right;line-height:1;padding-top:6px">→</span>
+            <p style="margin:0;grid-column:2;font-size:15px;line-height:1.5;opacity:.85;max-width:560px">{{ s.body }}</p>
+          </a>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 WHAT WE BUILD: commerce pillar + categories -->
+  <section data-stack="1" id="build" data-screen-label="What we build" style="position:sticky;top:92px;z-index:3;min-height:calc(100vh - 92px);max-width:1280px;margin:0 auto;padding:16px 28px 96px;display:flex">
+    <div style="flex:1 1 auto;border-radius:32px;background:#fff;border:1px solid #e2e8f0;box-shadow:0 -16px 48px -12px #0b0f1440;padding:clamp(28px,4vw,48px);overflow:hidden;position:relative">
+      <p style="position:absolute;top:12px;right:28px;margin:0;font-family:'Caveat',cursive;font-size:20px;color:#0b0f14;transform:rotate(-3deg);pointer-events:none">Pick your kit ↓</p>
+
+      <div style="display:flex;flex-wrap:wrap;gap:16px 40px;align-items:flex-end;justify-content:space-between;border-bottom:1px solid #e2e8f0;padding-bottom:24px">
+        <div style="display:grid;gap:12px;flex:1 1 420px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;color:#64748b">02 / WHAT WE BUILD</span>
+          <h2 style="margin:0;font-family:'Jost',sans-serif;font-weight:500;font-size:clamp(32px,4.4vw,60px);line-height:1.02;letter-spacing:-.02em">Site kits, not site packages.</h2>
+        </div>
+        <p style="margin:0;flex:0 1 340px;font-size:15px;line-height:1.6;color:#64748b">Every kit is a defined build with a fixed scope. Commerce is the pillar — the rest are the categories we ship most across the UAE and GCC.</p>
+      </div>
+
+      <div style="margin-top:28px;display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr))">
+        <a href="#contact" style="position:relative;display:grid;gap:14px;align-content:start;padding:clamp(24px,3vw,34px);border-radius:22px;background:#0b0f14;color:#fff;text-decoration:none;overflow:hidden;transition:transform .2s" style-hover="transform:translateY(-3px)">
+          <span style="display:flex;align-items:center;gap:10px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;color:#f9d20f">PILLAR · COMMERCE</span>
+          <h3 style="margin:0;font-family:'Jost',sans-serif;font-weight:500;font-size:clamp(26px,2.7vw,36px);line-height:1.08">Next.js commerce</h3>
+          <p style="margin:0;font-size:15px;line-height:1.6;color:#e2e8f0">A custom headless storefront built for speed and for catalogues that keep growing. Own the front end, the checkout flow and the data.</p>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;color:#f9d20f;border-top:1px solid #ffffff2e;padding-top:12px">NEXT.JS · HEADLESS CMS · STRIPE / TAP</span>
+        </a>
+        <a href="#contact" style="position:relative;display:grid;gap:14px;align-content:start;padding:clamp(24px,3vw,34px);border-radius:22px;background:#fff;border:1px solid #0b0f14;color:#0b0f14;text-decoration:none;transition:transform .2s" style-hover="transform:translateY(-3px)">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;color:#64748b">PILLAR · COMMERCE</span>
+          <h3 style="margin:0;font-family:'Jost',sans-serif;font-weight:500;font-size:clamp(26px,2.7vw,36px);line-height:1.08">Shopify storefront</h3>
+          <p style="margin:0;font-size:15px;line-height:1.6;color:#64748b">Shopify keeps running payments, inventory and orders. We build the storefront on top of it, so the shop looks nothing like a theme.</p>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;color:#0b0f14;border-top:1px solid #e2e8f0;padding-top:12px">SHOPIFY · HYDROGEN / LIQUID · METAOBJECTS</span>
+        </a>
+      </div>
+
+      <div style="margin-top:16px;display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr))">
+        <a href="#contact" style="display:grid;gap:10px;align-content:start;padding:22px;border-radius:18px;background:#f6f7f9;border:1px solid #e2e8f0;color:#0b0f14;text-decoration:none;transition:transform .2s,border-color .2s" style-hover="transform:translateY(-3px);border-color:#0b0f14">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;color:#64748b">KIT 01</span>
+          <h4 style="margin:0;font-family:'Jost',sans-serif;font-weight:500;font-size:21px;line-height:1.15">Real estate</h4>
+          <p style="margin:0;font-size:14px;line-height:1.5;color:#64748b">Listing portals with search, filters, map views and enquiry routing that reaches the right agent.</p>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;color:#0b0f14;border-top:1px solid #e2e8f0;padding-top:10px">LISTINGS · MAPS · CRM HANDOFF</span>
+        </a>
+        <a href="#contact" style="display:grid;gap:10px;align-content:start;padding:22px;border-radius:18px;background:#f6f7f9;border:1px solid #e2e8f0;color:#0b0f14;text-decoration:none;transition:transform .2s,border-color .2s" style-hover="transform:translateY(-3px);border-color:#0b0f14">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;color:#64748b">KIT 02</span>
+          <h4 style="margin:0;font-family:'Jost',sans-serif;font-weight:500;font-size:21px;line-height:1.15">Local business</h4>
+          <p style="margin:0;font-size:14px;line-height:1.5;color:#64748b">Clinics, salons, garages, restaurants — a site that gets found, answers the obvious questions and takes the booking.</p>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;color:#0b0f14;border-top:1px solid #e2e8f0;padding-top:10px">LOCAL SEO · BOOKINGS · WHATSAPP</span>
+        </a>
+        <a href="#contact" style="display:grid;gap:10px;align-content:start;padding:22px;border-radius:18px;background:#f6f7f9;border:1px solid #e2e8f0;color:#0b0f14;text-decoration:none;transition:transform .2s,border-color .2s" style-hover="transform:translateY(-3px);border-color:#0b0f14">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;color:#64748b">KIT 03</span>
+          <h4 style="margin:0;font-family:'Jost',sans-serif;font-weight:500;font-size:21px;line-height:1.15">Corporate & CMS</h4>
+          <p style="margin:0;font-size:14px;line-height:1.5;color:#64748b">Multi-page sites your team edits without calling us, with the structure to keep growing.</p>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;color:#0b0f14;border-top:1px solid #e2e8f0;padding-top:10px">CMS · MULTI-PAGE · AR / EN</span>
+        </a>
+        <a href="#contact" style="display:grid;gap:10px;align-content:start;padding:22px;border-radius:18px;background:#f6f7f9;border:1px solid #e2e8f0;color:#0b0f14;text-decoration:none;transition:transform .2s,border-color .2s" style-hover="transform:translateY(-3px);border-color:#0b0f14">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;color:#64748b">KIT 04</span>
+          <h4 style="margin:0;font-family:'Jost',sans-serif;font-weight:500;font-size:21px;line-height:1.15">Web apps & portals</h4>
+          <p style="margin:0;font-size:14px;line-height:1.5;color:#64748b">Customer dashboards, quoting tools and internal portals — the site that does the work, not just the telling.</p>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;color:#0b0f14;border-top:1px solid #e2e8f0;padding-top:10px">AUTH · DASHBOARDS · INTEGRATIONS</span>
+        </a>
+        <a href="#contact" style="display:grid;gap:10px;align-content:start;padding:22px;border-radius:18px;background:#f6f7f9;border:1px solid #e2e8f0;color:#0b0f14;text-decoration:none;transition:transform .2s,border-color .2s" style-hover="transform:translateY(-3px);border-color:#0b0f14">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;color:#64748b">KIT 05</span>
+          <h4 style="margin:0;font-family:'Jost',sans-serif;font-weight:500;font-size:21px;line-height:1.15">Campaign & landing</h4>
+          <p style="margin:0;font-size:14px;line-height:1.5;color:#64748b">Single-purpose pages built to convert one audience, shipped in days and measured from day one.</p>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;color:#0b0f14;border-top:1px solid #e2e8f0;padding-top:10px">FAST BUILD · A/B · ANALYTICS</span>
+        </a>
+        <a href="#contact" style="display:grid;gap:10px;align-content:start;padding:22px;border-radius:18px;background:#f6f7f9;border:1px solid #e2e8f0;color:#0b0f14;text-decoration:none;transition:transform .2s,border-color .2s" style-hover="transform:translateY(-3px);border-color:#0b0f14">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;color:#64748b">KIT 06</span>
+          <h4 style="margin:0;font-family:'Jost',sans-serif;font-weight:500;font-size:21px;line-height:1.15">Replatform & rescue</h4>
+          <p style="margin:0;font-size:14px;line-height:1.5;color:#64748b">An existing site that is slow, unmaintainable or on the wrong stack. We migrate it without losing the rankings.</p>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;color:#0b0f14;border-top:1px solid #e2e8f0;padding-top:10px">MIGRATION · SPEED · SEO KEPT</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 WORK: selected builds (placeholder) -->
+  <section data-stack="1" id="work" data-screen-label="Work" style="position:sticky;top:106px;z-index:4;min-height:calc(100vh - 106px);max-width:1280px;margin:0 auto;padding:16px 28px 96px;display:flex">
+    <div style="flex:1 1 auto;border-radius:32px;background:#fff;border:1px solid #e2e8f0;box-shadow:0 -16px 48px -12px #0b0f1440;padding:clamp(28px,4vw,48px);overflow:hidden;position:relative">
+      <p style="position:absolute;top:12px;right:28px;margin:0;font-family:'Caveat',cursive;font-size:20px;color:#0b0f14;transform:rotate(-3deg);pointer-events:none">Placeholder work &darr;</p>
+
+      <div style="display:flex;flex-wrap:wrap;gap:16px 40px;align-items:flex-end;justify-content:space-between;border-bottom:1px solid #e2e8f0;padding-bottom:24px">
+        <div style="display:grid;gap:12px;flex:1 1 420px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;color:#64748b">03 / SELECTED WORK</span>
+          <h2 style="margin:0;font-family:'Jost',sans-serif;font-weight:500;font-size:clamp(32px,4.4vw,60px);line-height:1.02;letter-spacing:-.02em">Six builds, one method.</h2>
+        </div>
+        <p style="margin:0;flex:0 1 340px;font-size:15px;line-height:1.6;color:#64748b">Names and numbers below are placeholders. Drop a screenshot onto any tile, and send me the real clients and results to swap in.</p>
+      </div>
+
+      <div style="margin-top:28px;display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))">
+        <a href="#contact" style="display:grid;grid-template-rows:auto 1fr;align-content:start;gap:0;border-radius:20px;background:#f6f7f9;border:1px solid #e2e8f0;color:#0b0f14;text-decoration:none;transition:transform .2s,border-color .2s" style-hover="transform:translateY(-3px);border-color:#0b0f14">
+          <div style="position:relative;width:100%;aspect-ratio:4/3;background:#e2e8f0;border-radius:19px 19px 0 0;overflow:hidden">
+            <image-slot id="work-1" shape="rect" placeholder="Maison Dates — drop a screenshot"></image-slot>
+          </div>
+          <div style="display:grid;gap:8px;padding:20px">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;color:#64748b">01 · SHOPIFY STOREFRONT</span>
+            <h4 style="margin:0;font-family:'Jost',sans-serif;font-weight:500;font-size:22px;line-height:1.15">Maison Dates</h4>
+            <p style="margin:0;font-size:14px;line-height:1.5;color:#64748b">Headless storefront for a Dubai gifting brand, with bundle builder and same-day delivery slots.</p>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;color:#0b0f14;border-top:1px solid #e2e8f0;padding-top:10px;margin-top:4px">+38% CONVERSION · 0.9s LCP</span>
+          </div>
+        </a>
+        <a href="#contact" style="display:grid;grid-template-rows:auto 1fr;align-content:start;gap:0;border-radius:20px;background:#f6f7f9;border:1px solid #e2e8f0;color:#0b0f14;text-decoration:none;transition:transform .2s,border-color .2s" style-hover="transform:translateY(-3px);border-color:#0b0f14">
+          <div style="position:relative;width:100%;aspect-ratio:4/3;background:#e2e8f0;border-radius:19px 19px 0 0;overflow:hidden">
+            <image-slot id="work-2" shape="rect" placeholder="Aster Living — drop a screenshot"></image-slot>
+          </div>
+          <div style="display:grid;gap:8px;padding:20px">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;color:#64748b">02 · NEXT.JS COMMERCE</span>
+            <h4 style="margin:0;font-family:'Jost',sans-serif;font-weight:500;font-size:22px;line-height:1.15">Aster Living</h4>
+            <p style="margin:0;font-size:14px;line-height:1.5;color:#64748b">2,400-SKU furniture catalogue with room-based browsing and finance checkout.</p>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;color:#0b0f14;border-top:1px solid #e2e8f0;padding-top:10px;margin-top:4px">2,400 SKUS · 12 WEEKS</span>
+          </div>
+        </a>
+        <a href="#contact" style="display:grid;grid-template-rows:auto 1fr;align-content:start;gap:0;border-radius:20px;background:#f6f7f9;border:1px solid #e2e8f0;color:#0b0f14;text-decoration:none;transition:transform .2s,border-color .2s" style-hover="transform:translateY(-3px);border-color:#0b0f14">
+          <div style="position:relative;width:100%;aspect-ratio:4/3;background:#e2e8f0;border-radius:19px 19px 0 0;overflow:hidden">
+            <image-slot id="work-3" shape="rect" placeholder="Marasi Properties — drop a screenshot"></image-slot>
+          </div>
+          <div style="display:grid;gap:8px;padding:20px">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;color:#64748b">03 · REAL ESTATE</span>
+            <h4 style="margin:0;font-family:'Jost',sans-serif;font-weight:500;font-size:22px;line-height:1.15">Marasi Properties</h4>
+            <p style="margin:0;font-size:14px;line-height:1.5;color:#64748b">Listing portal with map search, off-plan pages and enquiry routing into the agents&rsquo; CRM.</p>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;color:#0b0f14;border-top:1px solid #e2e8f0;padding-top:10px;margin-top:4px">1,100 LISTINGS · CRM SYNCED</span>
+          </div>
+        </a>
+        <a href="#contact" style="display:grid;grid-template-rows:auto 1fr;align-content:start;gap:0;border-radius:20px;background:#f6f7f9;border:1px solid #e2e8f0;color:#0b0f14;text-decoration:none;transition:transform .2s,border-color .2s" style-hover="transform:translateY(-3px);border-color:#0b0f14">
+          <div style="position:relative;width:100%;aspect-ratio:4/3;background:#e2e8f0;border-radius:19px 19px 0 0;overflow:hidden">
+            <image-slot id="work-4" shape="rect" placeholder="Clinica Nova — drop a screenshot"></image-slot>
+          </div>
+          <div style="display:grid;gap:8px;padding:20px">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;color:#64748b">04 · LOCAL BUSINESS</span>
+            <h4 style="margin:0;font-family:'Jost',sans-serif;font-weight:500;font-size:22px;line-height:1.15">Clinica Nova</h4>
+            <p style="margin:0;font-size:14px;line-height:1.5;color:#64748b">Three-branch clinic site with online booking, doctor profiles and WhatsApp triage.</p>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;color:#0b0f14;border-top:1px solid #e2e8f0;padding-top:10px;margin-top:4px">&minus;60% PHONE BOOKINGS</span>
+          </div>
+        </a>
+        <a href="#contact" style="display:grid;grid-template-rows:auto 1fr;align-content:start;gap:0;border-radius:20px;background:#f6f7f9;border:1px solid #e2e8f0;color:#0b0f14;text-decoration:none;transition:transform .2s,border-color .2s" style-hover="transform:translateY(-3px);border-color:#0b0f14">
+          <div style="position:relative;width:100%;aspect-ratio:4/3;background:#e2e8f0;border-radius:19px 19px 0 0;overflow:hidden">
+            <image-slot id="work-5" shape="rect" placeholder="Falcon Freight — drop a screenshot"></image-slot>
+          </div>
+          <div style="display:grid;gap:8px;padding:20px">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;color:#64748b">05 · WEB PORTAL</span>
+            <h4 style="margin:0;font-family:'Jost',sans-serif;font-weight:500;font-size:22px;line-height:1.15">Falcon Freight</h4>
+            <p style="margin:0;font-size:14px;line-height:1.5;color:#64748b">Customer portal for live shipment tracking, documents and invoice history.</p>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;color:#0b0f14;border-top:1px solid #e2e8f0;padding-top:10px;margin-top:4px">24/7 SELF-SERVE</span>
+          </div>
+        </a>
+        <a href="#contact" style="display:grid;grid-template-rows:auto 1fr;align-content:start;gap:0;border-radius:20px;background:#f6f7f9;border:1px solid #e2e8f0;color:#0b0f14;text-decoration:none;transition:transform .2s,border-color .2s" style-hover="transform:translateY(-3px);border-color:#0b0f14">
+          <div style="position:relative;width:100%;aspect-ratio:4/3;background:#e2e8f0;border-radius:19px 19px 0 0;overflow:hidden">
+            <image-slot id="work-6" shape="rect" placeholder="Sabaya Beauty — drop a screenshot"></image-slot>
+          </div>
+          <div style="display:grid;gap:8px;padding:20px">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;color:#64748b">06 · CAMPAIGN & LANDING</span>
+            <h4 style="margin:0;font-family:'Jost',sans-serif;font-weight:500;font-size:22px;line-height:1.15">Sabaya Beauty</h4>
+            <p style="margin:0;font-size:14px;line-height:1.5;color:#64748b">Launch page and quiz funnel for a skincare drop, shipped in nine days.</p>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;color:#0b0f14;border-top:1px solid #e2e8f0;padding-top:10px;margin-top:4px">9 DAYS · 4 VARIANTS</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 METHOD: a beam you scroll down -->
+  <section data-stack="1" id="method" data-screen-label="Method" style="position:sticky;top:120px;z-index:5;min-height:calc(100vh - 120px);max-width:1280px;margin:0 auto;padding:16px 28px 96px;display:flex;flex-direction:column;justify-content:flex-start">
+    <div style="flex:1 1 auto;border-radius:32px;background:#0b0f14;color:#fff;box-shadow:0 -16px 48px -12px #0b0f1466;padding:clamp(28px,4vw,48px);position:relative;overflow:hidden;position:relative">
+      <p style="position:absolute;top:12px;right:28px;margin:0;font-family:'Caveat',cursive;font-size:20px;color:#e2e8f0;transform:rotate(-3deg);pointer-events:none">Keep scrollin' — follow the beam…</p>
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 15% 0%,#f9d20f2a,transparent 45%),radial-gradient(ellipse at 90% 100%,#0b0f14aa,transparent 50%);pointer-events:none"></div>
+      <div style="position:relative;display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:end;margin-bottom:40px">
+        <div>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;color:#f9d20f">02 · THE PRISM METHOD</span>
+          <h2 style="margin:12px 0 0;font-family:'Jost',sans-serif;font-weight:500;font-size:clamp(36px,4.5vw,64px);line-height:1;letter-spacing:-.02em">One beam through,<br>three rays out.</h2>
+        </div>
+      </div>
+      <div style="position:relative;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:0">
+        <sc-for list="{{ steps }}" as="st" hint-placeholder-count="3">
+          <div onMouseEnter="{{ st.enter }}" style="position:relative;padding:36px 28px 12px 0;margin-right:28px;border-top:1px solid rgba(255,255,255,.14);cursor:default">
+            <div style="position:absolute;left:0;right:0;top:-1px;height:3px;background:{{ st.line }};transform-origin:left;transform:scaleX({{ st.fill }});transition:transform .7s cubic-bezier(.2,.8,.2,1)"></div>
+            <div style="position:absolute;left:0;top:-9px;width:18px;height:18px;border-radius:50%;background:{{ st.dot }};box-shadow:0 0 0 6px #0b0f14,0 0 24px {{ st.glow }};transition:all .5s"></div>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;color:{{ st.color }}">STEP {{ st.num }}</span>
+            <h3 style="margin:14px 0 12px;font-family:'Jost',sans-serif;font-weight:500;font-size:clamp(30px,3vw,44px);line-height:1;color:#fff">{{ st.title }}</h3>
+            <p style="margin:0;font-size:16px;line-height:1.65;color:#cbd5e1;opacity:{{ st.opacity }};transition:opacity .5s">{{ st.body }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 HOW WE WORK: the timeline is the spectrum -->
+  <section data-stack="1" id="engage" data-screen-label="How we work" style="position:sticky;top:134px;z-index:6;min-height:calc(100vh - 134px);max-width:1280px;margin:0 auto;padding:16px 28px 96px;display:flex;flex-direction:column;justify-content:flex-start">
+    <div style="flex:1 1 auto;border-radius:32px;background:#fff;border:1px solid #e2e8f0;box-shadow:0 -16px 48px -12px #0b0f1440;padding:clamp(28px,4vw,48px);overflow:hidden;position:relative">
+      <p style="position:absolute;top:12px;right:28px;margin:0;font-family:'Caveat',cursive;font-size:20px;color:#0b0f14;transform:rotate(-3deg);pointer-events:none">Almost there… pick a way in</p>
+      <div style="display:flex;justify-content:space-between;gap:24px 40px;flex-wrap:wrap;align-items:flex-end;margin-bottom:32px">
+        <div style="flex:1 1 380px;min-width:0">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;color:#64748b">03 · HOW WE WORK TOGETHER</span>
+          <h2 style="margin:12px 0 0;font-family:'Jost',sans-serif;font-weight:500;font-size:clamp(36px,4.5vw,64px);line-height:1;letter-spacing:-.02em;color:#0b0f14">Three ways to start.</h2>
+        </div>
+        <p style="flex:1 1 300px;max-width:380px;margin:0 0 6px;font-size:16px;line-height:1.6;color:#0b0f14">Fixed scope, clear price, no lock-in. Most partners begin with a Refraction Sprint and grow from there.</p>
+      </div>
+      <!-- duration bar -->
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,4fr) minmax(0,3fr);gap:6px;margin-bottom:8px">
+        <div style="height:14px;border-radius:999px;background:#f9d20f"></div>
+        <div style="height:14px;border-radius:999px;background:#e2e8f0"></div>
+        <div style="height:14px;border-radius:999px;background:linear-gradient(90deg,#0b0f14,#0b0f14 40%,rgba(13,62,102,0))"></div>
+      </div>
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,4fr) minmax(0,3fr);gap:6px;margin-bottom:28px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;color:#64748b">
+        <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">1–2 WEEKS</span><span style="white-space:nowrap">4–12 WEEKS</span><span style="white-space:nowrap">ONGOING →</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px">
+        <sc-for list="{{ ways }}" as="w" hint-placeholder-count="3">
+          <article style="border-radius:24px;padding:28px;background:{{ w.bg }};color:{{ w.fg }};display:flex;flex-direction:column;gap:12px;border:1px solid {{ w.border }}">
+            <div style="display:flex;justify-content:space-between;align-items:baseline">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;opacity:.7">{{ w.num }}</span>
+            </div>
+            <h3 style="margin:0;font-family:'Jost',sans-serif;font-weight:500;font-size:clamp(30px,3vw,40px);line-height:1">{{ w.title }}</h3>
+            <p style="margin:0;font-size:15px;line-height:1.6;opacity:.92">{{ w.body }}</p>
+            <ul style="margin:auto 0 0;padding:16px 0 0;list-style:none;display:grid;gap:8px;border-top:1px solid {{ w.border }}">
+              <sc-for list="{{ w.points }}" as="pt" hint-placeholder-count="3">
+                <li style="display:flex;gap:10px;font-size:14px;line-height:1.5"><span style="flex:none;width:18px;height:2px;background:currentColor;margin-top:10px;opacity:.5"></span>{{ pt }}</li>
+              </sc-for>
+            </ul>
+          </article>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 RESULTS: giant type -->
+  <section data-stack="1" id="results" data-screen-label="Results" style="position:sticky;top:148px;z-index:7;min-height:calc(100vh - 148px);max-width:1280px;margin:0 auto;padding:16px 28px 96px;display:flex;flex-direction:column;justify-content:flex-start">
+    <div style="flex:1 1 auto;border-radius:32px;background:#f9d20f;box-shadow:0 -16px 48px -12px #0b0f1440;padding:clamp(28px,4vw,48px);overflow:hidden;position:relative;position:relative">
+      <p style="position:absolute;top:12px;right:28px;margin:0;font-family:'Caveat',cursive;font-size:20px;color:#0b0f14;transform:rotate(-3deg);pointer-events:none">Still scrollin'? Good.</p>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;color:#0b0f14">04 · WHAT COMES OUT THE OTHER SIDE</span>
+      <h2 style="margin:12px 0 32px;font-family:'Jost',sans-serif;font-weight:500;font-size:clamp(36px,4.5vw,64px);line-height:1;letter-spacing:-.02em;color:#0b0f14">Systems, not slideware.</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0 32px">
+        <sc-for list="{{ stats }}" as="st" hint-placeholder-count="4">
+          <div style="padding:24px 0 20px;border-top:2px solid #0b0f14;min-width:0">
+            <div style="font-family:'Jost',sans-serif;font-weight:500;font-size:clamp(40px,5vw,80px);line-height:1;letter-spacing:-.03em;color:#0b0f14;overflow-wrap:anywhere">{{ st.value }}</div>
+            <p style="margin:12px 0 0;font-size:14px;line-height:1.5;color:#0b0f14">{{ st.label }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 FAQ -->
+  <section data-stack="1" id="faq" data-screen-label="FAQ" style="position:sticky;top:162px;z-index:8;min-height:calc(100vh - 162px);max-width:1280px;margin:0 auto;padding:16px 28px 96px;display:flex;flex-direction:column;justify-content:flex-start">
+    <div style="flex:1 1 auto;border-radius:32px;background:#fff;border:1px solid #e2e8f0;box-shadow:0 -16px 48px -12px #0b0f1440;padding:clamp(28px,4vw,48px);display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:32px;position:relative">
+      <p style="position:absolute;top:12px;right:28px;margin:0;font-family:'Caveat',cursive;font-size:20px;color:#0b0f14;transform:rotate(-3deg);pointer-events:none">Curious one, aren't you?</p>
+      <div>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;color:#64748b">05 · QUESTIONS</span>
+        <h2 style="margin:12px 0 16px;font-family:'Jost',sans-serif;font-weight:500;font-size:clamp(36px,4.5vw,64px);line-height:1;letter-spacing:-.02em;color:#0b0f14">Before you ask.</h2>
+      </div>
+      <div style="display:grid;align-content:start">
+        <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="6">
+          <div style="border-top:1px solid #e2e8f0">
+            <button onClick="{{ f.toggle }}" style="width:100%;display:flex;justify-content:space-between;align-items:center;gap:12px;text-align:left;padding:18px 0;border:0;background:transparent;cursor:pointer;font-family:'Jost',sans-serif;font-weight:500;font-size:22px;line-height:1.3;color:#0b0f14"><span style="flex:1 1 auto;min-width:0;display:block">{{ f.q }}</span><span style="flex:none;width:32px;height:32px;border-radius:50%;background:{{ f.iconBg }};color:{{ f.iconFg }};display:grid;place-items:center;font-size:18px;font-family:'Inter',sans-serif;transition:all .2s">{{ f.icon }}</span></button>
+            <sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}">
+              <p style="margin:0;padding:0 48px 20px 0;font-size:15px;line-height:1.65;color:#0b0f14">{{ f.a }}</p>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 CONTACT -->
+  <section data-stack="1" id="contact" data-screen-label="Contact" style="position:sticky;top:176px;z-index:9;min-height:calc(100vh - 176px);max-width:1280px;margin:0 auto;padding:16px 28px 96px;display:flex;flex-direction:column;justify-content:flex-start;gap:24px;padding-bottom:24px">
+    <div style="flex:1 1 auto;border-radius:32px;background:#0b0f14;color:#fff;box-shadow:0 -16px 48px -12px #0b0f1466;padding:clamp(36px,5vw,64px) clamp(28px,4vw,48px);position:relative;overflow:hidden;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:40px;align-items:center;align-content:center;position:relative">
+      <p style="position:absolute;top:12px;right:28px;margin:0;font-family:'Caveat',cursive;font-size:20px;color:#e2e8f0;transform:rotate(-3deg);pointer-events:none">Last stop — say hello ↓</p>
+      <div style="position:absolute;right:-80px;top:-80px;width:360px;height:360px;border-radius:50%;background:radial-gradient(circle,#f9d20f66,transparent 70%);pointer-events:none"></div>
+      <div style="position:relative">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;color:#e2e8f0">06 · CONTACT</span>
+        <h2 style="margin:14px 0 18px;font-family:'Jost',sans-serif;font-weight:500;font-size:clamp(44px,6vw,88px);line-height:.95;letter-spacing:-.025em">Refract your workflow.</h2>
+        <p style="margin:0;max-width:520px;font-size:17px;line-height:1.65;color:#e2e8f0">Tell us where the noise is. Within 48 hours we come back with the first rays — a concrete read on what to build, what to automate, and what to delete.</p>
+        <p style="margin:22px 0 0;font-size:14px;color:#e2e8f0">Dubai, UAE — working across the UAE &amp; GCC</p>
+      </div>
+      <div style="position:relative;background:#fff;color:#0b0f14;border-radius:24px;padding:22px;max-width:460px;justify-self:end;width:100%;box-shadow:0 24px 48px -12px #00000066">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;background:#f6f7f9;border-radius:14px;padding:4px;margin-bottom:18px">
+          <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="3">
+            <button onClick="{{ t.select }}" style="border:0;cursor:pointer;padding:11px 8px;border-radius:10px;font-family:'Jost',sans-serif;font-weight:500;font-size:16px;line-height:1;white-space:nowrap;background:{{ t.bg }};color:{{ t.fg }};transition:all .15s">{{ t.label }}</button>
+          </sc-for>
+        </div>
+        <sc-if value="{{ isBrief }}" hint-placeholder-val="{{ true }}">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+            <label style="display:grid;gap:6px;font-size:11px;letter-spacing:.14em;font-weight:700;color:#64748b">YOUR NAME<x-import component-from-global-scope="Storefront.Input" placeholder="Alex" hint-size="100%,40px"></x-import></label>
+            <label style="display:grid;gap:6px;font-size:11px;letter-spacing:.14em;font-weight:700;color:#64748b">COMPANY<x-import component-from-global-scope="Storefront.Input" placeholder="Business name" hint-size="100%,40px"></x-import></label>
+          </div>
+          <label style="display:grid;gap:6px;font-size:11px;letter-spacing:.14em;font-weight:700;color:#64748b;margin-bottom:12px">WHAT DO YOU NEED BUILT?<textarea placeholder="A short note…" style="min-height:96px;resize:vertical;font-size:14px;padding:10px 12px;border-radius:8px;border:1px solid #e2e8f0;background:#f6f7f9;color:#0b0f14;font-family:'Inter',sans-serif"></textarea></label>
+          <a href="mailto:hello@prismal.ae" style="display:flex;justify-content:center;align-items:center;gap:8px;padding:14px;border-radius:999px;background:#0b0f14;color:#f9d20f;font-weight:700;font-size:15px;text-decoration:none" style-hover="background:#64748b">Send the brief →</a>
+        </sc-if>
+        <sc-if value="{{ isEmail }}" hint-placeholder-val="{{ false }}">
+          <a href="mailto:hello@prismal.ae" style="display:flex;justify-content:space-between;align-items:center;padding:18px;border-radius:14px;background:#f6f7f9;border:1px solid #e2e8f0;color:#0b0f14;font-weight:700;text-decoration:none" style-hover="background:#f6f7f9">hello@prismal.ae <span>→</span></a>
+        </sc-if>
+        <sc-if value="{{ isWhatsApp }}" hint-placeholder-val="{{ false }}">
+          <a href="https://wa.me/971507217156" style="display:flex;justify-content:space-between;align-items:center;padding:18px;border-radius:14px;background:#f6f7f9;border:1px solid #e2e8f0;color:#0b0f14;font-weight:700;text-decoration:none" style-hover="background:#f6f7f9">WhatsApp +971 50 721 7156 <span>→</span></a>
+        </sc-if>
+      </div>
+    </div>
+    <footer style="display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding:0 8px">
+      <a href="#top" style="display:flex;align-items:center;gap:10px;color:#0b0f14;text-decoration:none"><img src="public/01-mark-primary.svg" alt="" style="height:18px;width:auto;display:block"><span style="font-family:'Jost',sans-serif;font-weight:500;letter-spacing:.35em;font-size:13px">PRISMAL</span></a>
+      <nav style="display:flex;gap:18px;flex-wrap:wrap;font-size:13px;font-weight:600">
+        <a href="#services" style="color:#64748b;white-space:nowrap">What we refract</a><a href="#method" style="color:#64748b">Method</a><a href="#engage" style="color:#64748b;white-space:nowrap">How we work</a><a href="#faq" style="color:#64748b">FAQ</a><a href="#contact" style="color:#64748b">Contact</a>
+      </nav>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;color:#64748b;white-space:nowrap">© 2026 PRISMAL — NOISE IN. SPECTRUM OUT.</span>
+    </footer>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { tab: 0, ray: 0, step: 0, faq: 0, spread: 0 };
+  beamRef = React.createRef();
+  splashRef = React.createRef();
+  hideSplash = () => {
+    const el = this.splashRef.current;
+    if (!el || el.dataset.done) return;
+    el.dataset.done = '1';
+    el.style.transition = 'opacity .3s ease-in';
+    el.style.opacity = '0';
+    setTimeout(() => { if (el) el.style.display = 'none'; }, 320);
+  };
+  componentDidMount() {
+    this._splashT = setTimeout(this.hideSplash, 2000);
+    this._skip = e => { if (e.type !== 'keydown' || e.key === 'Escape' || e.key === ' ') this.hideSplash(); };
+    window.addEventListener('pointerdown', this._skip);
+    window.addEventListener('keydown', this._skip);
+    this._onScroll = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const p = max > 0 ? window.scrollY / max : 0;
+      if (this.beamRef.current) this.beamRef.current.style.height = (p * 100) + '%';
+      const spread = Math.min(1, window.scrollY / 400);
+      if (Math.abs(spread - this.state.spread) > 0.02) this.setState({ spread });
+    };
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+    this._onScroll();
+    this._t = setInterval(() => this.setState(s => ({ step: (s.step + 1) % 3 })), 2800);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this._onScroll);
+    window.removeEventListener('pointerdown', this._skip);
+    window.removeEventListener('keydown', this._skip);
+    clearInterval(this._t); clearTimeout(this._splashT);
+  }
+  renderVals() {
+    const { tab, ray, step, faq, spread } = this.state;
+    const ang = 12 + spread * 22, L = 150;
+    const r = a => ({ x: Math.cos(a * Math.PI / 180) * L, y: Math.sin(a * Math.PI / 180) * L });
+    const tabDefs = ['Brief', 'Email', 'WhatsApp'];
+    const noiseWords = ['manual everything', 'copy · paste · repeat', '17 tools, zero answers', 'final_v7_REAL.xlsx', 'who owns this?'];
+    const noise = noiseWords.map((t, i) => ({ t, x: [0, 28, 8, 40, 16][i] + 'px', r: [-3, 2, -1, 3, -2][i] + 'deg', d: (3 + (i % 3)) + 's', c: i % 2 === 0 ? '#0b0f14' : '#64748b' }));
+    const svc = [
+      { num: '01', title: 'Website', bg: '#f9d20f', fg: '#0b0f14', body: 'Marketing sites and customer-facing web products built for how you actually work.' },
+      { num: '02', title: 'Software', bg: '#ffffff', fg: '#0b0f14', body: 'Web platforms, internal tools, dashboards and the APIs that connect them.' },
+      { num: '03', title: 'AI & Automation', bg: '#0b0f14', fg: '#fff', body: 'Copilots, pipelines and bots wired into your real data — work that runs itself.' },
+    ];
+    const stepDefs = [
+      { num: '01', title: 'Input', color: '#f9d20f', body: 'We embed in your operation and map the noise — every tool, every handoff, every hour that quietly leaks away.' },
+      { num: '02', title: 'Refraction', color: '#e2e8f0', body: 'We split the problem into its spectrum: what becomes software, what becomes AI, and what disappears into automation.' },
+      { num: '03', title: 'Spectrum', color: '#fff', body: 'You get running systems in weeks — shipped, measured, maintained, and compounding quietly in the background.' },
+    ];
+    const faqDefs = [
+      ['Where are you based?', 'PRISMAL is based in Dubai and works with businesses across the UAE and the wider GCC. We work on-site with clients in Dubai and Abu Dhabi, and remotely everywhere else.'],
+      ['What does a project cost?', 'Every engagement starts with a fixed-price Refraction Sprint so you know the full build cost before committing. Builds are then quoted as fixed scope — no open-ended hourly billing.'],
+      ['How fast can you ship?', 'A sprint takes one to two weeks. Most first systems are live within four to twelve weeks, shipped in weekly increments you can see running the whole way.'],
+      ['Do you work in Arabic?', 'Yes. We build bilingual Arabic / English interfaces and AI agents, with full right-to-left support where it\'s needed.'],
+      ['Do we own what you build?', 'Completely. You own the code, the models and the infrastructure. No lock-in, no per-seat licence on your own tools — even the sprint blueprint is yours to take elsewhere.'],
+      ['Software, AI or automation — which do we need?', 'That\'s exactly what the sprint answers. Most operations need a mix; we recommend the smallest combination that removes the most noise.'],
+    ];
+    return {
+      beamRef: this.beamRef,
+      splashRef: this.splashRef,
+      rays: { a: r(-ang), b: r(0), c: r(ang) },
+      noise,
+      tabs: tabDefs.map((label, i) => ({ label, select: () => this.setState({ tab: i }), bg: i === tab ? '#0b0f14' : 'transparent', fg: i === tab ? '#f9d20f' : '#64748b' })),
+      isBrief: tab === 0, isEmail: tab === 1, isWhatsApp: tab === 2,
+      services: svc,
+      steps: stepDefs.map((s, i) => ({ ...s, enter: () => this.setState({ step: i }), fill: i <= step ? 1 : 0, line: s.color, dot: i <= step ? s.color : '#0b0f14', glow: i === step ? s.color : 'transparent', opacity: i <= step ? 1 : 0.45 })),
+      ways: [
+        { num: '01', title: 'Refraction Sprint', note: 'start here', bg: '#f6f7f9', fg: '#0b0f14', border: '#f9d20f', body: 'We map your operation, find the highest-leverage rays, and hand you a costed build plan you own — whether or not you build it with us.', points: ['Operational audit', 'Solution blueprint', 'Fixed price, fixed scope'] },
+        { num: '02', title: 'Build', note: 'weekly, visibly', bg: '#f6f7f9', fg: '#0b0f14', border: '#e2e8f0', body: 'We design, build and ship the software, AI or automation — in tight weekly increments you can see running, not slideware.', points: ['Weekly shipping', 'One accountable team', 'Launch & handover'] },
+        { num: '03', title: 'Run', note: 'on call', bg: '#0b0f14', fg: '#fff', border: '#0b0f14', body: 'We keep your systems healthy, measured and improving — a retained partner on call as your operation and its noise keep changing.', points: ['Monitoring & support', 'Continuous improvement', 'Monthly retainer'] },
+      ],
+      stats: [
+        { value: '−70%', label: 'manual work across the operations we automate' },
+        { value: 'Weeks', label: 'from the first workshop to the first running system' },
+        { value: '24/7', label: 'your systems stay on duty while the team sleeps' },
+        { value: '3 → 1', label: 'three disciplines, one accountable partner' },
+      ],
+      faqs: faqDefs.map(([q, a], i) => ({ q, a, open: faq === i, toggle: () => this.setState({ faq: faq === i ? -1 : i }), icon: faq === i ? '−' : '+', iconBg: faq === i ? '#0b0f14' : '#f6f7f9', iconFg: faq === i ? '#f9d20f' : '#0b0f14' })),
+    };
+  }
+}
+</script>
+</body>
+</html>

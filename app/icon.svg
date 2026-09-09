@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
-  <title>Prismal favicon</title>
-  <rect width="32" height="32" rx="7" fill="#1C1C1A"/>
-  <g transform="translate(3.84,7.61) scale(0.1048)">
-    <path d="M0 160 L88 0 L112 45 L88 90 L176 160 Z" fill="#FFFFFF"/>
-    <path d="M92 92 L232 84 L232 104 Z" fill="#FFFFFF"/>
-  </g>
-</svg>
