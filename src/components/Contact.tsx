@@ -1,4 +1,5 @@
 import Band from "@/components/Band";
+import Headline from "@/components/Headline";
 import BriefForm from "@/components/BriefForm";
 import Footer from "@/components/Footer";
 import { CONTACT, SITE } from "@/content/site";
@@ -26,7 +27,7 @@ export default function Contact() {
 
       <div data-rv>
         <span className={cn(eyebrow, "text-accent")}>{CONTACT.eyebrow}</span>
-        <h2 className={cn(h2, "mt-4 text-[clamp(56px,8.5vw,140px)]")}>{CONTACT.title}</h2>
+        <Headline className={cn(h2, "mt-4 text-[clamp(56px,8.5vw,140px)]")}>{CONTACT.title}</Headline>
         <p className="m-0 mt-6 max-w-[520px] text-[18px] leading-[1.6] text-paper/85">{CONTACT.intro}</p>
 
         <dl className="m-0 mt-12 max-w-[520px] border-b border-white/10">

@@ -77,6 +77,7 @@ export default function WorkStrip() {
             href={w.url}
             target="_blank"
             rel="noopener noreferrer"
+            data-cursor="View ↗"
             className={cn(
               "group relative grid overflow-hidden rounded-[28px] border border-ink/10 bg-white text-ink shadow-[0_24px_60px_-28px_rgba(11,15,20,.5)] transition-[rotate,translate,box-shadow] duration-300 hover:-translate-y-2 hover:shadow-[0_32px_70px_-28px_rgba(11,15,20,.6)]",
               focus,

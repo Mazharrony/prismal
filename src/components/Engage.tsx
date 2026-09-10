@@ -1,4 +1,5 @@
 import Band from "@/components/Band";
+import Headline from "@/components/Headline";
 import { ENGAGE_HEAD, WAYS } from "@/content/site";
 import { eyebrow, h2 } from "@/lib/styles";
 import { cn } from "@/lib/utils";
@@ -18,7 +19,7 @@ export default function Engage() {
       <div className="flex flex-wrap items-end justify-between gap-x-12 gap-y-6">
         <div data-rv>
           <span className={cn(eyebrow, "text-ink/70")}>{ENGAGE_HEAD.eyebrow}</span>
-          <h2 className={cn(h2, "mt-4")}>{ENGAGE_HEAD.title}</h2>
+          <Headline className={cn(h2, "mt-4")}>{ENGAGE_HEAD.title}</Headline>
         </div>
         <p className="m-0 max-w-[380px] text-[17px] leading-[1.55] text-ink/80" data-rv style={{ ["--d" as string]: ".1s" }}>
           {ENGAGE_HEAD.intro}

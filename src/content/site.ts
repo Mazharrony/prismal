@@ -24,20 +24,21 @@ export const SITE = {
 export type NavLink = { label: string; href: string };
 
 export const NAV: readonly NavLink[] = [
-  { label: "What we refract", href: "#services" },
-  { label: "What we build", href: "#build" },
+  { label: "Services", href: "#services" },
   { label: "Work", href: "#work" },
   { label: "Method", href: "#method" },
-  { label: "How we work", href: "#engage" },
+  { label: "Pricing", href: "#engage" },
   { label: "FAQ", href: "#faq" },
 ];
 
 export const NAV_CTA: NavLink = { label: "Start a project →", href: "#contact" };
 
 export const FOOTER_NAV: readonly NavLink[] = [
-  { label: "What we refract", href: "#services" },
+  { label: "Services", href: "#services" },
+  { label: "Site kits", href: "#build" },
+  { label: "Work", href: "#work" },
   { label: "Method", href: "#method" },
-  { label: "How we work", href: "#engage" },
+  { label: "Pricing", href: "#engage" },
   { label: "FAQ", href: "#faq" },
   { label: "Contact", href: "#contact" },
 ];

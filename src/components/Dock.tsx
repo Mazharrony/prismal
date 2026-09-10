@@ -54,6 +54,7 @@ export default function Dock() {
         <a
           href={NAV_CTA.href}
           tabIndex={show ? 0 : -1}
+          data-magnetic=""
           className={cn(pillAccent, focus, "px-4 py-2 text-[13px]")}
         >
           {NAV_CTA.label}

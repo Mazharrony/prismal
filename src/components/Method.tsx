@@ -1,4 +1,5 @@
 import Band from "@/components/Band";
+import Headline from "@/components/Headline";
 import MethodSteps from "@/components/MethodSteps";
 import { METHOD_HEAD } from "@/content/site";
 import { eyebrow, h2 } from "@/lib/styles";
@@ -18,11 +19,7 @@ export default function Method() {
       />
       <div data-rv>
         <span className={cn(eyebrow, "text-accent")}>{METHOD_HEAD.eyebrow}</span>
-        <h2 className={cn(h2, "mt-4")}>
-          {t1}
-          <br />
-          {t2}
-        </h2>
+        <Headline className={cn(h2, "mt-4")} lines={[t1, t2]} />
       </div>
       <div className="mt-[clamp(40px,6vw,80px)]" data-rv style={{ ["--d" as string]: ".15s" }}>
         <MethodSteps />

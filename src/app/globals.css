@@ -92,6 +92,12 @@
   .wave--flip {
     transform: translateY(calc(-100% + 2px)) scaleX(-1);
   }
+  /* A wave sitting at the bottom of its own section (the hero). */
+  .wave--bottom {
+    top: auto;
+    bottom: -1px;
+    transform: none;
+  }
 
   /* ── Liquid glass (floating nav + dock) ─────────────────────────────── */
   .glass {
@@ -195,6 +201,69 @@
     animation-play-state: paused;
   }
 
+  /* ── Lenis smooth scroll ─────────────────────────────────────────────── */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  /* ── Header tuck-away ────────────────────────────────────────────────── */
+  header[data-header] {
+    transition:
+      translate 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+      opacity 0.35s;
+  }
+  header[data-header][data-hidden] {
+    translate: 0 -140%;
+    opacity: 0;
+  }
+
+  /* ── Word-by-word headline reveal ────────────────────────────────────── */
+  .hl .w {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+    padding-bottom: 0.08em;
+    margin-bottom: -0.08em;
+  }
+  .hl .w > span {
+    display: inline-block;
+  }
+  .has-js [data-rv="words"] {
+    opacity: 1;
+    translate: 0;
+  }
+  .has-js [data-rv="words"] .w > span,
+  .has-js [data-rv]:not([data-rv="words"]) .hl .w > span {
+    translate: 0 110%;
+    transition: translate 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) calc(var(--d, 0s) + var(--i, 0) * 55ms);
+  }
+  .has-js [data-rv="words"].is-in .w > span,
+  .has-js [data-rv].is-in .hl .w > span {
+    translate: 0;
+  }
+
+  /* ── Drag-to-scroll strips ───────────────────────────────────────────── */
+  .strip {
+    cursor: grab;
+  }
+  .strip.is-dragging {
+    cursor: grabbing;
+    user-select: none;
+  }
+  .strip.is-dragging > * {
+    pointer-events: none;
+  }
+
   /* ── Scroll reveal ───────────────────────────────────────────────────── */
   .has-js [data-rv] {
     opacity: 0;
@@ -225,7 +294,10 @@
   .cursor-tag > span {
     display: block;
     transform: translate(14px, 14px) scale(var(--s, 1));
-    transition: transform 0.2s;
+    transition:
+      transform 0.2s,
+      background-color 0.2s,
+      color 0.2s;
     border-radius: 999px;
     background: var(--color-accent);
     color: var(--color-ink);
@@ -234,6 +306,10 @@
     font-weight: 600;
     letter-spacing: 0.04em;
     padding: 4px 9px;
+  }
+  .cursor-tag.is-hot > span {
+    background: var(--color-paper);
+    color: var(--color-ink);
   }
 
   /* ── Work strip ──────────────────────────────────────────────────────── */
@@ -434,6 +510,10 @@
     .typing-dot,
     .glass::before {
       animation: none;
+    }
+    header[data-header][data-hidden] {
+      translate: 0;
+      opacity: 1;
     }
   }
 }

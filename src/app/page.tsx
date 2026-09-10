@@ -6,11 +6,14 @@ import Engage from "@/components/Engage";
 import Faq from "@/components/Faq";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
+import Interactions from "@/components/Interactions";
 import Marquee from "@/components/Marquee";
 import Method from "@/components/Method";
 import Results from "@/components/Results";
 import Reveal from "@/components/Reveal";
+import ScrollBar from "@/components/ScrollBar";
 import Services from "@/components/Services";
+import SmoothScroll from "@/components/SmoothScroll";
 import Splash from "@/components/Splash";
 import Work from "@/components/Work";
 
@@ -18,8 +21,11 @@ export default function Page() {
   return (
     <>
       <Splash />
+      <SmoothScroll />
       <Reveal />
+      <Interactions />
       <Cursor />
+      <ScrollBar />
       <Header />
       <Dock />
       <main id="top">

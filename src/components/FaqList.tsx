@@ -91,6 +91,7 @@ export default function FaqList() {
           <div className="border-t border-ink/10 px-4 pb-6 pt-3">
             <a
               href="#contact"
+              data-cursor="Ask"
               className={cn(
                 "flex items-center justify-between rounded-full border border-ink/15 bg-white py-2 pl-4 pr-1.5 font-sans text-[14px] text-muted-2 transition-colors hover:border-ink",
                 focus,

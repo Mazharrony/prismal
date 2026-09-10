@@ -3,9 +3,10 @@
 import { useEffect, useRef } from "react";
 
 /**
- * The small "You" tag that trails the pointer, in the spirit of crency's. The
- * native cursor stays; this only annotates it. Fine pointers only, off under
- * reduced motion, grows over interactive targets.
+ * The small tag that trails the pointer. It reads "You" by default and takes
+ * the label of any `[data-cursor]` target underneath ("View", "Build",
+ * "Send"…), growing slightly over anything interactive. The native cursor
+ * stays; this only annotates it. Fine pointers only, off under reduced motion.
  */
 export default function Cursor() {
   const ref = useRef<HTMLDivElement>(null);
@@ -18,6 +19,7 @@ export default function Cursor() {
       window.matchMedia("(prefers-reduced-motion: reduce)").matches
     )
       return;
+    const label = el.firstElementChild as HTMLElement;
 
     let x = -100, y = -100, tx = x, ty = y, raf = 0;
     const tick = () => {
@@ -30,8 +32,13 @@ export default function Cursor() {
       tx = e.clientX;
       ty = e.clientY;
       el.classList.add("is-on");
-      const hot = (e.target as Element | null)?.closest("a, button, [role=tab], input, textarea, label");
+      const t = e.target as Element | null;
+      const named = t?.closest<HTMLElement>("[data-cursor]");
+      const hot = named ?? t?.closest("a, button, [role=tab], [role=radio], input, textarea, label, .strip");
+      const text = named?.dataset.cursor || (t?.closest(".strip") ? "Drag" : "You");
+      if (label.textContent !== text) label.textContent = text;
       el.style.setProperty("--s", hot ? "1.15" : "1");
+      el.classList.toggle("is-hot", !!named);
       if (!raf) raf = requestAnimationFrame(tick);
     };
     const leave = () => el.classList.remove("is-on");

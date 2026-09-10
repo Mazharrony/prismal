@@ -1,4 +1,5 @@
 import Band from "@/components/Band";
+import Headline from "@/components/Headline";
 import { BUILD_HEAD, KITS, PILLARS } from "@/content/site";
 import { eyebrow, focus, h2 } from "@/lib/styles";
 import { cn } from "@/lib/utils";
@@ -10,7 +11,7 @@ export default function Build() {
       <div className="flex flex-wrap items-end justify-between gap-x-12 gap-y-6">
         <div data-rv>
           <span className={cn(eyebrow, "text-accent")}>{BUILD_HEAD.eyebrow}</span>
-          <h2 className={cn(h2, "mt-4")}>{BUILD_HEAD.title}</h2>
+          <Headline className={cn(h2, "mt-4")}>{BUILD_HEAD.title}</Headline>
         </div>
         <p className="m-0 max-w-[400px] text-[17px] leading-[1.55] text-muted" data-rv style={{ ["--d" as string]: ".1s" }}>
           {BUILD_HEAD.intro}
@@ -25,9 +26,11 @@ export default function Build() {
               key={p.title}
               href="#contact"
               data-rv
+              data-tilt="5"
+              data-cursor="Build"
               style={{ ["--d" as string]: `${i * 0.12}s` }}
               className={cn(
-                "group relative grid content-start gap-4 overflow-hidden rounded-[28px] p-8 transition-transform duration-300 hover:-translate-y-1.5",
+                "group relative grid content-start gap-4 overflow-hidden rounded-[28px] p-8",
                 ink ? "border border-white/10 bg-ink-2 text-paper" : "bg-paper text-ink",
                 focus,
               )}

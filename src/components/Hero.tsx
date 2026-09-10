@@ -1,3 +1,4 @@
+import Headline from "@/components/Headline";
 import Sticker from "@/components/Sticker";
 import Wave from "@/components/Wave";
 import { HERO, TRUST } from "@/content/site";
@@ -70,25 +71,34 @@ export default function Hero() {
             </g>
           </svg>
 
-          <h1 className="display relative m-0 text-[clamp(64px,12.5vw,196px)]">
-            <span className="block">{line1}</span>
-            <span className="block min-[861px]:ml-[10vw]">{line2}</span>
-          </h1>
+          <Headline
+            as="h1"
+            className="display relative m-0 text-[clamp(64px,12.5vw,196px)] [&>span:last-child]:min-[861px]:ml-[10vw]"
+            lines={[line1, line2]}
+          />
 
-          {/* Stickers: pinned around the headline on desktop. */}
+          {/* Stickers: pinned around the headline on desktop, drifting with the pointer. */}
           <div className="pointer-events-none absolute inset-0 max-[860px]:hidden" aria-hidden="true">
-            <Sticker tone="coral" shape="burst" rotate={-8} className="absolute -top-14 left-[38%] h-[118px] w-[118px]">
-              {TRUST[0]}
-            </Sticker>
-            <Sticker tone="accent" shape="pill" rotate={-6} delay={0.8} className="absolute right-[6%] top-[8%]">
-              {TRUST[1]}
-            </Sticker>
-            <Sticker tone="sky" shape="tag" rotate={4} delay={1.6} className="absolute bottom-[22%] left-[2%]">
-              {TRUST[2]}
-            </Sticker>
-            <Sticker tone="violet" shape="burst" rotate={10} delay={2.4} className="absolute -bottom-10 right-[12%] h-[124px] w-[124px]">
-              {TRUST[3]}
-            </Sticker>
+            <span data-parallax="" data-depth="28" className="absolute -top-14 left-[38%] block">
+              <Sticker tone="coral" shape="burst" rotate={-8} className="h-[118px] w-[118px]">
+                {TRUST[0]}
+              </Sticker>
+            </span>
+            <span data-parallax="" data-depth="-18" className="absolute right-[6%] top-[8%] block">
+              <Sticker tone="accent" shape="pill" rotate={-6} delay={0.8}>
+                {TRUST[1]}
+              </Sticker>
+            </span>
+            <span data-parallax="" data-depth="22" className="absolute bottom-[22%] left-[2%] block">
+              <Sticker tone="sky" shape="tag" rotate={4} delay={1.6}>
+                {TRUST[2]}
+              </Sticker>
+            </span>
+            <span data-parallax="" data-depth="-30" className="absolute -bottom-10 right-[12%] block">
+              <Sticker tone="violet" shape="burst" rotate={10} delay={2.4} className="h-[124px] w-[124px]">
+                {TRUST[3]}
+              </Sticker>
+            </span>
           </div>
         </div>
 
@@ -109,17 +119,17 @@ export default function Hero() {
             {HERO.intro}
           </p>
           <div className="flex flex-wrap gap-3 max-[520px]:w-full max-[520px]:grid" data-rv style={{ ["--d" as string]: ".1s" }}>
-            <a href={HERO.primaryCta.href} className={cn(pillAccent, focus, "px-7 py-4 text-[16px]")}>
+            <a href={HERO.primaryCta.href} data-magnetic="" className={cn(pillAccent, focus, "px-7 py-4 text-[16px]")}>
               {HERO.primaryCta.label}
             </a>
-            <a href={HERO.secondaryCta.href} className={cn(pillGhost, focus, "px-7 py-4 text-[16px]")}>
+            <a href={HERO.secondaryCta.href} data-magnetic="" className={cn(pillGhost, focus, "px-7 py-4 text-[16px]")}>
               {HERO.secondaryCta.label}
             </a>
           </div>
         </div>
       </div>
 
-      <Wave className="!top-auto !bottom-0 !translate-y-0 text-paper" />
+      <Wave className="wave--bottom text-paper" />
     </section>
   );
 }

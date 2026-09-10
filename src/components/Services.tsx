@@ -1,4 +1,5 @@
 import Band from "@/components/Band";
+import Headline from "@/components/Headline";
 import { SERVICES, SERVICES_HEAD } from "@/content/site";
 import { eyebrow, focus, h2 } from "@/lib/styles";
 import { cn } from "@/lib/utils";
@@ -21,7 +22,7 @@ export default function Services() {
       <div className="flex flex-wrap items-end justify-between gap-x-12 gap-y-6">
         <div data-rv>
           <span className={cn(eyebrow, "text-muted-2")}>{SERVICES_HEAD.eyebrow}</span>
-          <h2 className={cn(h2, "mt-4")}>{SERVICES_HEAD.title}</h2>
+          <Headline className={cn(h2, "mt-4")}>{SERVICES_HEAD.title}</Headline>
         </div>
         <p className="m-0 max-w-[380px] text-[17px] leading-[1.55] text-muted-2" data-rv style={{ ["--d" as string]: ".1s" }}>
           {SERVICES_HEAD.intro}
@@ -34,9 +35,11 @@ export default function Services() {
             key={s.num}
             href="#contact"
             data-rv
+            data-tilt="7"
+            data-cursor="Build"
             style={{ ["--d" as string]: `${i * 0.12}s` }}
             className={cn(
-              "group relative flex min-h-[440px] flex-col overflow-hidden rounded-[32px] p-8 transition-transform duration-300 hover:-translate-y-2 hover:-rotate-1 max-[1024px]:min-h-0",
+              "group relative flex min-h-[440px] flex-col overflow-hidden rounded-[32px] p-8 max-[1024px]:min-h-0",
               CARD[i],
               focus,
             )}

@@ -146,6 +146,8 @@ function Form({ onReset }: { onReset: () => void }) {
         type="submit"
         disabled={pending}
         aria-busy={pending}
+        data-magnetic=""
+        data-cursor="Send"
         className={cn(
           "group flex cursor-pointer items-center justify-between rounded-full border-0 py-5 pl-7 pr-3 font-brand text-[18px] font-semibold transition-colors",
           pending ? "bg-muted-2 text-paper" : "bg-accent text-ink hover:bg-paper",

@@ -1,4 +1,5 @@
 import Band from "@/components/Band";
+import Headline from "@/components/Headline";
 import { RESULTS_HEAD, STATS } from "@/content/site";
 import { eyebrow, h2 } from "@/lib/styles";
 import { cn } from "@/lib/utils";
@@ -9,7 +10,7 @@ export default function Results() {
     <Band id="results" tone="ink">
       <div data-rv>
         <span className={cn(eyebrow, "text-accent")}>{RESULTS_HEAD.eyebrow}</span>
-        <h2 className={cn(h2, "mt-4")}>{RESULTS_HEAD.title}</h2>
+        <Headline className={cn(h2, "mt-4")}>{RESULTS_HEAD.title}</Headline>
       </div>
       <div className="mt-[clamp(32px,5vw,64px)] grid grid-cols-4 gap-x-8 max-[1024px]:grid-cols-2 max-[520px]:grid-cols-1">
         {STATS.map((s, i) => (

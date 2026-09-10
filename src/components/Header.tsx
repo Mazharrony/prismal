@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 /** Floating pill nav, centred at the top of the viewport. */
 export default function Header() {
   return (
-    <header className="pointer-events-none fixed inset-x-0 top-4 z-50 flex justify-center px-4">
+    <header data-header="" className="pointer-events-none fixed inset-x-0 top-4 z-50 flex justify-center px-4">
       <div className="glass pointer-events-auto flex items-center gap-1 rounded-full p-1.5 pl-4">
         <a href="#top" className={cn("mr-2 flex items-center gap-2.5 rounded-full", focus)}>
           <Image
@@ -38,6 +38,7 @@ export default function Header() {
         </nav>
         <a
           href={NAV_CTA.href}
+          data-magnetic=""
           className={cn(pillAccent, focus, "ml-1 px-4 py-2 text-[13px] max-[860px]:hidden")}
         >
           {NAV_CTA.label}
