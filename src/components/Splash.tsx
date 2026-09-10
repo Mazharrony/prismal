@@ -19,6 +19,10 @@ export default function Splash() {
     const el = root.current;
     if (!el) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    // Arm the hero beam while the splash still covers it: line hidden, nodes
+    // collapsed, ready to be drawn the moment the splash lifts.
+    const html = document.documentElement;
+    html.classList.add("hero-armed");
     let done = false;
     let fade: number | undefined;
     const hide = () => {
@@ -27,11 +31,10 @@ export default function Splash() {
       el.style.transition = "opacity .3s ease-in";
       el.style.opacity = "0";
       fade = window.setTimeout(() => setGone(true), 320);
-      // Release the hero beam now rather than at its 2.05s fallback, so an
-      // early skip isn't followed by a dead wait.
-      document.documentElement.classList.add("hero-go");
+      // Stroke (CSS) and nib (SMIL) start on the same frame.
+      html.classList.add("hero-go");
       document
-        .querySelectorAll<SVGAnimateMotionElement>(".hero-head animateMotion")
+        .querySelectorAll<SVGAnimateMotionElement>(".hero-pen animateMotion")
         .forEach((a) => a.beginElement());
     };
     const skip = (e: Event) => {

@@ -194,38 +194,50 @@
   }
 
   /* ── Hero beam ───────────────────────────────────────────────────────── */
-  /* `--go` is when the entrance starts: 2.05s (after the splash) by default,
-     0s once Splash marks the document `hero-go`. Every part keys off it. */
+  /* Three states, all set on <html> by Splash so the stroke, the nodes and
+     the nib start on the same frame:
+       (none)      no JS / reduced motion — the finished drawing.
+       .hero-armed splash is up — line hidden, nodes collapsed.
+       .hero-go    splash lifted — draw for `--pen` seconds (the nib's SMIL
+                   `dur` must match) with nodes popping as it passes.
+     `--sy` is the hero's scroll offset (Interactions) for a light parallax. */
   .hero-beam {
-    --go: 2.05s;
-    --whip: 1.4s;
-  }
-  .hero-go .hero-beam {
-    --go: 0s;
+    --pen: 5s;
+    translate: 0 calc(var(--sy, 0) * -0.16px);
   }
   .hero-beam-line,
   .hero-beam-glow {
     stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+  }
+  .hero-armed .hero-beam-line,
+  .hero-armed .hero-beam-glow {
     stroke-dashoffset: 1;
-    animation: draw var(--whip) cubic-bezier(0.7, 0, 0.2, 1) var(--go) forwards;
+  }
+  .hero-go .hero-beam-line,
+  .hero-go .hero-beam-glow {
+    /* Linear on purpose: the nib's motion is paced, so the drawn stroke and
+       the nib stay together and the node delays line up. */
+    animation: draw var(--pen) linear forwards;
   }
   .hero-beam-glow {
-    opacity: 0.55;
+    opacity: 0.4;
   }
   .hero-nodes circle {
+    r: 6;
+  }
+  .hero-armed .hero-nodes circle {
+    r: 0;
+  }
+  .hero-go .hero-nodes circle {
     animation: node-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-    animation-delay: calc(var(--go) + var(--t) * var(--whip));
+    animation-delay: calc(var(--t) * var(--pen));
   }
-  .hero-head {
+  .hero-pen {
     opacity: 0;
-    animation: head var(--whip) linear var(--go) forwards;
   }
-  /* Patrol dots sit at the SVG origin until their motion begins; keep them
-     invisible until then (timings match the animateMotion `begin`s). */
-  .hero-dots circle {
-    opacity: 0;
-    animation: fade-in 0.3s ease-out forwards;
-    animation-delay: calc(3.6s + var(--i, 0) * 2.2s);
+  .hero-go .hero-pen {
+    animation: pen calc(var(--pen) + 0.6s) linear forwards;
   }
 
   /* ── Marquee ─────────────────────────────────────────────────────────── */
@@ -547,9 +559,11 @@
       animation: none;
       r: 6;
     }
-    .hero-dots,
-    .hero-head {
+    .hero-pen {
       display: none;
+    }
+    .hero-beam {
+      translate: 0;
     }
     .has-js [data-rv] {
       opacity: 1;
@@ -598,11 +612,6 @@
     stroke-dashoffset: 0;
   }
 }
-@keyframes fade-in {
-  to {
-    opacity: 1;
-  }
-}
 @keyframes node-pop {
   0% {
     r: 0;
@@ -614,11 +623,12 @@
     r: 6;
   }
 }
-@keyframes head {
+/* The nib is visible for the whole drawing, then lifts off. */
+@keyframes pen {
   0% {
     opacity: 1;
   }
-  85% {
+  89% {
     opacity: 1;
   }
   100% {

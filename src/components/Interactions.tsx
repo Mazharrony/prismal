@@ -27,6 +27,7 @@ export default function Interactions() {
     /* ── scroll: header + progress ────────────────────────────────────── */
     const header = document.querySelector<HTMLElement>("header[data-header]");
     const bar = document.getElementById("scroll-progress");
+    const heroEl = document.getElementById("hero");
     let last = window.scrollY;
     let raf = 0;
     const onScroll = () => {
@@ -34,6 +35,8 @@ export default function Interactions() {
       raf = requestAnimationFrame(() => {
         raf = 0;
         const y = window.scrollY;
+        // Scroll offset for the hero beam's parallax, capped at one screen.
+        if (heroEl && !reduced) heroEl.style.setProperty("--sy", String(Math.min(y, 1200)));
         if (header && !reduced) {
           const down = y > last + 2 && y > 160;
           const up = y < last - 2 || y < 80;

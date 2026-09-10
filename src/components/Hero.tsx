@@ -8,8 +8,15 @@ import { eyebrow, focus, pillAccent, pillGhost } from "@/lib/styles";
 import { cn } from "@/lib/utils";
 
 const RAY_FILL = ["#f9d20f", "#f3efe6", "#98a2ae"];
-/** The beam's spline through the headline, in the 1440×620 hero viewBox. */
-const BEAM = "M-60 300 C 160 120, 360 520, 600 360 S 920 60, 1120 300 S 1420 560, 1520 340";
+/**
+ * The beam's flourish through the headline in the 1440×620 hero viewBox: in
+ * from the left under "NOISE IN.", up across the gap, a loop around the end of
+ * "SPECTRUM OUT.", and out to the right.
+ */
+const BEAM =
+  "M-80 360 C 120 250, 300 470, 520 330 S 860 120, 1010 250 C 1120 340, 1030 470, 900 430 C 770 390, 820 230, 1040 200 C 1230 175, 1360 300, 1520 250";
+/** Where the hollow nodes sit, as fractions of the path length. */
+const NODES = [0.1, 0.32, 0.5, 0.66, 0.84];
 
 /**
  * The opening screen: the beam draws itself through the headline while the
@@ -46,69 +53,73 @@ export default function Hero() {
 
         <div className="relative mt-8">
           {/* The beam: drawn once on load, dots run along it. */}
-          {/* The beam whips across the headline the moment the splash lifts
-              (`html.hero-go`, set by Splash; the 2.05s fallback covers no-JS):
-              a glow and the line draw together, a bright head leads them, and
-              the nodes pop as it passes. Then the dots patrol the path. */}
-          <svg
-            aria-hidden="true"
-            className="hero-beam pointer-events-none absolute -inset-x-10 -top-16 -bottom-10 h-[calc(100%+104px)] w-[calc(100%+80px)] overflow-visible"
-            viewBox="0 0 1440 620"
-            preserveAspectRatio="none"
+          {/* The beam is drawn by a pen nib over ~5s, starting the moment the
+              splash lifts: Splash arms it (`html.hero-armed`) and then fires
+              `html.hero-go` and the nib's motion in the same call. Hollow
+              nodes pop as the nib passes. Without JS the finished line shows.
+              The whole drawing drifts with the pointer and eases up on scroll. */}
+          <div
+            data-parallax=""
+            data-depth="10"
+            className="pointer-events-none absolute -inset-x-10 -top-16 -bottom-10"
           >
-            <defs>
-              <filter id="beam-blur" x="-10%" y="-40%" width="120%" height="180%">
-                <feGaussianBlur stdDeviation="7" />
-              </filter>
-            </defs>
-            <path
-              className="hero-beam-glow"
-              d={BEAM}
-              fill="none"
-              stroke="#f9d20f"
-              strokeWidth="14"
-              strokeLinecap="round"
-              pathLength="1"
-              filter="url(#beam-blur)"
-              vectorEffect="non-scaling-stroke"
-            />
-            <path
-              className="hero-beam-line"
-              d={BEAM}
-              fill="none"
-              stroke="#f9d20f"
-              strokeWidth="4"
-              strokeLinecap="round"
-              pathLength="1"
-              vectorEffect="non-scaling-stroke"
-            />
-            <g className="hero-nodes" fill="#f9d20f" stroke="#0b0f14" strokeWidth="3">
-              {[0.14, 0.4, 0.62, 0.86].map((t) => (
-                <circle key={t} r="0" style={{ "--t": t } as CSSProperties}>
-                  <animateMotion path={BEAM} keyPoints={`${t};${t}`} keyTimes="0;1" calcMode="linear" dur="0.01s" fill="freeze" />
-                </circle>
-              ))}
-            </g>
-            <circle className="hero-head" r="8" fill="#f3efe6">
-              <animateMotion
-                path={BEAM}
-                dur="1.4s"
-                begin="2.05s; indefinite"
-                restart="never"
-                fill="freeze"
-                calcMode="spline"
-                keyTimes="0;1"
-                keySplines=".7 0 .2 1"
+            <svg
+              aria-hidden="true"
+              className="hero-beam h-full w-full overflow-visible"
+              viewBox="0 0 1440 620"
+              preserveAspectRatio="none"
+            >
+              <defs>
+                <filter id="beam-blur" x="-10%" y="-40%" width="120%" height="180%">
+                  <feGaussianBlur stdDeviation="6" />
+                </filter>
+              </defs>
+              <path
+                className="hero-beam-glow"
+                d={BEAM}
+                fill="none"
+                stroke="#f9d20f"
+                strokeWidth="10"
+                strokeLinecap="round"
+                pathLength="1"
+                filter="url(#beam-blur)"
+                vectorEffect="non-scaling-stroke"
               />
-            </circle>
-            <g className="hero-dots" fill="#f9d20f">
-              {[0, 1, 2].map((i) => (
-                <circle key={i} r="5" style={{ "--i": i } as CSSProperties}>
-                  <animateMotion dur="7s" begin={`${3.6 + i * 2.2}s`} repeatCount="indefinite" path={BEAM} />
-                </circle>
-              ))}
-            </g>
-          </svg>
+              <path
+                className="hero-beam-line"
+                d={BEAM}
+                fill="none"
+                stroke="#f9d20f"
+                strokeWidth="3.5"
+                strokeLinecap="round"
+                pathLength="1"
+                vectorEffect="non-scaling-stroke"
+              />
+              <g className="hero-nodes" fill="#0b0f14" stroke="#f9d20f" strokeWidth="3" vectorEffect="non-scaling-stroke">
+                {NODES.map((t) => (
+                  <circle key={t} r="0" style={{ "--t": t } as CSSProperties}>
+                    <animateMotion path={BEAM} keyPoints={`${t};${t}`} keyTimes="0;1" calcMode="linear" dur="0.01s" fill="freeze" />
+                  </circle>
+                ))}
+              </g>
+              {/* The nib: tip at the origin, body trailing along −x, so
+                  rotate="auto" keeps it pointing along the stroke. */}
+              <g className="hero-pen">
+                <animateMotion
+                  path={BEAM}
+                  dur="5s"
+                  begin="indefinite"
+                  restart="never"
+                  fill="freeze"
+                  rotate="auto"
+                />
+                <path d="M0 0 L-26 -9 L-40 -6 L-40 6 L-26 9 Z" fill="#f3efe6" stroke="#0b0f14" strokeWidth="2" strokeLinejoin="round" />
+                <path d="M-40 -6 L-82 -5 L-82 5 L-40 6 Z" fill="#f9d20f" stroke="#0b0f14" strokeWidth="2" strokeLinejoin="round" />
+                <circle cx="-22" cy="0" r="2.2" fill="#0b0f14" />
+                <path d="M-22 0 L-4 0" stroke="#0b0f14" strokeWidth="1.5" />
+              </g>
+            </svg>
+          </div>
 
           <Headline
             as="h1"
