@@ -27,6 +27,12 @@ export default function Splash() {
       el.style.transition = "opacity .3s ease-in";
       el.style.opacity = "0";
       fade = window.setTimeout(() => setGone(true), 320);
+      // Release the hero beam now rather than at its 2.05s fallback, so an
+      // early skip isn't followed by a dead wait.
+      document.documentElement.classList.add("hero-go");
+      document
+        .querySelectorAll<SVGAnimateMotionElement>(".hero-head animateMotion")
+        .forEach((a) => a.beginElement());
     };
     const skip = (e: Event) => {
       if (e.type !== "keydown") return hide();

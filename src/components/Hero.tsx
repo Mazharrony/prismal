@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import Headline from "@/components/Headline";
 import Sticker from "@/components/Sticker";
 import Wave from "@/components/Wave";
@@ -7,6 +8,8 @@ import { eyebrow, focus, pillAccent, pillGhost } from "@/lib/styles";
 import { cn } from "@/lib/utils";
 
 const RAY_FILL = ["#f9d20f", "#f3efe6", "#98a2ae"];
+/** The beam's spline through the headline, in the 1440×620 hero viewBox. */
+const BEAM = "M-60 300 C 160 120, 360 520, 600 360 S 920 60, 1120 300 S 1420 560, 1520 340";
 
 /**
  * The opening screen: the beam draws itself through the headline while the
@@ -43,29 +46,65 @@ export default function Hero() {
 
         <div className="relative mt-8">
           {/* The beam: drawn once on load, dots run along it. */}
+          {/* The beam whips across the headline the moment the splash lifts
+              (`html.hero-go`, set by Splash; the 2.05s fallback covers no-JS):
+              a glow and the line draw together, a bright head leads them, and
+              the nodes pop as it passes. Then the dots patrol the path. */}
           <svg
             aria-hidden="true"
             className="hero-beam pointer-events-none absolute -inset-x-10 -top-16 -bottom-10 h-[calc(100%+104px)] w-[calc(100%+80px)] overflow-visible"
             viewBox="0 0 1440 620"
             preserveAspectRatio="none"
           >
+            <defs>
+              <filter id="beam-blur" x="-10%" y="-40%" width="120%" height="180%">
+                <feGaussianBlur stdDeviation="7" />
+              </filter>
+            </defs>
             <path
-              d="M-60 300 C 160 120, 360 520, 600 360 S 920 60, 1120 300 S 1420 560, 1520 340"
+              className="hero-beam-glow"
+              d={BEAM}
               fill="none"
               stroke="#f9d20f"
-              strokeWidth="3"
+              strokeWidth="14"
+              strokeLinecap="round"
+              pathLength="1"
+              filter="url(#beam-blur)"
+              vectorEffect="non-scaling-stroke"
+            />
+            <path
+              className="hero-beam-line"
+              d={BEAM}
+              fill="none"
+              stroke="#f9d20f"
+              strokeWidth="4"
+              strokeLinecap="round"
               pathLength="1"
               vectorEffect="non-scaling-stroke"
             />
+            <g className="hero-nodes" fill="#f9d20f" stroke="#0b0f14" strokeWidth="3">
+              {[0.14, 0.4, 0.62, 0.86].map((t) => (
+                <circle key={t} r="0" style={{ "--t": t } as CSSProperties}>
+                  <animateMotion path={BEAM} keyPoints={`${t};${t}`} keyTimes="0;1" calcMode="linear" dur="0.01s" fill="freeze" />
+                </circle>
+              ))}
+            </g>
+            <circle className="hero-head" r="8" fill="#f3efe6">
+              <animateMotion
+                path={BEAM}
+                dur="1.4s"
+                begin="2.05s; indefinite"
+                restart="never"
+                fill="freeze"
+                calcMode="spline"
+                keyTimes="0;1"
+                keySplines=".7 0 .2 1"
+              />
+            </circle>
             <g className="hero-dots" fill="#f9d20f">
               {[0, 1, 2].map((i) => (
-                <circle key={i} r="5">
-                  <animateMotion
-                    dur="7s"
-                    begin={`${1.2 + i * 2.2}s`}
-                    repeatCount="indefinite"
-                    path="M-60 300 C 160 120, 360 520, 600 360 S 920 60, 1120 300 S 1420 560, 1520 340"
-                  />
+                <circle key={i} r="5" style={{ "--i": i } as CSSProperties}>
+                  <animateMotion dur="7s" begin={`${3.6 + i * 2.2}s`} repeatCount="indefinite" path={BEAM} />
                 </circle>
               ))}
             </g>
