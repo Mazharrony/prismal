@@ -29,7 +29,7 @@ export default function FaqList() {
           <span className="font-brand text-[15px] font-semibold tracking-[.2em] text-ink">{SITE.name}</span>
           <span className="flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[.16em] text-muted-2">
             <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-[#22c55e]" />
-            Online · replies within 48h
+            Online · replies within 1 hour
           </span>
         </div>
       </div>

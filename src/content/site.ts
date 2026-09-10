@@ -74,7 +74,7 @@ export type RayTone = (typeof HERO.rays)[number]["tone"];
 /** Hero trust stickers. Only claims the site can back up. */
 export const TRUST = [
   "12 live builds",
-  "Reply within 48h",
+  "Reply within 1 hour",
   "Fixed-price sprint",
   "You own the code",
 ] as const;
@@ -486,7 +486,7 @@ export const CONTACT = {
     email: "Email",
     whatsapp: "WhatsApp",
     based: "Based in",
-    hours: "We reply within 48 hours",
+    hours: "We reply within 1 hour",
   },
   form: {
     pickLabel: "What do you need?",
