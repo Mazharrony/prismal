@@ -481,22 +481,38 @@ export const CONTACT = {
   intro:
     "Tell us where the noise is. Within 48 hours we come back with the first rays — a concrete read on what to build, what to automate, and what to delete.",
   note: "Last stop — say hello ↓",
-  tabs: ["Brief", "Email", "WhatsApp"],
+  /** The contact rail beside the headline. */
+  rail: {
+    email: "Email",
+    whatsapp: "WhatsApp",
+    based: "Based in",
+    hours: "We reply within 48 hours",
+  },
   form: {
-    pickLabel: "WHAT DO YOU NEED?",
+    pickLabel: "What do you need?",
     picks: [
       { label: "Website", prefill: "We need a website that " },
       { label: "Software", prefill: "We need software that " },
       { label: "AI & Automation", prefill: "We want to automate " },
       { label: "Not sure yet", prefill: "The noise we have is " },
     ],
-    name: { label: "YOUR NAME", placeholder: "Alex" },
-    company: { label: "COMPANY", placeholder: "Business name" },
-    email: { label: "YOUR EMAIL", placeholder: "you@company.com" },
-    brief: { label: "WHAT DO YOU NEED BUILT?", placeholder: "A short note…" },
-    submit: "Send the brief →",
+    channelLabel: "How should we reply?",
+    channels: [
+      { value: "email", label: "Email" },
+      { value: "whatsapp", label: "WhatsApp" },
+      { value: "call", label: "Call" },
+    ],
+    name: "Your name",
+    company: "Company",
+    email: "Email address",
+    phone: "Phone number",
+    brief: "What needs building?",
+    submit: "Send the brief",
     sending: "Sending…",
-    sent: "Brief received → we reply within 48 hours",
-    again: "Send another",
+    sentTitle: "Received.",
+    sent: "We read every brief ourselves and come back within 48 hours with a first read: what to build, what to automate, what to delete.",
+    again: "Send another brief",
   },
 } as const;
+
+export type Channel = (typeof CONTACT.form.channels)[number]["value"];

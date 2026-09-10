@@ -2,21 +2,22 @@
 
 import { useActionState, useId, useRef, useState } from "react";
 import { sendBrief } from "@/app/actions/send-brief";
-import { Input } from "@/components/ui/Input";
-import { Textarea } from "@/components/ui/Textarea";
-import { CONTACT, SITE } from "@/content/site";
+import { Field, TextField } from "@/components/ui/Field";
+import { CONTACT, SITE, type Channel } from "@/content/site";
 import { initialBriefState, type BriefField } from "@/lib/brief";
 import { focus } from "@/lib/styles";
 import { cn } from "@/lib/utils";
 
-const labelClass = "grid gap-1.5 text-[11px] font-bold uppercase tracking-[.14em] text-muted-2";
-const errorClass = "text-[12px] font-medium normal-case tracking-normal text-destructive";
+const chip =
+  "cursor-pointer rounded-full border px-4 py-2 font-brand text-[14px] font-semibold transition-colors duration-150";
+const chipOff = "border-white/20 bg-transparent text-paper/85 hover:border-paper";
+const chipOn = "border-accent bg-accent text-ink";
+const groupLabel = "mb-3 block font-mono text-[11px] uppercase tracking-[.2em] text-muted";
 
 /**
- * The Brief tab. The quick-pick chips prefill the textarea and travel with the
- * email as `service`; the pill shows pending / error states and the form swaps
- * for a confirmation once the email is away. `key` remounts a fresh form for
- * "Send another".
+ * The brief, as a letter: underline fields, service chips, a reply-channel
+ * toggle that asks for a number only when it needs one, and one send button.
+ * `key` remounts a fresh form for "Send another".
  */
 export default function BriefForm() {
   const [round, setRound] = useState(0);
@@ -25,22 +26,25 @@ export default function BriefForm() {
 
 function Form({ onReset }: { onReset: () => void }) {
   const [state, action, pending] = useActionState(sendBrief, initialBriefState);
-  const [pick, setPick] = useState<string>(state.values?.service ?? "");
+  const [pick, setPick] = useState(state.values?.service ?? "");
+  const [channel, setChannel] = useState<Channel>(
+    (state.values?.channel as Channel) || "email",
+  );
   const brief = useRef<HTMLTextAreaElement>(null);
   const uid = useId();
   const id = (f: BriefField) => `${uid}-${f}`;
   const err = (f: BriefField) => state.fieldErrors?.[f]?.[0];
+  const value = (f: BriefField) => state.values?.[f] ?? "";
 
   if (state.status === "sent") {
     return (
-      <div className="grid gap-3" role="status" aria-live="polite">
-        <p className="m-0 flex items-center justify-center rounded-full bg-accent p-4 text-center font-brand text-[16px] font-semibold text-ink">
-          {CONTACT.form.sent}
-        </p>
+      <div className="grid gap-5" role="status" aria-live="polite">
+        <p className="display m-0 text-[clamp(64px,8vw,120px)] text-accent">{CONTACT.form.sentTitle}</p>
+        <p className="m-0 max-w-[46ch] text-[17px] leading-[1.6] text-paper/85">{CONTACT.form.sent}</p>
         <button
           type="button"
           onClick={onReset}
-          className={cn("cursor-pointer border-0 bg-transparent text-[13px] font-semibold text-muted-2 underline-offset-4 hover:underline", focus)}
+          className={cn("w-fit cursor-pointer border-0 bg-transparent p-0 text-[14px] font-semibold text-muted underline-offset-4 hover:text-paper hover:underline", focus)}
         >
           {CONTACT.form.again}
         </button>
@@ -59,71 +63,69 @@ function Form({ onReset }: { onReset: () => void }) {
     }
   };
 
-  const error = (f: BriefField) =>
-    err(f) && (
-      <span id={`${id(f)}-error`} className={errorClass} role="alert">
-        {err(f)}
-      </span>
-    );
-  const a11y = (f: BriefField) => ({
-    id: id(f),
-    name: f,
-    "aria-invalid": err(f) ? true : undefined,
-    "aria-describedby": err(f) ? `${id(f)}-error` : undefined,
-    defaultValue: state.values?.[f] ?? "",
-  });
-
   return (
-    <form action={action} noValidate className="grid gap-4">
+    <form action={action} noValidate className="grid gap-9">
       <fieldset className="m-0 border-0 p-0">
-        <legend className="mb-2 text-[11px] font-bold uppercase tracking-[.14em] text-muted-2">
-          {CONTACT.form.pickLabel}
-        </legend>
+        <legend className={groupLabel}>{CONTACT.form.pickLabel}</legend>
         <div className="flex flex-wrap gap-2">
-          {CONTACT.form.picks.map((c) => {
-            const on = pick === c.label;
-            return (
-              <button
-                key={c.label}
-                type="button"
-                aria-pressed={on}
-                onClick={() => choose(c)}
-                className={cn(
-                  "cursor-pointer rounded-full border px-4 py-2 font-brand text-[14px] font-semibold transition-colors",
-                  on ? "border-ink bg-ink text-accent" : "border-ink/20 bg-transparent text-ink hover:border-ink",
-                  focus,
-                )}
-              >
-                {c.label}
-              </button>
-            );
-          })}
+          {CONTACT.form.picks.map((c) => (
+            <button
+              key={c.label}
+              type="button"
+              aria-pressed={pick === c.label}
+              onClick={() => choose(c)}
+              className={cn(chip, pick === c.label ? chipOn : chipOff, focus)}
+            >
+              {c.label}
+            </button>
+          ))}
         </div>
         <input type="hidden" name="service" value={pick} />
       </fieldset>
 
-      <div className="grid grid-cols-2 gap-3 max-[420px]:grid-cols-1">
-        <label htmlFor={id("name")} className={labelClass}>
-          <span>{CONTACT.form.name.label}</span>
-          <Input {...a11y("name")} placeholder={CONTACT.form.name.placeholder} autoComplete="name" />
-          {error("name")}
-        </label>
-        <label htmlFor={id("company")} className={labelClass}>
-          <span>{CONTACT.form.company.label}</span>
-          <Input {...a11y("company")} placeholder={CONTACT.form.company.placeholder} autoComplete="organization" />
-          {error("company")}
-        </label>
+      <div className="grid gap-7">
+        <div className="grid grid-cols-2 gap-x-8 gap-y-7 max-[520px]:grid-cols-1">
+          <Field id={id("name")} name="name" label={CONTACT.form.name} autoComplete="name" defaultValue={value("name")} error={err("name")} />
+          <Field id={id("company")} name="company" label={CONTACT.form.company} autoComplete="organization" defaultValue={value("company")} error={err("company")} />
+        </div>
+        <Field id={id("email")} name="email" type="email" inputMode="email" label={CONTACT.form.email} autoComplete="email" defaultValue={value("email")} error={err("email")} />
+        <TextField id={id("brief")} name="brief" ref={brief} label={CONTACT.form.brief} defaultValue={value("brief")} error={err("brief")} />
       </div>
-      <label htmlFor={id("email")} className={labelClass}>
-        <span>{CONTACT.form.email.label}</span>
-        <Input {...a11y("email")} type="email" inputMode="email" placeholder={CONTACT.form.email.placeholder} autoComplete="email" />
-        {error("email")}
-      </label>
-      <label htmlFor={id("brief")} className={labelClass}>
-        <span>{CONTACT.form.brief.label}</span>
-        <Textarea {...a11y("brief")} ref={brief} placeholder={CONTACT.form.brief.placeholder} />
-        {error("brief")}
-      </label>
+
+      <fieldset className="m-0 border-0 p-0">
+        <legend className={groupLabel}>{CONTACT.form.channelLabel}</legend>
+        <div className="flex flex-wrap gap-2" role="radiogroup" aria-label={CONTACT.form.channelLabel}>
+          {CONTACT.form.channels.map((c) => (
+            <button
+              key={c.value}
+              type="button"
+              role="radio"
+              aria-checked={channel === c.value}
+              onClick={() => setChannel(c.value)}
+              className={cn(chip, channel === c.value ? chipOn : chipOff, focus)}
+            >
+              {c.label}
+            </button>
+          ))}
+        </div>
+        <input type="hidden" name="channel" value={channel} />
+        <div className={cn("grid transition-[grid-template-rows] duration-300", channel === "email" ? "grid-rows-[0fr]" : "grid-rows-[1fr]")}>
+          <div className="min-h-0 overflow-hidden">
+            <Field
+              id={id("phone")}
+              name="phone"
+              type="tel"
+              inputMode="tel"
+              label={CONTACT.form.phone}
+              autoComplete="tel"
+              defaultValue={value("phone")}
+              error={err("phone")}
+              className="mt-6"
+              tabIndex={channel === "email" ? -1 : 0}
+            />
+          </div>
+        </div>
+      </fieldset>
 
       {/* Honeypot: hidden from people, filled by bots. */}
       <label className="sr-only" aria-hidden="true">
@@ -132,7 +134,7 @@ function Form({ onReset }: { onReset: () => void }) {
       </label>
 
       {state.status === "error" && state.message && (
-        <p className="m-0 text-[13px] leading-[1.5] text-destructive" role="alert">
+        <p className="m-0 text-[14px] leading-[1.5] text-coral" role="alert">
           {state.message}{" "}
           <a href={`mailto:${SITE.email}`} className="underline">
             {SITE.email}
@@ -145,12 +147,15 @@ function Form({ onReset }: { onReset: () => void }) {
         disabled={pending}
         aria-busy={pending}
         className={cn(
-          "flex cursor-pointer items-center justify-center gap-2 rounded-full border-0 p-4 font-brand text-[16px] font-semibold transition-colors",
-          pending ? "bg-muted-2 text-paper" : "bg-ink text-accent hover:bg-ink-3",
+          "group flex cursor-pointer items-center justify-between rounded-full border-0 py-5 pl-7 pr-3 font-brand text-[18px] font-semibold transition-colors",
+          pending ? "bg-muted-2 text-paper" : "bg-accent text-ink hover:bg-paper",
           focus,
         )}
       >
         {pending ? CONTACT.form.sending : CONTACT.form.submit}
+        <span aria-hidden="true" className="grid h-11 w-11 place-items-center rounded-full bg-ink text-accent transition-transform group-hover:translate-x-1">
+          →
+        </span>
       </button>
     </form>
   );

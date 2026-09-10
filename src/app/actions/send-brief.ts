@@ -5,26 +5,50 @@ import { z } from "zod";
 import { SITE } from "@/content/site";
 import type { BriefField, BriefState } from "@/lib/brief";
 
-const schema = z.object({
-  name: z
-    .string()
-    .trim()
-    .min(2, "Tell us your name.")
-    .max(80, "Keep it under 80 characters."),
-  company: z.string().trim().max(120, "Keep it under 120 characters.").default(""),
-  email: z.email("Enter an email we can reply to."),
-  brief: z
-    .string()
-    .trim()
-    .min(10, "A sentence or two is enough — what needs building?")
-    .max(2000, "Keep it under 2000 characters."),
-  /** Quick-pick chip, if one was chosen. */
-  service: z.string().trim().max(40).default(""),
-  // Honeypot: a hidden field a person never sees. Anything in it is a bot.
-  website: z.string().default(""),
-});
+const schema = z
+  .object({
+    name: z
+      .string()
+      .trim()
+      .min(2, "Tell us your name.")
+      .max(80, "Keep it under 80 characters."),
+    company: z.string().trim().max(120, "Keep it under 120 characters.").default(""),
+    email: z.email("Enter an email we can reply to."),
+    phone: z.string().trim().max(32, "Keep it under 32 characters.").default(""),
+    brief: z
+      .string()
+      .trim()
+      .min(10, "A sentence or two is enough — what needs building?")
+      .max(2000, "Keep it under 2000 characters."),
+    /** Quick-pick chip, if one was chosen. */
+    service: z.string().trim().max(40).default(""),
+    channel: z.enum(["email", "whatsapp", "call"]).catch("email"),
+    // Honeypot: a hidden field a person never sees. Anything in it is a bot.
+    website: z.string().default(""),
+  })
+  .superRefine((v, ctx) => {
+    if (v.channel !== "email" && !/^\+?[\d\s().-]{7,}$/.test(v.phone)) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["phone"],
+        message:
+          v.channel === "whatsapp"
+            ? "Add the number we should WhatsApp."
+            : "Add the number we should call.",
+      });
+    }
+  });
 
-const FIELDS: readonly BriefField[] = ["name", "company", "email", "brief", "service"];
+const FIELDS: readonly BriefField[] = [
+  "name",
+  "company",
+  "email",
+  "phone",
+  "brief",
+  "service",
+  "channel",
+];
+const CHANNEL_LABEL = { email: "Email", whatsapp: "WhatsApp", call: "Call" } as const;
 const SEND_FAILED = "Couldn't send just now — email us directly at";
 
 export async function sendBrief(
@@ -48,7 +72,7 @@ export async function sendBrief(
     return { status: "sent" };
   }
 
-  const { name, company, email, brief, service } = parsed.data;
+  const { name, company, email, phone, brief, service, channel } = parsed.data;
   const to = process.env.BRIEF_TO_EMAIL ?? SITE.email;
   const from = process.env.BRIEF_FROM_EMAIL ?? `${SITE.name} <${SITE.email}>`;
   const key = process.env.RESEND_API_KEY;
@@ -58,6 +82,7 @@ export async function sendBrief(
     `Name: ${name}`,
     `Company: ${company || "—"}`,
     `Email: ${email}`,
+    `Reply via: ${CHANNEL_LABEL[channel]}${phone ? ` · ${phone}` : ""}`,
     `Needs: ${service || "—"}`,
     "",
     brief,
