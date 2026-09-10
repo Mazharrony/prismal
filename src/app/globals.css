@@ -310,18 +310,6 @@
     translate: 0;
   }
 
-  /* ── Drag-to-scroll strips ───────────────────────────────────────────── */
-  .strip {
-    cursor: grab;
-  }
-  .strip.is-dragging {
-    cursor: grabbing;
-    user-select: none;
-  }
-  .strip.is-dragging > * {
-    pointer-events: none;
-  }
-
   /* ── Scroll reveal ───────────────────────────────────────────────────── */
   .has-js [data-rv] {
     opacity: 0;
@@ -370,33 +358,170 @@
     color: var(--color-ink);
   }
 
-  /* ── Work strip ──────────────────────────────────────────────────────── */
-  .strip {
+  /* ── Work deck ───────────────────────────────────────────────────────── */
+  /* Every card is centred, then pushed out by `--side` (−1/0/1) and `--d`
+     (distance from the front). Only transforms change between states. */
+  .deck {
+    --card-w: 340px;
+    --card-h: 460px;
+    --open-w: 700px;
+    --step: 56px;
+    position: relative;
+    height: 560px;
+    touch-action: pan-y;
+    user-select: none;
+  }
+  .deck-card {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: var(--card-w);
+    height: var(--card-h);
+    overflow: hidden;
+    border-radius: 28px;
+    background: var(--color-paper);
+    box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.8);
+    transform: translate(calc(-50% + var(--side) * (200px + var(--d) * var(--step))), -50%)
+      scale(calc(1 - var(--d) * 0.035)) rotate(calc(var(--side) * var(--d) * 1.2deg));
+    transition:
+      transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1),
+      width 0.7s cubic-bezier(0.2, 0.8, 0.2, 1),
+      opacity 0.4s;
+  }
+  .deck-card.is-active {
+    width: var(--open-w);
+    transform: translate(-50%, -50%);
+  }
+  .deck-card.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .deck-face {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: var(--card-w);
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: var(--color-ink-2);
+    cursor: pointer;
+    overflow: hidden;
+  }
+  .deck-card.is-active .deck-face {
+    cursor: default;
+  }
+  .deck-face img {
+    transition: filter 0.5s;
+  }
+  .deck-card:not(.is-active) .deck-face img {
+    filter: brightness(0.55) saturate(0.8);
+  }
+  .deck-card:not(.is-active):hover .deck-face img {
+    filter: brightness(0.75) saturate(0.9);
+  }
+  .deck-shade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(11, 15, 20, 0.35), transparent 40%, rgba(11, 15, 20, 0.5));
+    pointer-events: none;
+  }
+  /* The spine: a coloured strip on the outer edge carrying the name. */
+  .deck-spine {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 52px;
+    display: grid;
+    place-items: center;
+    writing-mode: vertical-rl;
+    font-family: var(--font-brand);
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .deck-card.is-left .deck-spine {
+    left: 0;
+    transform: rotate(180deg);
+  }
+  .deck-card.is-right .deck-spine {
+    right: 0;
+  }
+  .deck-card:not(.is-active) .deck-spine {
+    opacity: 1;
+  }
+  .deck-info {
+    position: absolute;
+    left: var(--card-w);
+    top: 0;
+    width: calc(var(--open-w) - var(--card-w));
+    height: 100%;
+    background: var(--color-paper);
+    color: var(--color-ink);
+  }
+  .deck-info-inner {
     display: flex;
-    gap: 20px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-    padding-block: 24px;
-    margin-inline: -28px;
-    padding-inline: 28px;
+    flex-direction: column;
+    height: 100%;
+    padding: 28px 30px 26px;
   }
-  .strip::-webkit-scrollbar {
-    display: none;
+  .deck-burst {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 900px;
+    height: 900px;
+    translate: -50% -44%;
+    opacity: 0.75;
+    pointer-events: none;
+    z-index: 0;
   }
-  .strip > * {
-    flex: 0 0 min(380px, 82vw);
-    scroll-snap-align: start;
+  .deck-burst-a {
+    transform-origin: 0 0;
+    animation: spin 140s linear infinite;
   }
-  .strip > *:nth-child(odd) {
-    rotate: -1.5deg;
+  .deck-burst-b {
+    transform-origin: 0 0;
+    animation: spin 90s linear infinite reverse;
   }
-  .strip > *:nth-child(even) {
-    rotate: 1.5deg;
-  }
-  .strip > *:hover,
-  .strip > *:focus-visible {
-    rotate: 0deg;
+
+  @media (max-width: 860px) {
+    .deck {
+      --card-w: min(300px, 82vw);
+      --card-h: 540px;
+      --open-w: var(--card-w);
+      --step: 34px;
+      height: 600px;
+    }
+    .deck-card {
+      transform: translate(calc(-50% + var(--side) * (110px + var(--d) * var(--step))), -50%)
+        scale(calc(1 - var(--d) * 0.06)) rotate(calc(var(--side) * var(--d) * 2deg));
+    }
+    .deck-card.is-hidden,
+    .deck-card:not(.is-active):not(.is-hidden) {
+      opacity: 1;
+    }
+    .deck-face {
+      height: 46%;
+      width: 100%;
+    }
+    .deck-info {
+      left: 0;
+      top: 46%;
+      width: 100%;
+      height: 54%;
+    }
+    .deck-info-inner {
+      padding: 20px 22px 20px;
+    }
+    .deck-burst {
+      width: 640px;
+      height: 640px;
+    }
   }
 
   /* ── Letter form ────────────────────────────────────────────────────── */
@@ -570,8 +695,12 @@
       translate: 0;
       transition: none;
     }
-    .strip > * {
-      rotate: 0deg;
+    .deck-burst-a,
+    .deck-burst-b {
+      animation: none;
+    }
+    .deck-card {
+      transition: none;
     }
     .typing-dot,
     .glass::before {
@@ -610,6 +739,11 @@
 @keyframes draw {
   to {
     stroke-dashoffset: 0;
+  }
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
 }
 @keyframes node-pop {

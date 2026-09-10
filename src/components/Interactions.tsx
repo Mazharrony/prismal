@@ -11,7 +11,6 @@ const clamp = (n: number, a: number, b: number) => Math.min(b, Math.max(a, n));
  * - `[data-tilt]` cards tilt in 3D under the pointer.
  * - `[data-parallax]` elements inside `#hero` drift with the pointer by
  *   `data-depth`.
- * - `.strip` rows can be dragged with the mouse; a drag suppresses the click.
  * - The header tucks away on scroll down and returns on scroll up.
  * - `#scroll-progress` tracks page position.
  *
@@ -132,69 +131,6 @@ export default function Interactions() {
         hero.removeEventListener("pointerleave", leave);
       });
     }
-
-    /* ── drag to scroll strips ────────────────────────────────────────── */
-    document.querySelectorAll<HTMLElement>(".strip").forEach((strip) => {
-      let startX = 0, startLeft = 0, dragged = false, active = false;
-      const down = (e: PointerEvent) => {
-        if (e.button !== 0) return;
-        active = true;
-        dragged = false;
-        startX = e.clientX;
-        startLeft = strip.scrollLeft;
-        strip.classList.add("is-dragging");
-        strip.style.scrollSnapType = "none";
-      };
-      const move = (e: PointerEvent) => {
-        if (!active) return;
-        const dx = e.clientX - startX;
-        if (Math.abs(dx) > 5) dragged = true;
-        strip.scrollLeft = startLeft - dx;
-      };
-      const up = () => {
-        if (!active) return;
-        active = false;
-        strip.classList.remove("is-dragging");
-        // Settle on a card in the direction of the drag; restoring snap-type
-        // immediately would pull a short drag straight back to where it began.
-        const first = strip.firstElementChild as HTMLElement | null;
-        const step = (first?.offsetWidth ?? 0) + 20;
-        if (dragged && step > 20) {
-          const from = Math.round(startLeft / step);
-          const delta = (strip.scrollLeft - startLeft) / step;
-          const to =
-            from +
-            (Math.abs(delta) > 0.12
-              ? Math.sign(delta) * Math.max(1, Math.round(Math.abs(delta)))
-              : 0);
-          strip.scrollTo({ left: to * step, behavior: "smooth" });
-          window.setTimeout(() => (strip.style.scrollSnapType = ""), 650);
-        } else {
-          strip.style.scrollSnapType = "";
-        }
-      };
-      const click = (e: MouseEvent) => {
-        if (dragged) {
-          e.preventDefault();
-          e.stopPropagation();
-        }
-      };
-      // Links and images start a native drag on mousedown, which would swallow
-      // the pointer moves; the strip owns dragging instead.
-      const noDrag = (e: DragEvent) => e.preventDefault();
-      strip.addEventListener("pointerdown", down);
-      strip.addEventListener("dragstart", noDrag);
-      window.addEventListener("pointermove", move);
-      window.addEventListener("pointerup", up);
-      strip.addEventListener("click", click, true);
-      cleanups.push(() => {
-        strip.removeEventListener("pointerdown", down);
-        strip.removeEventListener("dragstart", noDrag);
-        window.removeEventListener("pointermove", move);
-        window.removeEventListener("pointerup", up);
-        strip.removeEventListener("click", click, true);
-      });
-    });
 
     return () => cleanups.forEach((f) => f());
   }, []);

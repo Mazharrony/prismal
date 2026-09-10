@@ -34,8 +34,8 @@ export default function Cursor() {
       el.classList.add("is-on");
       const t = e.target as Element | null;
       const named = t?.closest<HTMLElement>("[data-cursor]");
-      const hot = named ?? t?.closest("a, button, [role=tab], [role=radio], input, textarea, label, .strip");
-      const text = named?.dataset.cursor || (t?.closest(".strip") ? "Drag" : "You");
+      const hot = named ?? t?.closest("a, button, [role=tab], [role=radio], input, textarea, label");
+      const text = named?.dataset.cursor || "You";
       if (label.textContent !== text) label.textContent = text;
       el.style.setProperty("--s", hot ? "1.15" : "1");
       el.classList.toggle("is-hot", !!named);
