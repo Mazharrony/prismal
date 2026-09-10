@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 export default function Header() {
   return (
     <header className="pointer-events-none fixed inset-x-0 top-4 z-50 flex justify-center px-4">
-      <div className="pointer-events-auto flex items-center gap-1 rounded-full border border-white/10 bg-ink-2/85 p-1.5 pl-4 shadow-[0_12px_40px_-12px_rgba(0,0,0,.7)] backdrop-blur-xl">
+      <div className="glass pointer-events-auto flex items-center gap-1 rounded-full p-1.5 pl-4">
         <a href="#top" className={cn("mr-2 flex items-center gap-2.5 rounded-full", focus)}>
           <Image
             src="/02-mark-reversed.svg"

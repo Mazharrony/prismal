@@ -46,7 +46,7 @@ export default function Dock() {
     >
       <div
         className={cn(
-          "flex items-center gap-1 rounded-full border border-white/10 bg-ink-2/85 p-1.5 shadow-[0_16px_48px_-12px_rgba(0,0,0,.8)] backdrop-blur-xl",
+          "glass flex items-center gap-1 rounded-full p-1.5",
           show && "pointer-events-auto",
         )}
       >

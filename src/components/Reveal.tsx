@@ -5,7 +5,9 @@ import { useEffect } from "react";
 /**
  * Scroll reveal for anything carrying `data-rv`. Marks the document as
  * scripted first, so the hidden initial state only ever applies when this
- * observer is there to lift it; without JS the page renders visible.
+ * observer is there to lift it; without JS the page renders visible. Elements
+ * added later (hot reload, remounted forms) are picked up by a MutationObserver
+ * so nothing can be left hidden.
  */
 export default function Reveal() {
   useEffect(() => {
@@ -23,9 +25,23 @@ export default function Reveal() {
       },
       { threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
     );
-    document.querySelectorAll("[data-rv]").forEach((el) => io.observe(el));
+    const watch = (scope: ParentNode) =>
+      scope.querySelectorAll("[data-rv]:not(.is-in)").forEach((el) => io.observe(el));
+    watch(document);
+    const mo = new MutationObserver((records) => {
+      for (const r of records) {
+        for (const n of r.addedNodes) {
+          if (n instanceof Element) {
+            if (n.matches("[data-rv]")) io.observe(n);
+            watch(n);
+          }
+        }
+      }
+    });
+    mo.observe(document.body, { childList: true, subtree: true });
     return () => {
       io.disconnect();
+      mo.disconnect();
       root.classList.remove("has-js");
     };
   }, []);
