@@ -1,18 +1,12 @@
 import type { Metadata, Viewport } from "next";
-import {
-  Big_Shoulders,
-  Caveat,
-  IBM_Plex_Mono,
-  Inter,
-  Jost,
-} from "next/font/google";
+import { Big_Shoulders, IBM_Plex_Mono, Inter, Jost } from "next/font/google";
 import { SITE } from "@/content/site";
 import "./globals.css";
 
-// Self-hosted through next/font. Big Shoulders Display carries the giant
-// uppercase headlines; Jost the wordmark, card titles and stickers; Inter the
-// body; IBM Plex Mono the labels. All variable except Plex, which needs its
-// two weights named.
+// Self-hosted through next/font. Big Shoulders carries the giant uppercase
+// headlines; Jost the wordmark, card titles and stickers; Inter the body;
+// IBM Plex Mono the labels. All variable except Plex, which needs its two
+// weights named.
 const shoulders = Big_Shoulders({
   subsets: ["latin"],
   variable: "--font-shoulders",
@@ -24,7 +18,6 @@ const plex = IBM_Plex_Mono({
   weight: ["400", "500"],
   variable: "--font-plex",
 });
-const caveat = Caveat({ subsets: ["latin"], variable: "--font-caveat" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
@@ -53,7 +46,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${shoulders.variable} ${jost.variable} ${inter.variable} ${plex.variable} ${caveat.variable}`}
+      className={`${shoulders.variable} ${jost.variable} ${inter.variable} ${plex.variable}`}
     >
       <body>{children}</body>
     </html>

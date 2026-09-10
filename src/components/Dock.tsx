@@ -40,7 +40,7 @@ export default function Dock() {
     <div
       aria-hidden={!show}
       className={cn(
-        "pointer-events-none fixed inset-x-0 bottom-5 z-40 flex justify-center px-4 transition-[opacity,translate] duration-500",
+        "pointer-events-none fixed inset-x-0 bottom-5 z-40 flex justify-center px-4 pb-[env(safe-area-inset-bottom)] transition-[opacity,translate] duration-500",
         show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6",
       )}
     >

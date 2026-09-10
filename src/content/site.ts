@@ -1,19 +1,22 @@
 /**
- * Every word on the site, ported verbatim from the design handoff
- * (`docs/handoff/Prismal Redesign v2.dc.html`, the `renderVals()` arrays and
- * the hard-coded pillar / kit / work markup). Components read from here and
- * never carry copy of their own, so a copy change is a one-file edit.
+ * Every word on the site. Components read from here and never carry copy of
+ * their own, so a copy change is a one-file edit.
  *
- * The six `WORK` entries are the handoff's invented placeholders — swap in real
- * clients, metrics and 4:3 screenshots before launch.
+ * Copy rules (agreed 2026-09-10): the prism metaphor lives in the display
+ * headlines only ("Noise in. Spectrum out.", "Three rays. One firm.", "The
+ * Prism Method", "Refraction Sprint", "Refract your workflow."); everything
+ * else is plain benefit language in a playful voice. The only numbers on the
+ * page are the four claims the studio backs: −70% manual work, replies within
+ * 1 hour, a first read within 48 hours, fixed-price sprints with full code
+ * ownership. Arrows: → action, ↗ external link, ↓ scroll.
  */
 
 export const SITE = {
   name: "PRISMAL",
   url: "https://prismal.ae",
-  title: "PRISMAL — Websites, software and AI automation for the UAE & GCC",
+  title: "Prismal — Websites, software & AI automation, Dubai",
   description:
-    "We build custom websites and web platforms for businesses across the UAE and GCC — then wire in the AI and automation that make them run themselves.",
+    "Websites that win clients. Software that does the admin. AI that keeps both running while you sleep. Built in Dubai for the UAE and GCC.",
   location: "Dubai, UAE — working across the UAE & GCC",
   email: "hello@prismal.ae",
   whatsappNumber: "+971 50 721 7156",
@@ -67,16 +70,16 @@ export const HERO = {
   headline: ["Noise in.", "Spectrum out."],
   intro: SITE.description,
   primaryCta: { label: "Start a project →", href: "#contact" },
-  secondaryCta: { label: "See what we refract ↓", href: "#services" },
+  secondaryCta: { label: "See the work ↓", href: "#work" },
 } as const;
 
 export type RayTone = (typeof HERO.rays)[number]["tone"];
 
-/** Hero trust stickers. Only claims the site can back up. */
+/** Hero trust stickers, in shape order: burst · pill · tag · burst. */
 export const TRUST = [
   "12 live builds",
-  "Reply within 1 hour",
-  "Fixed-price sprint",
+  "1-hour replies",
+  "Fixed price, no surprises",
   "You own the code",
 ] as const;
 
@@ -89,15 +92,16 @@ export type Service = {
   num: string;
   title: string;
   body: string;
+  cta: string;
   bg: string;
   fg: string;
 };
 
 export const SERVICES_HEAD = {
-  eyebrow: "01 · WHAT WE REFRACT",
+  eyebrow: "01 · WHAT WE DO",
   title: "Three rays. One firm.",
   intro:
-    "Every engagement passes through the same prism and splits into the discipline it actually needs.",
+    "Tell us the problem. We'll tell you which of the three it needs — usually a mix.",
   note: "Keep scrollin'…",
 } as const;
 
@@ -107,31 +111,34 @@ export const SERVICES: readonly Service[] = [
     title: "Website",
     bg: "#f9d20f",
     fg: "#0b0f14",
-    body: "Marketing sites and customer-facing web products built for how you actually work.",
+    body: "Sites that load fast, get found, and turn visitors into enquiries.",
+    cta: "I need a site",
   },
   {
     num: "02",
     title: "Software",
     bg: "#ffffff",
     fg: "#0b0f14",
-    body: "Web platforms, internal tools, dashboards and the APIs that connect them.",
+    body: "Portals, dashboards and internal tools that retire the spreadsheet everyone hates.",
+    cta: "I need software",
   },
   {
     num: "03",
     title: "AI & Automation",
     bg: "#0b0f14",
     fg: "#fff",
-    body: "Copilots, pipelines and bots wired into your real data — work that runs itself.",
+    body: "Bots and pipelines wired into your real data, so the repetitive work does itself.",
+    cta: "Automate this",
   },
 ];
 
 /* ── 02 What we build ─────────────────────────────────────────────────── */
 
 export const BUILD_HEAD = {
-  eyebrow: "02 / WHAT WE BUILD",
+  eyebrow: "02 · SITE KITS",
   title: "Site kits, not site packages.",
   intro:
-    "Every kit is a defined build with a fixed scope. Commerce is the pillar — the rest are the categories we ship most across the UAE and GCC.",
+    "Fixed scope, fixed price, known timeline. Commerce is the pillar; the rest are the kits we ship most across the UAE and GCC.",
   note: "Pick your kit ↓",
 } as const;
 
@@ -172,7 +179,7 @@ export const KITS: readonly Kit[] = [
   {
     num: "KIT 02",
     title: "Local business",
-    body: "Clinics, salons, garages, restaurants — a site that gets found, answers the obvious questions and takes the booking.",
+    body: "Clinics, salons, garages, restaurants: a site that gets found, answers the obvious questions and takes the booking.",
     stack: "LOCAL SEO · BOOKINGS · WHATSAPP",
   },
   {
@@ -204,9 +211,9 @@ export const KITS: readonly Kit[] = [
 /* ── 03 Selected work ─────────────────────────────────────────────────── */
 
 export const WORK_HEAD = {
-  eyebrow: "03 / SELECTED WORK",
+  eyebrow: "03 · SELECTED WORK",
   title: "Twelve builds, one method.",
-  intro: "Twelve live client sites. Every tile links to the real thing.",
+  intro: "All live, all clickable. Go and poke around.",
   note: "All live — click through ↓",
   swipe: "SWIPE →",
 } as const;
@@ -341,7 +348,7 @@ export const WORK: readonly WorkItem[] = [
 /* ── The Prism Method ─────────────────────────────────────────────────── */
 
 export const METHOD_HEAD = {
-  eyebrow: "02 · THE PRISM METHOD",
+  eyebrow: "04 · THE PRISM METHOD",
   title: ["One beam through,", "three rays out."],
   note: "Keep scrollin' — follow the beam…",
 } as const;
@@ -353,29 +360,29 @@ export const STEPS: readonly Step[] = [
     num: "01",
     title: "Input",
     color: "#f9d20f",
-    body: "We embed in your operation and map the noise — every tool, every handoff, every hour that quietly leaks away.",
+    body: "We sit inside your operation for a week and list every tool, hand-off and hour that leaks.",
   },
   {
     num: "02",
     title: "Refraction",
     color: "#e2e8f0",
-    body: "We split the problem into its spectrum: what becomes software, what becomes AI, and what disappears into automation.",
+    body: "We split it into what becomes software, what becomes AI, and what simply gets deleted.",
   },
   {
     num: "03",
     title: "Spectrum",
     color: "#fff",
-    body: "You get running systems in weeks — shipped, measured, maintained, and compounding quietly in the background.",
+    body: "You get running systems in weeks, shipped in pieces you can use from day one.",
   },
 ];
 
-/* ── How we work ──────────────────────────────────────────────────────── */
+/* ── Pricing ──────────────────────────────────────────────────────────── */
 
 export const ENGAGE_HEAD = {
-  eyebrow: "03 · HOW WE WORK TOGETHER",
+  eyebrow: "05 · PRICING",
   title: "Three ways to start.",
   intro:
-    "Fixed scope, clear price, no lock-in. Most partners begin with a Refraction Sprint and grow from there.",
+    "Fixed scope. Clear price. No lock-in. Most clients start with a sprint and grow from there.",
   note: "Almost there… pick a way in",
   durations: ["1–2 WEEKS", "4–12 WEEKS", "ONGOING →"],
 } as const;
@@ -383,6 +390,8 @@ export const ENGAGE_HEAD = {
 export type Way = {
   num: string;
   title: string;
+  /** Mono price framing under the title. No AED figures until they're agreed. */
+  price: string;
   body: string;
   points: readonly string[];
   bg: string;
@@ -394,28 +403,31 @@ export const WAYS: readonly Way[] = [
   {
     num: "01",
     title: "Refraction Sprint",
+    price: "FIXED PRICE · 1–2 WEEKS",
     bg: "#f6f7f9",
     fg: "#0b0f14",
     border: "#f9d20f",
-    body: "We map your operation, find the highest-leverage rays, and hand you a costed build plan you own — whether or not you build it with us.",
+    body: "We map the operation, find the highest-leverage fixes, and hand you a costed plan you own — build it with us or not.",
     points: ["Operational audit", "Solution blueprint", "Fixed price, fixed scope"],
   },
   {
     num: "02",
     title: "Build",
+    price: "FIXED SCOPE · 4–12 WEEKS",
     bg: "#f6f7f9",
     fg: "#0b0f14",
     border: "#e2e8f0",
-    body: "We design, build and ship the software, AI or automation — in tight weekly increments you can see running, not slideware.",
+    body: "We design, build and ship in weekly increments you can see running. No slideware.",
     points: ["Weekly shipping", "One accountable team", "Launch & handover"],
   },
   {
     num: "03",
     title: "Run",
+    price: "MONTHLY RETAINER",
     bg: "#0b0f14",
     fg: "#fff",
     border: "#0b0f14",
-    body: "We keep your systems healthy, measured and improving — a retained partner on call as your operation and its noise keep changing.",
+    body: "We keep it healthy, measured and improving, on call as your business changes.",
     points: ["Monitoring & support", "Continuous improvement", "Monthly retainer"],
   },
 ];
@@ -423,26 +435,34 @@ export const WAYS: readonly Way[] = [
 /* ── Results ──────────────────────────────────────────────────────────── */
 
 export const RESULTS_HEAD = {
-  eyebrow: "04 · WHAT COMES OUT THE OTHER SIDE",
+  eyebrow: "06 · RESULTS",
   title: "Systems, not slideware.",
   note: "Still scrollin'? Good.",
+  footnote: "Measured on client projects. Ask us for the numbers.",
 } as const;
 
 export type Stat = { value: string; label: string };
 
 export const STATS: readonly Stat[] = [
-  { value: "−70%", label: "manual work across the operations we automate" },
-  { value: "Weeks", label: "from the first workshop to the first running system" },
-  { value: "24/7", label: "your systems stay on duty while the team sleeps" },
+  { value: "−70%", label: "less manual work in the operations we automate" },
+  { value: "Weeks", label: "from first workshop to first running system" },
+  { value: "24/7", label: "on duty while your team sleeps" },
   { value: "3 → 1", label: "three disciplines, one accountable partner" },
 ];
 
 /* ── FAQ ──────────────────────────────────────────────────────────────── */
 
 export const FAQ_HEAD = {
-  eyebrow: "05 · QUESTIONS",
+  eyebrow: "07 · FAQ",
   title: "Before you ask.",
+  intro:
+    "The questions every client asks first, answered the way we answer them on WhatsApp.",
   note: "Curious one, aren't you?",
+  chat: {
+    status: "Online · replies in 1h",
+    divider: "Today",
+    ask: "Type your question…",
+  },
 } as const;
 
 export type Faq = { q: string; a: string };
@@ -450,37 +470,37 @@ export type Faq = { q: string; a: string };
 export const FAQS: readonly Faq[] = [
   {
     q: "Where are you based?",
-    a: "PRISMAL is based in Dubai and works with businesses across the UAE and the wider GCC. We work on-site with clients in Dubai and Abu Dhabi, and remotely everywhere else.",
+    a: "Dubai. We work on-site across Dubai and Abu Dhabi, and remotely everywhere else in the GCC.",
   },
   {
     q: "What does a project cost?",
-    a: "Every engagement starts with a fixed-price Refraction Sprint so you know the full build cost before committing. Builds are then quoted as fixed scope — no open-ended hourly billing.",
+    a: "Every project starts with a fixed-price sprint, so you know the full build cost before you commit. No hourly billing.",
   },
   {
     q: "How fast can you ship?",
-    a: "A sprint takes one to two weeks. Most first systems are live within four to twelve weeks, shipped in weekly increments you can see running the whole way.",
+    a: "A sprint is one to two weeks. Most first systems are live in four to twelve, shipped weekly so you see it running.",
   },
   {
     q: "Do you work in Arabic?",
-    a: "Yes. We build bilingual Arabic / English interfaces and AI agents, with full right-to-left support where it's needed.",
+    a: "Yes. Bilingual Arabic/English interfaces and agents, with proper right-to-left support.",
   },
   {
     q: "Do we own what you build?",
-    a: "Completely. You own the code, the models and the infrastructure. No lock-in, no per-seat licence on your own tools — even the sprint blueprint is yours to take elsewhere.",
+    a: "Completely. Code, models, infrastructure. No lock-in, no per-seat licence — even the sprint plan is yours to take elsewhere.",
   },
   {
     q: "Software, AI or automation — which do we need?",
-    a: "That's exactly what the sprint answers. Most operations need a mix; we recommend the smallest combination that removes the most noise.",
+    a: "That's what the sprint answers. Most operations need a mix; we recommend the smallest one that removes the most noise.",
   },
 ];
 
 /* ── Contact ──────────────────────────────────────────────────────────── */
 
 export const CONTACT = {
-  eyebrow: "06 · CONTACT",
+  eyebrow: "08 · SAY HELLO",
   title: "Refract your workflow.",
   intro:
-    "Tell us where the noise is. Within 48 hours we come back with the first rays — a concrete read on what to build, what to automate, and what to delete.",
+    "Tell us what's slow, manual or ugly. Within 48 hours you get a straight answer: what to build, what to automate, what to delete.",
   note: "Last stop — say hello ↓",
   /** The contact rail beside the headline. */
   rail: {
@@ -490,14 +510,14 @@ export const CONTACT = {
     hours: "We reply within 1 hour",
   },
   form: {
-    pickLabel: "What do you need?",
+    pickLabel: "What are we fixing?",
     picks: [
       { label: "Website", prefill: "We need a website that " },
       { label: "Software", prefill: "We need software that " },
-      { label: "AI & Automation", prefill: "We want to automate " },
-      { label: "Not sure yet", prefill: "The noise we have is " },
+      { label: "AI & Automation", prefill: "We want to stop doing " },
+      { label: "No idea yet", prefill: "Honestly, the mess is " },
     ],
-    channelLabel: "How should we reply?",
+    channelLabel: "Where do we reach you?",
     channels: [
       { value: "email", label: "Email" },
       { value: "whatsapp", label: "WhatsApp" },
@@ -505,13 +525,13 @@ export const CONTACT = {
     ],
     name: "Your name",
     company: "Company",
-    email: "Email address",
-    phone: "Phone number",
-    brief: "What needs building?",
+    email: "Email",
+    phone: "WhatsApp or phone number",
+    brief: "What's the noise?",
     submit: "Send the brief",
     sending: "Sending…",
     sentTitle: "Received.",
-    sent: "We read every brief ourselves and come back within 48 hours with a first read: what to build, what to automate, what to delete.",
+    sent: "We read every brief ourselves. Expect a reply within the hour, and a proper read within 48.",
     again: "Send another brief",
   },
 } as const;

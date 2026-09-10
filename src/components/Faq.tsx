@@ -12,7 +12,7 @@ export default function Faq() {
         <span className={cn(eyebrow, "text-muted-2")}>{FAQ_HEAD.eyebrow}</span>
         <Headline className={cn(h2, "mt-4")}>{FAQ_HEAD.title}</Headline>
         <p className="m-0 mt-6 max-w-[38ch] text-[17px] leading-[1.55] text-muted-2">
-          The questions every client asks first, answered the way we answer them on WhatsApp.
+          {FAQ_HEAD.intro}
         </p>
       </div>
       <FaqList />

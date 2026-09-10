@@ -57,7 +57,7 @@ export default function Services() {
                 CTA[i],
               )}
             >
-              Build this <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">→</span>
+              {s.cta} <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">→</span>
             </span>
           </a>
         ))}

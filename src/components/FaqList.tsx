@@ -1,4 +1,4 @@
-import { FAQS, SITE } from "@/content/site";
+import { FAQ_HEAD, FAQS, SITE } from "@/content/site";
 import { PRISM_BODY, PRISM_RAYS, PRISM_VIEWBOX } from "@/lib/prism";
 import { focus } from "@/lib/styles";
 import { cn } from "@/lib/utils";
@@ -52,7 +52,7 @@ export default function FaqList() {
               <span className="font-brand text-[14px] font-semibold tracking-[.2em] text-ink">{SITE.name}</span>
               <span className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[.16em] text-muted-2">
                 <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-[#22c55e]" />
-                Online · replies in 1h
+                {FAQ_HEAD.chat.status}
               </span>
             </div>
           </div>
@@ -60,7 +60,7 @@ export default function FaqList() {
           {/* Thread */}
           <dl className="phone-thread m-0 grid flex-1 content-start gap-5 overflow-y-auto overscroll-contain px-4 py-5">
             <span className="justify-self-center font-mono text-[10px] uppercase tracking-[.16em] text-muted-2" aria-hidden="true">
-              Today
+              {FAQ_HEAD.chat.divider}
             </span>
             {FAQS.map((f) => (
               <div key={f.q} className="grid gap-2">
@@ -97,7 +97,7 @@ export default function FaqList() {
                 focus,
               )}
             >
-              Ask your own question…
+              {FAQ_HEAD.chat.ask}
               <span aria-hidden="true" className="grid h-8 w-8 place-items-center rounded-full bg-accent text-ink">
                 ↑
               </span>

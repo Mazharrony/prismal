@@ -49,6 +49,7 @@ export default function Engage() {
           >
             <span className="font-mono text-[11px] tracking-[.2em] opacity-70">{w.num}</span>
             <h3 className="display m-0 text-[clamp(44px,4.5vw,64px)]">{w.title}</h3>
+            <span className="font-mono text-[11px] tracking-[.18em] opacity-80">{w.price}</span>
             <p className="m-0 text-[16px] leading-[1.55] opacity-85">{w.body}</p>
             <ul className="m-0 mt-auto grid list-none gap-2 border-t border-current/20 p-0 pt-5">
               {w.points.map((pt) => (

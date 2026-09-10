@@ -27,6 +27,9 @@ export default function Results() {
           </div>
         ))}
       </div>
+      <p className={cn(eyebrow, "mt-6 text-muted normal-case tracking-[.14em]")} data-rv>
+        {RESULTS_HEAD.footnote}
+      </p>
     </Band>
   );
 }

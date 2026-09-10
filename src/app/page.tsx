@@ -20,6 +20,9 @@ import Work from "@/components/Work";
 export default function Page() {
   return (
     <>
+      <a href="#top" className="skip-link">
+        Skip to content
+      </a>
       <Splash />
       <SmoothScroll />
       <Reveal />

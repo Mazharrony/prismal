@@ -34,7 +34,6 @@
   --font-display: var(--font-shoulders), Impact, "Arial Narrow", sans-serif;
   --font-brand: var(--font-jost), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-plex), ui-monospace, "SFMono-Regular", monospace;
-  --font-hand: var(--font-caveat), "Segoe Print", cursive;
 }
 
 @layer base {
@@ -56,6 +55,25 @@
   ::selection {
     background: var(--color-accent);
     color: var(--color-ink);
+  }
+  /* First tab stop: jumps keyboard users past the fixed chrome. */
+  .skip-link {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 400;
+    padding: 10px 16px;
+    border-radius: 999px;
+    background: var(--color-accent);
+    color: var(--color-ink);
+    font: 600 14px/1 var(--font-brand);
+    transform: translateY(-200%);
+    transition: transform 0.2s;
+  }
+  .skip-link:focus-visible {
+    transform: none;
+    outline: 3px solid var(--color-paper);
+    outline-offset: 2px;
   }
 }
 

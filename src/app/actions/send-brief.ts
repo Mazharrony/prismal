@@ -18,7 +18,7 @@ const schema = z
     brief: z
       .string()
       .trim()
-      .min(10, "A sentence or two is enough — what needs building?")
+      .min(10, "A sentence or two is enough — what's slow, manual or ugly?")
       .max(2000, "Keep it under 2000 characters."),
     /** Quick-pick chip, if one was chosen. */
     service: z.string().trim().max(40).default(""),
