@@ -1,23 +1,31 @@
-import StackCard from "@/components/StackCard";
+import Band from "@/components/Band";
 import { RESULTS_HEAD, STATS } from "@/content/site";
 import { eyebrow, h2 } from "@/lib/styles";
 import { cn } from "@/lib/utils";
 
+/** Four giant numbers on ink. */
 export default function Results() {
   return (
-    <StackCard id="results" top={148} z={7} tone="accent" note={RESULTS_HEAD.note}>
-      <span className={cn(eyebrow, "text-ink")}>{RESULTS_HEAD.eyebrow}</span>
-      <h2 className={cn(h2, "mb-8 mt-3 text-ink")}>{RESULTS_HEAD.title}</h2>
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-x-8">
-        {STATS.map((s) => (
-          <div key={s.value} className="min-w-0 border-t-2 border-ink pb-5 pt-6">
-            <div className="font-display text-[clamp(40px,5vw,80px)] font-medium leading-none tracking-[-.03em] text-ink [overflow-wrap:anywhere]">
+    <Band id="results" tone="ink">
+      <div data-rv>
+        <span className={cn(eyebrow, "text-accent")}>{RESULTS_HEAD.eyebrow}</span>
+        <h2 className={cn(h2, "mt-4")}>{RESULTS_HEAD.title}</h2>
+      </div>
+      <div className="mt-[clamp(32px,5vw,64px)] grid grid-cols-4 gap-x-8 max-[1024px]:grid-cols-2 max-[520px]:grid-cols-1">
+        {STATS.map((s, i) => (
+          <div
+            key={s.value}
+            data-rv
+            style={{ ["--d" as string]: `${i * 0.1}s` }}
+            className="min-w-0 border-t-2 border-accent pb-6 pt-6"
+          >
+            <div className="display whitespace-nowrap text-[clamp(64px,6.6vw,120px)] text-accent">
               {s.value}
             </div>
-            <p className="m-0 mt-3 text-[14px] leading-[1.5] text-ink">{s.label}</p>
+            <p className="m-0 mt-3 max-w-[26ch] text-[15px] leading-[1.5] text-muted">{s.label}</p>
           </div>
         ))}
       </div>
-    </StackCard>
+    </Band>
   );
 }

@@ -1,34 +1,38 @@
 /*!
  * PRISMAL — prismal.ae
  *
- * Built from the design handoff in docs/handoff/. Tokens, type, spacing and
- * motion timings are the handoff's. Deliberate departures from it:
+ * Direction (2026-09-10): the handoff's light card cascade was replaced with a
+ * dark, full-bleed "spectrum" world at the client's request — crency.agency
+ * was the reference for the energy (giant condensed headlines, stickers,
+ * wave dividers, a floating dock, a marquee, a cursor tag), while the palette
+ * stays Prismal's: ink canvas, warm paper type, the yellow beam, and three
+ * sticker colours. All copy and the twelve live builds carry over unchanged.
  *
- *  - Cards pin only when they fit the viewport (measured by StackController),
- *    replacing the handoff's fixed `@media (min-height:900px)` suggestion, and
- *    the covered card recedes (scale + dim) as the next one slides over it.
- *  - Below 860px nothing pins: cards overlap by 16px, reveal on scroll, and the
- *    six-tile kit and work grids become horizontal snap rows. The handoff's
- *    cascade would leave most cards' lower halves unreachable on a phone.
- *  - A hamburger drawer replaces the wrapping pill nav below 860px.
- *  - The Brief form gained a YOUR EMAIL field so briefs can be answered.
- *  - Fonts are self-hosted through next/font, not a Google Fonts <link>.
- *  - The prototype's global `a:hover { color; underline }` is not ported — it
- *    would recolour every pill and tile; hover styles are set per element.
+ * Motion is transform/opacity only and every effect has a reduced-motion
+ * fallback. Nothing here is required to read the page: with JS or motion off
+ * the same HTML renders fully visible.
  */
 
 @import "tailwindcss";
 
 @theme inline {
   --color-ink: #0b0f14;
-  --color-muted: #64748b;
-  --color-line: #e2e8f0;
-  --color-surface: #f6f7f9;
+  --color-ink-2: #151b24;
+  --color-ink-3: #1f2733;
+  --color-paper: #f3efe6;
+  --color-paper-2: #e6e0d2;
   --color-accent: #f9d20f;
+  --color-violet: #7c5cff;
+  --color-coral: #ff5a5f;
+  --color-sky: #4cc9f0;
+  --color-muted: #98a2ae;
+  --color-muted-2: #5f6873;
+  --color-line: #ddd7c8;
   --color-destructive: #ef4444;
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-jost), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-shoulders), Impact, "Arial Narrow", sans-serif;
+  --font-brand: var(--font-jost), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-plex), ui-monospace, "SFMono-Regular", monospace;
   --font-hand: var(--font-caveat), "Segoe Print", cursive;
 }
@@ -39,141 +43,186 @@
   }
   body {
     margin: 0;
-    background: var(--color-surface);
-    color: var(--color-ink);
+    background: var(--color-ink);
+    color: var(--color-paper);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
   }
   a {
     color: inherit;
     text-decoration: none;
   }
-}
-
-/* ── Card cascade ─────────────────────────────────────────────────────────
-   Every section is a `.stack`; StackController sets `data-pinned` when the
-   card fits the viewport and writes `--stack-progress` (0→1) as the next card
-   covers it. Everything here is in @layer components so per-section Tailwind
-   utilities can still override it. */
-
-@property --stack-progress {
-  syntax: "<number>";
-  inherits: true;
-  initial-value: 0;
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-ink);
+  }
 }
 
 @layer components {
-  .stack {
+  /* ── Type ────────────────────────────────────────────────────────────── */
+  .display {
+    font-family: var(--font-display);
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 0.88;
+    letter-spacing: -0.005em;
+    text-wrap: balance;
+  }
+
+  /* ── Bands + waves ───────────────────────────────────────────────────── */
+  .band {
     position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 16px 28px 96px;
-    --stack-progress: 0;
+    padding-block: clamp(72px, 9vw, 128px);
   }
-  .stack[data-pinned="true"] {
-    position: sticky;
-    top: var(--stack-top);
-    min-height: calc(100vh - var(--stack-top));
+  .band + .band {
+    padding-top: clamp(96px, 11vw, 160px);
   }
-  /* Too tall for its slot: pin at the same offset, clamp to the slot, and add
-     the overflow as scroll distance during which the body shifts up
-     (`--stack-extra` / `--stack-shift` are set by StackController). */
-  .stack[data-pinned="tall"] {
-    position: sticky;
-    top: var(--stack-top);
-    height: calc(100vh - var(--stack-top));
-  }
-  .stack-spacer {
-    height: 0;
-  }
-  .stack[data-pinned="tall"] .stack-body {
-    transform: translateY(calc(var(--stack-shift, 0) * -1px));
-    will-change: transform;
-  }
-  /* Soft edge where shifted content passes under the card's top. */
-  .stack[data-pinned="tall"] .stack-card::before {
-    content: "";
+  .wave {
     position: absolute;
-    inset: 0 0 auto 0;
-    z-index: 4;
-    height: 56px;
-    background: linear-gradient(to bottom, var(--card-bg, #fff), transparent);
-    opacity: calc(min(1, var(--stack-shift, 0) / 32));
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: clamp(40px, 7vw, 96px);
+    display: block;
     pointer-events: none;
+    /* Overlaps the band by 2px so no hairline of the band below shows. */
+    transform: translateY(calc(-100% + 2px));
   }
-  .stack-card {
+  .wave--flip {
+    transform: translateY(calc(-100% + 2px)) scaleX(-1);
+  }
+
+  /* ── Stickers ────────────────────────────────────────────────────────── */
+  .sticker {
+    --r: 0deg;
+    --d: 0s;
     position: relative;
-    display: flex;
-    flex-direction: column;
-    flex: 1 1 auto;
-    overflow: hidden;
-    transform-origin: 50% 0;
-    transform: translateY(calc(var(--stack-progress) * -12px))
-      scale(calc(1 - var(--stack-progress) * 0.04));
+    display: inline-grid;
+    place-items: center;
+    text-align: center;
+    font-family: var(--font-brand);
+    font-weight: 600;
+    line-height: 1.05;
+    transform: rotate(var(--r));
+    animation: sticker-float 4.5s ease-in-out var(--d) infinite alternate;
   }
-  .stack[data-pinned] .stack-card {
-    will-change: transform;
-  }
-  /* The card's content. Never shrinks, so a tall card clips it and the shift
-     above reveals the rest; in a stretched card it fills the height so grid
-     bodies (contact) can centre. */
-  .stack-body {
-    flex: 1 0 auto;
-    min-width: 0;
-  }
-  .stack-veil {
+  .sticker > svg {
     position: absolute;
     inset: 0;
-    z-index: 5;
-    border-radius: inherit;
-    background: var(--color-ink);
-    opacity: calc(var(--stack-progress) * 0.12);
+    width: 100%;
+    height: 100%;
+  }
+  .sticker > span {
+    position: relative;
+    padding: 0.9em 1.1em;
+  }
+  .sticker--pill > span {
+    padding: 0.55em 1em;
+  }
+  .sticker--tag {
+    clip-path: polygon(0 12%, 100% 0, 96% 100%, 4% 92%);
+  }
+
+  /* ── Hero beam ───────────────────────────────────────────────────────── */
+  .hero-beam path {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: draw 2.2s cubic-bezier(0.4, 0, 0.2, 1) 0.5s forwards;
+  }
+
+  /* ── Marquee ─────────────────────────────────────────────────────────── */
+  .marquee {
+    display: flex;
+    overflow: hidden;
+    white-space: nowrap;
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+  .marquee > div {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: 0.5em;
+    padding-right: 0.5em;
+    animation: marquee 32s linear infinite;
+  }
+  .marquee:hover > div {
+    animation-play-state: paused;
+  }
+
+  /* ── Scroll reveal ───────────────────────────────────────────────────── */
+  .has-js [data-rv] {
+    opacity: 0;
+    translate: 0 28px;
+    transition:
+      opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) var(--d, 0s),
+      translate 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) var(--d, 0s);
+  }
+  .has-js [data-rv].is-in {
+    opacity: 1;
+    translate: 0;
+  }
+
+  /* ── Cursor tag ──────────────────────────────────────────────────────── */
+  .cursor-tag {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 300;
     pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.25s;
+    will-change: transform;
+  }
+  .cursor-tag.is-on {
+    opacity: 1;
+  }
+  .cursor-tag > span {
+    display: block;
+    transform: translate(14px, 14px) scale(var(--s, 1));
+    transition: transform 0.2s;
+    border-radius: 999px;
+    background: var(--color-accent);
+    color: var(--color-ink);
+    font-family: var(--font-brand);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 4px 9px;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .stack-card {
-      transform: none;
-    }
-    .stack-veil {
-      display: none;
-    }
+  /* ── Work strip ──────────────────────────────────────────────────────── */
+  .strip {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding-block: 24px;
+    margin-inline: -28px;
+    padding-inline: 28px;
+  }
+  .strip::-webkit-scrollbar {
+    display: none;
+  }
+  .strip > * {
+    flex: 0 0 min(380px, 82vw);
+    scroll-snap-align: start;
+  }
+  .strip > *:nth-child(odd) {
+    rotate: -1.5deg;
+  }
+  .strip > *:nth-child(even) {
+    rotate: 1.5deg;
+  }
+  .strip > *:hover,
+  .strip > *:focus-visible {
+    rotate: 0deg;
   }
 
-  /* Mobile: no pinning, overlap lip, scroll reveal, snap rows. */
-  @media (max-width: 860px) {
-    .stack {
-      padding: 0 16px;
-      min-height: 0;
-    }
-    header + .stack {
-      padding-top: 12px;
-    }
-    .stack-spacer {
-      display: none;
-    }
-    .stack-spacer + .stack {
-      margin-top: -16px;
-    }
-    .stack:last-of-type {
-      padding-bottom: 24px;
-    }
-    .stack-card {
-      transform: none;
-      transition:
-        opacity 0.6s ease,
-        translate 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
-    }
-    .stack-card[data-reveal="pending"] {
-      opacity: 0;
-      translate: 0 24px;
-    }
-    .stack-veil {
-      display: none;
-    }
+  /* ── Method stepper ─────────────────────────────────────────────────── */
+  .method-fill {
+    transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
   }
 
   /* ── Splash ─────────────────────────────────────────────────────────── */
@@ -208,75 +257,8 @@
   .sp-word {
     animation: sp-word 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.68s both;
   }
-  @media (prefers-reduced-motion: reduce) {
-    .sp-root {
-      display: none;
-    }
-  }
 
-  /* ── Hero scene ─────────────────────────────────────────────────────── */
-  .hero-noise text {
-    animation:
-      fade-in 1s ease-out calc(var(--i) * 0.14s) both,
-      flicker 4.5s steps(12) calc(1s + var(--i) * 0.14s) infinite;
-  }
-  .hero-beam {
-    transform-box: fill-box;
-    transform-origin: 0 50%;
-    animation: beam-grow 1.1s cubic-bezier(0.4, 0, 0.2, 1) 0.25s both;
-  }
-  .hero-dot {
-    animation: particle-run 2.4s linear calc(0.4s + var(--i) * 0.6s) infinite;
-  }
-  .hero-prism {
-    animation: fade-in 0.8s ease-out 0.3s both;
-  }
-  .hero-ray {
-    transform-box: fill-box;
-    animation: ray-pop 0.9s cubic-bezier(0.18, 1.25, 0.3, 1) both;
-    animation-delay: calc(1.45s + var(--i) * 0.07s);
-  }
-  .hero-ray-0 {
-    transform-origin: left bottom;
-  }
-  .hero-ray-1 {
-    transform-origin: left 33%;
-  }
-  .hero-ray-2 {
-    transform-origin: left top;
-  }
-  .hero-spectral {
-    animation: spectral-settle 2.2s ease-out both;
-    animation-delay: calc(1.45s + var(--i) * 0.07s);
-  }
-  .hero-burst {
-    transform-box: fill-box;
-    transform-origin: center;
-    animation: burst 1s ease-out 1.4s both;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .hero-scene * {
-      animation-duration: 0.01ms !important;
-      animation-delay: 0s !important;
-      animation-iteration-count: 1 !important;
-    }
-  }
-
-  /* ── Work strip (desktop paging) ────────────────────────────────────── */
-  .work-strip {
-    scrollbar-width: none;
-    scroll-behavior: smooth;
-  }
-  .work-strip::-webkit-scrollbar {
-    display: none;
-  }
-
-  /* ── Method stepper ─────────────────────────────────────────────────── */
-  .method-fill {
-    transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
-  }
-
-  /* ── Mobile nav drawer ──────────────────────────────────────────────── */
+  /* ── Drawer ─────────────────────────────────────────────────────────── */
   .mnav {
     position: fixed;
     inset: 0;
@@ -288,132 +270,56 @@
     padding: 0;
     border: 0;
     background: var(--color-ink);
-    color: #fff;
+    color: var(--color-paper);
   }
   .mnav::backdrop {
     background: transparent;
   }
-}
 
-/* ── Mobile overrides that must beat Tailwind utilities ──────────────────
-   Unlayered on purpose: the kit/work grids carry `grid` utilities, and the
-   build card carries padding utilities; these must win below the breakpoints. */
-@media (max-width: 860px) {
-  .snap-row {
-    display: flex;
-    gap: 12px;
-    margin-inline: -20px;
-    padding-inline: 20px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-  }
-  .snap-row::-webkit-scrollbar {
-    display: none;
-  }
-  .snap-row > * {
-    flex: 0 0 78%;
-    scroll-snap-align: start;
-  }
-}
-@media (max-width: 520px) {
-  #build .stack-card {
-    padding: 20px 16px;
-  }
-  .snap-row {
-    margin-inline: -16px;
-    padding-inline: 16px;
+  /* ── Reduced motion ─────────────────────────────────────────────────── */
+  @media (prefers-reduced-motion: reduce) {
+    .sp-root {
+      display: none;
+    }
+    .sticker,
+    .marquee > div {
+      animation: none;
+    }
+    .hero-beam path {
+      animation: none;
+      stroke-dashoffset: 0;
+    }
+    .hero-dots {
+      display: none;
+    }
+    .has-js [data-rv] {
+      opacity: 1;
+      translate: 0;
+      transition: none;
+    }
+    .strip > * {
+      rotate: 0deg;
+    }
   }
 }
 
-/* ── Keyframes (names kept from the handoff) ─────────────────────────── */
-@keyframes beam-grow {
+/* ── Keyframes ───────────────────────────────────────────────────────── */
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes sticker-float {
   from {
-    transform: scaleX(0);
-  }
-}
-@keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-}
-@keyframes flicker {
-  0%,
-  100% {
-    opacity: 0.75;
-  }
-  8% {
-    opacity: 0.35;
-  }
-  12% {
-    opacity: 0.8;
-  }
-  38% {
-    opacity: 0.5;
-  }
-  42% {
-    opacity: 0.85;
-  }
-  71% {
-    opacity: 0.4;
-  }
-  76% {
-    opacity: 0.7;
-  }
-}
-@keyframes particle-run {
-  0% {
-    transform: translateX(0);
-    opacity: 0;
-  }
-  12% {
-    opacity: 1;
-  }
-  88% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateX(430px);
-    opacity: 0;
-  }
-}
-@keyframes ray-pop {
-  from {
-    transform: scale(0);
-  }
-  70% {
-    transform: scale(1.05);
+    transform: rotate(var(--r)) translateY(0);
   }
   to {
-    transform: scale(1);
+    transform: rotate(var(--r)) translateY(-8px);
   }
 }
-@keyframes spectral-settle {
-  0% {
-    opacity: 0;
-  }
-  10% {
-    opacity: 1;
-  }
-  35% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-@keyframes burst {
-  0% {
-    opacity: 0;
-    transform: scale(0.2);
-  }
-  12% {
-    opacity: 0.9;
-  }
-  100% {
-    opacity: 0;
-    transform: scale(16);
+@keyframes marquee {
+  to {
+    transform: translateX(-100%);
   }
 }
 @keyframes sp-reveal {

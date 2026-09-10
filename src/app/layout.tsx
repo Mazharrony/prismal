@@ -1,13 +1,22 @@
 import type { Metadata, Viewport } from "next";
-import { Caveat, IBM_Plex_Mono, Inter, Jost } from "next/font/google";
+import {
+  Big_Shoulders,
+  Caveat,
+  IBM_Plex_Mono,
+  Inter,
+  Jost,
+} from "next/font/google";
 import { SITE } from "@/content/site";
 import "./globals.css";
 
-// The handoff loads these from Google Fonts; next/font self-hosts the same
-// families and exposes them as CSS variables that globals.css maps onto the
-// Tailwind font tokens. Jost, Inter and Caveat are variable fonts, so one file
-// each covers every weight the design uses; IBM Plex Mono is static and needs
-// its two weights named.
+// Self-hosted through next/font. Big Shoulders Display carries the giant
+// uppercase headlines; Jost the wordmark, card titles and stickers; Inter the
+// body; IBM Plex Mono the labels. All variable except Plex, which needs its
+// two weights named.
+const shoulders = Big_Shoulders({
+  subsets: ["latin"],
+  variable: "--font-shoulders",
+});
 const jost = Jost({ subsets: ["latin"], variable: "--font-jost" });
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const plex = IBM_Plex_Mono({
@@ -35,7 +44,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f6f7f9",
+  themeColor: "#0b0f14",
 };
 
 export default function RootLayout({
@@ -44,7 +53,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${jost.variable} ${inter.variable} ${plex.variable} ${caveat.variable}`}
+      className={`${shoulders.variable} ${jost.variable} ${inter.variable} ${plex.variable} ${caveat.variable}`}
     >
       <body>{children}</body>
     </html>

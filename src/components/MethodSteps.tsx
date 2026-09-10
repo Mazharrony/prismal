@@ -35,7 +35,7 @@ export default function MethodSteps() {
   }, []);
 
   return (
-    <div className="relative grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))]">
+    <div className="relative grid grid-cols-3 gap-x-8 max-[860px]:grid-cols-1 max-[860px]:gap-y-2">
       {STEPS.map((s, i) => {
         const reached = i <= step;
         const active = i === step;
@@ -45,7 +45,7 @@ export default function MethodSteps() {
             tabIndex={0}
             onMouseEnter={() => setStep(i)}
             onFocus={() => setStep(i)}
-            className="relative mr-7 cursor-default border-t border-white/[.14] pb-3 pr-7 pt-9 outline-none max-[860px]:mr-0 max-[860px]:pr-0"
+            className="relative cursor-default border-t border-white/[.14] pb-4 pt-10 outline-none"
           >
             <div
               className="method-fill absolute inset-x-0 -top-px h-[3px] origin-left"
@@ -55,20 +55,15 @@ export default function MethodSteps() {
               className="absolute -top-[9px] left-0 h-[18px] w-[18px] rounded-full transition-all duration-500"
               style={{
                 background: reached ? s.color : "#0b0f14",
-                boxShadow: `0 0 0 6px #0b0f14, 0 0 24px ${active ? s.color : "transparent"}`,
+                boxShadow: `0 0 0 6px #0b0f14, 0 0 28px ${active ? s.color : "transparent"}`,
               }}
             />
-            <span
-              className="font-mono text-[11px] tracking-[.2em]"
-              style={{ color: s.color }}
-            >
+            <span className="font-mono text-[11px] tracking-[.2em]" style={{ color: s.color }}>
               STEP {s.num}
             </span>
-            <h3 className="mb-3 mt-3.5 font-display text-[clamp(30px,3vw,44px)] font-medium leading-none text-white">
-              {s.title}
-            </h3>
+            <h3 className="display mb-4 mt-3 text-[clamp(48px,6vw,88px)] text-paper">{s.title}</h3>
             <p
-              className="m-0 text-[16px] leading-[1.65] text-slate-300 transition-opacity duration-500"
+              className="m-0 max-w-[36ch] text-[17px] leading-[1.6] text-muted transition-opacity duration-500"
               style={{ opacity: reached ? 1 : 0.45 }}
             >
               {s.body}

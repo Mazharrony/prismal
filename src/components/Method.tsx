@@ -1,5 +1,5 @@
+import Band from "@/components/Band";
 import MethodSteps from "@/components/MethodSteps";
-import StackCard from "@/components/StackCard";
 import { METHOD_HEAD } from "@/content/site";
 import { eyebrow, h2 } from "@/lib/styles";
 import { cn } from "@/lib/utils";
@@ -7,26 +7,26 @@ import { cn } from "@/lib/utils";
 export default function Method() {
   const [t1, t2] = METHOD_HEAD.title;
   return (
-    <StackCard id="method" top={120} z={5} tone="ink" note={METHOD_HEAD.note}>
+    <Band id="method" tone="ink" className="overflow-hidden">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(ellipse at 15% 0%, #f9d20f2a, transparent 45%), radial-gradient(ellipse at 90% 100%, #0b0f14aa, transparent 50%)",
-        }}
+        className="pointer-events-none absolute -left-40 top-0 h-[700px] w-[700px] rounded-full bg-[radial-gradient(circle,rgba(249,210,15,.18),transparent_62%)]"
       />
-      <div className="relative mb-10 flex flex-wrap items-end justify-between gap-6">
-        <div>
-          <span className={cn(eyebrow, "text-accent")}>{METHOD_HEAD.eyebrow}</span>
-          <h2 className={cn(h2, "mt-3")}>
-            {t1}
-            <br />
-            {t2}
-          </h2>
-        </div>
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-40 bottom-0 h-[600px] w-[600px] rounded-full bg-[radial-gradient(circle,rgba(124,92,255,.28),transparent_62%)]"
+      />
+      <div data-rv>
+        <span className={cn(eyebrow, "text-accent")}>{METHOD_HEAD.eyebrow}</span>
+        <h2 className={cn(h2, "mt-4")}>
+          {t1}
+          <br />
+          {t2}
+        </h2>
       </div>
-      <MethodSteps />
-    </StackCard>
+      <div className="mt-[clamp(40px,6vw,80px)]" data-rv style={{ ["--d" as string]: ".15s" }}>
+        <MethodSteps />
+      </div>
+    </Band>
   );
 }

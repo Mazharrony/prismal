@@ -1,46 +1,64 @@
-import StackCard from "@/components/StackCard";
+import Band from "@/components/Band";
 import { SERVICES, SERVICES_HEAD } from "@/content/site";
-import { eyebrow, h2 } from "@/lib/styles";
+import { eyebrow, focus, h2 } from "@/lib/styles";
 import { cn } from "@/lib/utils";
 
+const CARD = [
+  "bg-accent text-ink",
+  "bg-ink text-paper",
+  "bg-violet text-paper",
+];
+const CTA = [
+  "bg-ink text-paper hover:bg-ink-3",
+  "bg-accent text-ink hover:bg-paper",
+  "bg-paper text-ink hover:bg-accent",
+];
+
+/** Three colour-block cards, one per ray. */
 export default function Services() {
   return (
-    <StackCard id="services" top={78} z={2} note={SERVICES_HEAD.note}>
-      <div className="mb-7 flex flex-wrap items-end justify-between gap-x-10 gap-y-6">
-        <div className="min-w-0 flex-[1_1_380px]">
-          <span className={eyebrow}>{SERVICES_HEAD.eyebrow}</span>
-          <h2 className={cn(h2, "mt-3 text-ink")}>{SERVICES_HEAD.title}</h2>
+    <Band id="services" tone="paper" wave={false}>
+      <div className="flex flex-wrap items-end justify-between gap-x-12 gap-y-6">
+        <div data-rv>
+          <span className={cn(eyebrow, "text-muted-2")}>{SERVICES_HEAD.eyebrow}</span>
+          <h2 className={cn(h2, "mt-4")}>{SERVICES_HEAD.title}</h2>
         </div>
-        <p className="m-0 mb-1.5 max-w-[380px] flex-[1_1_300px] text-[16px] leading-[1.6] text-ink">
+        <p className="m-0 max-w-[380px] text-[17px] leading-[1.55] text-muted-2" data-rv style={{ ["--d" as string]: ".1s" }}>
           {SERVICES_HEAD.intro}
         </p>
       </div>
-      <div className="grid gap-2">
-        {SERVICES.map((s) => (
+
+      <div className="mt-[clamp(36px,5vw,64px)] grid grid-cols-3 gap-5 max-[1024px]:grid-cols-1">
+        {SERVICES.map((s, i) => (
           <a
             key={s.num}
             href="#contact"
-            style={{ background: s.bg, color: s.fg }}
-            className="grid grid-cols-[48px_minmax(0,1fr)_32px] grid-rows-[auto_auto] items-start gap-x-5 gap-y-2 rounded-[18px] px-7 py-6 transition-transform duration-[250ms] hover:translate-x-3 max-[520px]:grid-cols-[36px_minmax(0,1fr)_24px] max-[520px]:px-5"
+            data-rv
+            style={{ ["--d" as string]: `${i * 0.12}s` }}
+            className={cn(
+              "group relative flex min-h-[440px] flex-col overflow-hidden rounded-[32px] p-8 transition-transform duration-300 hover:-translate-y-2 hover:-rotate-1 max-[1024px]:min-h-0",
+              CARD[i],
+              focus,
+            )}
           >
-            <span className="pt-2.5 font-mono text-[12px] leading-none tracking-[.2em] opacity-70">
-              {s.num}
-            </span>
-            <h3 className="m-0 font-display text-[clamp(26px,2.6vw,36px)] font-medium leading-[1.1] tracking-[-.01em]">
+            <span className="display text-[96px] leading-none opacity-30">{s.num}</span>
+            <h3 className="m-0 mt-auto font-brand text-[clamp(30px,2.8vw,40px)] font-medium leading-[1.05]">
               {s.title}
             </h3>
-            <span
-              aria-hidden="true"
-              className="pt-1.5 text-right text-[22px] leading-none"
-            >
-              →
-            </span>
-            <p className="col-start-2 m-0 max-w-[560px] text-[15px] leading-[1.5] opacity-85 max-[520px]:col-[1/-1]">
+            <p className="m-0 mt-4 max-w-[34ch] text-[16px] leading-[1.55] opacity-85">
               {s.body}
             </p>
+            <span
+              className={cn(
+                "mt-8 inline-flex w-fit items-center gap-2 rounded-full px-5 py-3 font-brand text-[15px] font-semibold transition-colors",
+                CTA[i],
+              )}
+            >
+              Build this <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">→</span>
+            </span>
           </a>
         ))}
       </div>
-    </StackCard>
+    </Band>
   );
 }

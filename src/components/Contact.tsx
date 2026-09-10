@@ -1,38 +1,35 @@
+import Band from "@/components/Band";
 import ContactPanel from "@/components/ContactPanel";
 import Footer from "@/components/Footer";
-import StackCard from "@/components/StackCard";
 import { CONTACT, SITE } from "@/content/site";
-import { eyebrow } from "@/lib/styles";
+import { eyebrow, h2 } from "@/lib/styles";
 import { cn } from "@/lib/utils";
 
 export default function Contact() {
   return (
-    <StackCard
+    <Band
       id="contact"
-      top={176}
-      z={9}
       tone="ink"
-      pad="contact"
-      note={CONTACT.note}
-      sectionClassName="gap-6 pb-6"
-      bodyClassName="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] content-center items-center gap-10 max-[860px]:grid-cols-1"
-      after={<Footer />}
+      wave={false}
+      className="overflow-hidden !pb-8"
+      innerClassName="grid grid-cols-[1.1fr_1fr] items-center gap-12 max-[1024px]:grid-cols-1"
     >
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -right-20 -top-20 h-[360px] w-[360px] rounded-full bg-[radial-gradient(circle,#f9d20f66,transparent_70%)]"
+        className="pointer-events-none absolute -right-40 -top-56 h-[720px] w-[720px] rounded-full bg-[radial-gradient(circle,rgba(249,210,15,.28),transparent_62%)]"
       />
-      <div className="relative">
-        <span className={cn(eyebrow, "text-line")}>{CONTACT.eyebrow}</span>
-        <h2 className="mb-[18px] mt-3.5 font-display text-[clamp(44px,6vw,88px)] font-medium leading-[.95] tracking-[-.025em]">
-          {CONTACT.title}
-        </h2>
-        <p className="m-0 max-w-[520px] text-[17px] leading-[1.65] text-line">
-          {CONTACT.intro}
-        </p>
-        <p className="m-0 mt-[22px] text-[14px] text-line">{SITE.location}</p>
+      <div data-rv>
+        <span className={cn(eyebrow, "text-accent")}>{CONTACT.eyebrow}</span>
+        <h2 className={cn(h2, "mt-4 text-[clamp(56px,9vw,150px)]")}>{CONTACT.title}</h2>
+        <p className="m-0 mt-6 max-w-[520px] text-[18px] leading-[1.6] text-paper/85">{CONTACT.intro}</p>
+        <p className="m-0 mt-5 text-[14px] text-muted">{SITE.location}</p>
       </div>
-      <ContactPanel />
-    </StackCard>
+      <div data-rv style={{ ["--d" as string]: ".15s" }}>
+        <ContactPanel />
+      </div>
+      <div className="col-span-full mt-[clamp(48px,8vw,112px)]">
+        <Footer />
+      </div>
+    </Band>
   );
 }

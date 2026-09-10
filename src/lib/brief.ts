@@ -1,6 +1,6 @@
 /** Shared shape of the Brief form's action state (client and server). */
 
-export type BriefField = "name" | "company" | "email" | "brief";
+export type BriefField = "name" | "company" | "email" | "brief" | "service";
 
 export type BriefState = {
   status: "idle" | "sent" | "error";

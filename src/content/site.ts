@@ -71,6 +71,17 @@ export const HERO = {
 
 export type RayTone = (typeof HERO.rays)[number]["tone"];
 
+/** Hero trust stickers. Only claims the site can back up. */
+export const TRUST = [
+  "12 live builds",
+  "Reply within 48h",
+  "Fixed-price sprint",
+  "You own the code",
+] as const;
+
+/** The brand line on a loop above the contact band. */
+export const MARQUEE = ["Noise in.", "Spectrum out.", "Prismal"] as const;
+
 /* ── 01 Services ──────────────────────────────────────────────────────── */
 
 export type Service = {
@@ -472,6 +483,13 @@ export const CONTACT = {
   note: "Last stop — say hello ↓",
   tabs: ["Brief", "Email", "WhatsApp"],
   form: {
+    pickLabel: "WHAT DO YOU NEED?",
+    picks: [
+      { label: "Website", prefill: "We need a website that " },
+      { label: "Software", prefill: "We need software that " },
+      { label: "AI & Automation", prefill: "We want to automate " },
+      { label: "Not sure yet", prefill: "The noise we have is " },
+    ],
     name: { label: "YOUR NAME", placeholder: "Alex" },
     company: { label: "COMPANY", placeholder: "Business name" },
     email: { label: "YOUR EMAIL", placeholder: "you@company.com" },

@@ -18,11 +18,13 @@ const schema = z.object({
     .trim()
     .min(10, "A sentence or two is enough — what needs building?")
     .max(2000, "Keep it under 2000 characters."),
+  /** Quick-pick chip, if one was chosen. */
+  service: z.string().trim().max(40).default(""),
   // Honeypot: a hidden field a person never sees. Anything in it is a bot.
   website: z.string().default(""),
 });
 
-const FIELDS: readonly BriefField[] = ["name", "company", "email", "brief"];
+const FIELDS: readonly BriefField[] = ["name", "company", "email", "brief", "service"];
 const SEND_FAILED = "Couldn't send just now — email us directly at";
 
 export async function sendBrief(
@@ -46,16 +48,17 @@ export async function sendBrief(
     return { status: "sent" };
   }
 
-  const { name, company, email, brief } = parsed.data;
+  const { name, company, email, brief, service } = parsed.data;
   const to = process.env.BRIEF_TO_EMAIL ?? SITE.email;
   const from = process.env.BRIEF_FROM_EMAIL ?? `${SITE.name} <${SITE.email}>`;
   const key = process.env.RESEND_API_KEY;
 
-  const subject = `New brief — ${name}${company ? ` · ${company}` : ""}`;
+  const subject = `New brief — ${name}${company ? ` · ${company}` : ""}${service ? ` · ${service}` : ""}`;
   const text = [
     `Name: ${name}`,
     `Company: ${company || "—"}`,
     `Email: ${email}`,
+    `Needs: ${service || "—"}`,
     "",
     brief,
   ].join("\n");
