@@ -666,6 +666,72 @@
     background: transparent;
   }
 
+  /* ── Policy tables (legal pages) ────────────────────────────────────── */
+  .legal-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+  }
+  .legal-table th,
+  .legal-table td {
+    padding: 16px 20px 16px 0;
+    vertical-align: top;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .legal-table th {
+    font: 500 11px/1.4 var(--font-mono);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    border-top: 0;
+    padding-top: 0;
+  }
+  .legal-table td {
+    font-size: 16px;
+    line-height: 1.6;
+    color: rgb(243 239 230 / 0.85);
+  }
+  .legal-table td:first-child {
+    color: var(--color-paper);
+  }
+  /* Below 640px the columns stack and each cell prints its own heading, so
+     the table stays readable without sideways scrolling. */
+  @media (max-width: 640px) {
+    .legal-table thead {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+    .legal-table tr,
+    .legal-table td {
+      display: block;
+    }
+    .legal-table tr {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-block: 8px;
+    }
+    .legal-table tr:first-child {
+      border-top: 0;
+      padding-top: 0;
+    }
+    .legal-table td {
+      border-top: 0;
+      padding: 8px 0;
+    }
+    .legal-table td::before {
+      content: attr(data-label);
+      display: block;
+      margin-bottom: 4px;
+      font: 500 11px/1.4 var(--font-mono);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+    }
+  }
+
   /* ── Reduced motion ─────────────────────────────────────────────────── */
   @media (prefers-reduced-motion: reduce) {
     .sp-root {
