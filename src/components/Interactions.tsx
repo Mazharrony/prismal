@@ -13,6 +13,7 @@ const clamp = (n: number, a: number, b: number) => Math.min(b, Math.max(a, n));
  *   `data-depth`.
  * - The header tucks away on scroll down and returns on scroll up.
  * - `#scroll-progress` tracks page position.
+ * - The marquee takes its speed, direction and lean from scroll velocity.
  *
  * Everything is transform-only and skipped under reduced motion; pointer
  * effects run on fine pointers only.
@@ -29,6 +30,51 @@ export default function Interactions() {
     const heroEl = document.getElementById("hero");
     let last = window.scrollY;
     let raf = 0;
+
+    // Scrollable height, measured when the page changes size rather than on
+    // every frame: reading scrollHeight inside the scroll loop forces layout.
+    let max = 0;
+    const measure = () => {
+      max = document.documentElement.scrollHeight - window.innerHeight;
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(document.body);
+    window.addEventListener("resize", measure);
+    cleanups.push(() => {
+      ro.disconnect();
+      window.removeEventListener("resize", measure);
+    });
+
+    /* ── marquee: velocity → playback rate and lean ───────────────────── */
+    // The marquee keeps its CSS animation; scrolling down speeds it up,
+    // scrolling up runs it backwards, and the strip leans into the motion.
+    // `dy` is the latest per-frame delta and decays once scrolling stops, so
+    // the strip eases back to its idle drift instead of snapping.
+    const marquee = document.querySelector<HTMLElement>(".marquee");
+    let anims: Animation[] = [];
+    let dy = 0;
+    let vel = 0;
+    let vr = 0;
+    // Gains are deliberately soft: a hard flick under Lenis is ~40px a frame,
+    // which lands around 3x and 7deg, well short of the clamps. Louder than
+    // that reads as frantic rather than responsive.
+    const lean = () => {
+      vel += (dy - vel) * 0.15;
+      dy *= 0.8;
+      if (!anims.length && marquee) anims = Array.from(marquee.children).flatMap((c) => c.getAnimations());
+      const rate = clamp(1 + vel * 0.05, -4, 4);
+      for (const a of anims) a.playbackRate = rate;
+      const settled = Math.abs(vel) <= 0.05 && Math.abs(dy) <= 0.05;
+      if (marquee) {
+        marquee.style.transform = settled ? "" : `skewX(${clamp(-vel * 0.12, -8, 8).toFixed(2)}deg)`;
+        // Promote the strip to its own layer only while it is actually moving.
+        marquee.style.willChange = settled ? "" : "transform";
+      }
+      vr = settled ? 0 : requestAnimationFrame(lean);
+    };
+    cleanups.push(() => cancelAnimationFrame(vr));
+
     const onScroll = () => {
       if (raf) return;
       raf = requestAnimationFrame(() => {
@@ -42,9 +88,10 @@ export default function Interactions() {
           if (down) header.dataset.hidden = "";
           else if (up) delete header.dataset.hidden;
         }
-        if (bar) {
-          const max = document.documentElement.scrollHeight - window.innerHeight;
-          bar.style.transform = `scaleX(${max > 0 ? y / max : 0})`;
+        if (bar) bar.style.transform = `scaleX(${max > 0 ? y / max : 0})`;
+        if (marquee && !reduced) {
+          dy = y - last;
+          if (!vr) vr = requestAnimationFrame(lean);
         }
         last = y;
       });

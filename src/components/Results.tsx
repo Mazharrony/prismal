@@ -1,5 +1,5 @@
 import Band from "@/components/Band";
-import Headline from "@/components/Headline";
+import Headline, { Chars } from "@/components/Headline";
 import { RESULTS_HEAD, STATS } from "@/content/site";
 import { eyebrow, h2 } from "@/lib/styles";
 import { cn } from "@/lib/utils";
@@ -20,8 +20,15 @@ export default function Results() {
             style={{ ["--d" as string]: `${i * 0.1}s` }}
             className="min-w-0 border-t-2 border-accent pb-6 pt-6"
           >
-            <div className="display whitespace-nowrap text-[clamp(64px,6.6vw,120px)] text-accent">
-              {s.value}
+            {/* One glyph per box for the rise; the label keeps it one word to a screen reader. */}
+            <div
+              role="img"
+              aria-label={s.value}
+              className="hl display whitespace-nowrap text-[clamp(64px,6.6vw,120px)] text-accent"
+            >
+              <span aria-hidden="true">
+                <Chars text={s.value} />
+              </span>
             </div>
             <p className="m-0 mt-3 max-w-[26ch] text-[15px] leading-[1.5] text-muted">{s.label}</p>
           </div>

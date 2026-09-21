@@ -18,6 +18,23 @@ export function Words({ text, from = 0 }: { text: string; from?: number }) {
   );
 }
 
+/** The same rise one glyph at a time, for short figures rather than sentences. */
+export function Chars({ text, from = 0 }: { text: string; from?: number }) {
+  return (
+    <>
+      {Array.from(text).map((c, i) =>
+        c === " " ? (
+          <span key={i}> </span>
+        ) : (
+          <span key={i} className="w" style={{ "--i": from + i } as CSSProperties}>
+            <span>{c}</span>
+          </span>
+        ),
+      )}
+    </>
+  );
+}
+
 /**
  * A display headline whose words rise into view when its `data-rv` ancestor
  * (or itself) enters the viewport. `lines` renders one line per entry; a

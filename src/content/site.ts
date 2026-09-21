@@ -49,8 +49,8 @@ export const FOOTER_NAV: readonly NavLink[] = [
 /* ── Hero ─────────────────────────────────────────────────────────────── */
 
 export const HERO = {
-  noiseEyebrow: "NOISE IN",
-  spectrumEyebrow: "SPECTRUM OUT",
+  /** The offer in three words, so the label above the headline doesn't just repeat it. */
+  eyebrow: "Websites · Software · AI automation",
   sceneLabel:
     "Operational noise entering a prism and refracting into three rays",
   /** The flickering phrases in the SVG scene, with their `x`/`y` in viewBox units. */
@@ -74,14 +74,6 @@ export const HERO = {
 } as const;
 
 export type RayTone = (typeof HERO.rays)[number]["tone"];
-
-/** Hero trust stickers, in shape order: burst · pill · tag · burst. */
-export const TRUST = [
-  "12 live builds",
-  "1-hour replies",
-  "Fixed price, no surprises",
-  "You own the code",
-] as const;
 
 /** The brand line on a loop above the contact band. */
 export const MARQUEE = ["Noise in.", "Spectrum out.", "Prismal"] as const;
@@ -212,7 +204,7 @@ export const KITS: readonly Kit[] = [
 
 export const WORK_HEAD = {
   eyebrow: "03 · SELECTED WORK",
-  title: "Twelve builds, one method.",
+  title: "Thirteen builds, one method.",
   intro: "All live, all clickable. Go and poke around.",
   note: "All live — click through ↓",
   swipe: "SWIPE →",
@@ -243,6 +235,11 @@ export type WorkItem = {
   capability: Capability;
   /** 800×500 screenshot under /public/work. */
   image: string;
+  /** Spans the full grid width. Keep to one, at the end, or the grid goes ragged. */
+  featured?: boolean;
+  /** A second paragraph, shown on a featured card only. Same rule as `built`:
+   *  only what the linked page actually shows. */
+  detail?: string;
 };
 
 export const WORK: readonly WorkItem[] = [
@@ -343,7 +340,37 @@ export const WORK: readonly WorkItem[] = [
     capability: "websites",
     image: "/work/ravenala.jpg",
   },
+  {
+    name: "Mali the FirmBot",
+    // Mali itself is not public yet, so the link goes to the Bangla language
+    // model it runs on — the only part a visitor can actually inspect today.
+    // Swap this for Mali's own URL once it ships, per the `built` rule above.
+    url: "https://github.com/Mazharrony/BanglaLM",
+    // Client-supplied positioning. Unlike every other `built` line, the "up to
+    // 70%" figure is not shown on the linked page and is not verified here —
+    // it is an exception to the no-metric rule above, kept at the client's ask.
+    built: "Firm automation that takes on up to 70% of routine admin, in Bangla",
+    capability: "ai-automation",
+    image: "/work/mali-firmbot.jpg",
+    featured: true,
+    // Every number here is stated in the BanglaLM README; nothing is inferred.
+    detail:
+      "Mali runs on BanglaLM: a 27M-parameter decoder-only Transformer written from first principles — attention, causal masking and rotary embeddings in roughly 600 lines — with its own Bangla sub-word tokenizer, a full training loop and 255 tests. Nothing pretrained, no external API.",
+  },
 ];
+
+/**
+ * Hero trust stickers, in shape order: burst · pill · tag · burst. The two
+ * bursts are ~120px discs, so their lines stay at two short words. No hard
+ * numbers here by choice: a count or an SLA on a sticker has to be kept true
+ * forever, and "12 live builds" had already drifted once.
+ */
+export const TRUST = [
+  "Weekly releases",
+  "Fast response times",
+  "Fixed price, no hidden fees",
+  "Full code ownership",
+] as const;
 
 /* ── The Prism Method ─────────────────────────────────────────────────── */
 

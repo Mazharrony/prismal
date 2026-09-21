@@ -48,7 +48,7 @@ export default function Hero() {
               <path key={d} d={d} fill={RAY_FILL[i]} />
             ))}
           </svg>
-          <span className={cn(eyebrow, "text-muted")}>{HERO.noiseEyebrow} → {HERO.spectrumEyebrow}</span>
+          <span className={cn(eyebrow, "text-muted")}>{HERO.eyebrow}</span>
         </div>
 
         <div className="relative mt-8">

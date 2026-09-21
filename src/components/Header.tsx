@@ -1,4 +1,3 @@
-import Image from "next/image";
 import MobileNav from "@/components/MobileNav";
 import { NAV, NAV_CTA, SITE } from "@/content/site";
 import { focus, pillAccent } from "@/lib/styles";
@@ -9,15 +8,7 @@ export default function Header() {
   return (
     <header data-header="" className="pointer-events-none fixed inset-x-0 top-4 z-50 flex justify-center px-4">
       <div className="glass pointer-events-auto flex items-center gap-1 rounded-full p-1.5 pl-4">
-        <a href="#top" className={cn("mr-2 flex items-center gap-2.5 rounded-full", focus)}>
-          <Image
-            src="/02-mark-reversed.svg"
-            alt=""
-            width={29}
-            height={20}
-            priority
-            className="block h-5 w-auto"
-          />
+        <a href="#top" className={cn("mr-2 flex items-center rounded-full", focus)}>
           <span className="font-brand text-[13px] font-medium tracking-[.35em] text-paper">
             {SITE.name}
           </span>
