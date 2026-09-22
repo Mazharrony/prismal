@@ -388,6 +388,133 @@
     color: var(--color-ink);
   }
 
+  /* ── Work deck (desktop) ─────────────────────────────────────────────── */
+  /* Every card is centred, then pushed out by `--side` (−1/0/1) and `--d`
+     (distance from the front). Only transforms change between states.
+     All cards share one shape — 8:5 face on top, paper strip below — so the
+     front card shows its whole screenshot. Hidden at 860px and below, where
+     the grid takes over. */
+  .deck {
+    --card-w: min(560px, 58vw);
+    --card-h: 512px;
+    --step: 60px;
+    position: relative;
+    height: 592px;
+    touch-action: pan-y;
+    user-select: none;
+  }
+  .deck-card {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    display: flex;
+    flex-direction: column;
+    width: var(--card-w);
+    height: var(--card-h);
+    overflow: hidden;
+    border-radius: 24px;
+    background: var(--color-paper);
+    box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.8);
+    transform: translate(calc(-50% + var(--side) * (8px + var(--d) * var(--step))), -50%)
+      scale(calc(1 - var(--d) * 0.035)) rotate(calc(var(--side) * var(--d) * 1.2deg));
+    transition:
+      transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1),
+      opacity 0.4s;
+  }
+  .deck-card.is-active {
+    transform: translate(-50%, -50%);
+  }
+  .deck-card.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .deck-face {
+    position: relative;
+    flex: none;
+    width: 100%;
+    aspect-ratio: 8 / 5;
+    overflow: hidden;
+    background: var(--color-ink-2);
+  }
+  .deck-face img {
+    transition: filter 0.5s;
+  }
+  .deck-card:not(.is-active) .deck-face img {
+    filter: brightness(0.55) saturate(0.8);
+  }
+  .deck-card:not(.is-active):hover .deck-face img {
+    filter: brightness(0.75) saturate(0.9);
+  }
+  .deck-shade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(11, 15, 20, 0.35), transparent 40%);
+    pointer-events: none;
+  }
+  .deck-info {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 18px 22px 16px;
+    color: var(--color-ink);
+  }
+  /* Full-card hit area for cards in the fan, carrying the spine. */
+  .deck-hit {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    transition: opacity 0.3s;
+  }
+  .deck-card.is-active .deck-hit {
+    opacity: 0;
+    pointer-events: none;
+  }
+  /* The spine: a coloured strip on the outer edge carrying the name. */
+  .deck-spine {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 52px;
+    display: grid;
+    place-items: center;
+    writing-mode: vertical-rl;
+    font-family: var(--font-brand);
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .deck-card.is-left .deck-spine {
+    left: 0;
+    transform: rotate(180deg);
+  }
+  .deck-card.is-right .deck-spine {
+    right: 0;
+  }
+  .deck-burst {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 900px;
+    height: 900px;
+    translate: -50% -44%;
+    opacity: 0.75;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .deck-burst-a {
+    transform-origin: 0 0;
+    animation: spin 140s linear infinite;
+  }
+  .deck-burst-b {
+    transform-origin: 0 0;
+    animation: spin 90s linear infinite reverse;
+  }
+
   /* ── Letter form ────────────────────────────────────────────────────── */
   .field {
     position: relative;
@@ -626,6 +753,13 @@
       scale: 1;
       transition: none;
     }
+    .deck-burst-a,
+    .deck-burst-b {
+      animation: none;
+    }
+    .deck-card {
+      transition: none;
+    }
     .typing-dot,
     .glass::before {
       animation: none;
@@ -663,6 +797,11 @@
 @keyframes draw {
   to {
     stroke-dashoffset: 0;
+  }
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
 }
 @keyframes node-pop {

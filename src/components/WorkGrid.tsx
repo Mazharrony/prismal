@@ -31,6 +31,7 @@ const CHIPS = FILTERS.filter((f) => count(f.key) > 0);
 const host = (url: string) => new URL(url).hostname.replace(/^www\./, "");
 
 /**
+ * Phones and small tablets only — the deck takes over above 860px.
  * Every live build as a grid: all of them visible at once, each card a
  * screenshot, what we built and a link straight to the site. The capability
  * chips narrow the grid to one of the three rays. A portfolio has to be

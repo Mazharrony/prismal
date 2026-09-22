@@ -1,14 +1,15 @@
 import Band from "@/components/Band";
 import Headline from "@/components/Headline";
+import WorkDeck from "@/components/WorkDeck";
 import WorkGrid from "@/components/WorkGrid";
 import { WORK_HEAD } from "@/content/site";
 import { eyebrow, h2 } from "@/lib/styles";
 import { cn } from "@/lib/utils";
 
-/** Selected work: every live build as a scannable grid on ink. */
+/** Selected work: the builds as a fanned deck on desktop, a grid on phones. */
 export default function Work() {
   return (
-    <Band id="work" tone="ink" flip>
+    <Band id="work" tone="ink" flip className="overflow-hidden">
       <div className="flex flex-wrap items-end justify-between gap-x-12 gap-y-6">
         <div data-rv>
           <span className={cn(eyebrow, "text-accent")}>{WORK_HEAD.eyebrow}</span>
@@ -18,7 +19,13 @@ export default function Work() {
           {WORK_HEAD.intro}
         </p>
       </div>
-      <WorkGrid />
+      {/* The fan needs width to spread; below 860px every build gets its own card instead. */}
+      <div className="max-[860px]:hidden">
+        <WorkDeck />
+      </div>
+      <div className="hidden max-[860px]:block">
+        <WorkGrid />
+      </div>
     </Band>
   );
 }
