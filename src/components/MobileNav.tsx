@@ -8,9 +8,16 @@ import { cn } from "@/lib/utils";
 /**
  * Full-screen ink drawer. Opened from the header's hamburger below 860px and
  * from the dock's "Menu" at any size. A native <dialog> opened modally gives
- * the focus trap, Escape handling and focus return for free.
+ * the focus trap, Escape handling and focus return for free. `base` prefixes
+ * the in-page links away from the one-pager, as in Header and Footer.
  */
-export default function MobileNav({ trigger = "header" }: { trigger?: "header" | "dock" }) {
+export default function MobileNav({
+  trigger = "header",
+  base = "",
+}: {
+  trigger?: "header" | "dock";
+  base?: string;
+}) {
   const dialog = useRef<HTMLDialogElement>(null);
   const [open, setOpen] = useState(false);
 
@@ -93,7 +100,7 @@ export default function MobileNav({ trigger = "header" }: { trigger?: "header" |
             {NAV.map((l, i) => (
               <a
                 key={l.href}
-                href={l.href}
+                href={`${base}${l.href}`}
                 onClick={() => setOpen(false)}
                 className={cn(
                   "display flex items-center justify-between border-t border-white/[.12] py-4 text-[clamp(40px,8vw,88px)] text-paper transition-colors hover:text-accent",
@@ -108,7 +115,7 @@ export default function MobileNav({ trigger = "header" }: { trigger?: "header" |
             ))}
           </nav>
           <a
-            href={NAV_CTA.href}
+            href={`${base}${NAV_CTA.href}`}
             onClick={() => setOpen(false)}
             className={cn(pillAccent, focus, "mt-auto px-6 py-4 text-[16px]")}
           >

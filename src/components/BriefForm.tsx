@@ -1,9 +1,10 @@
 "use client";
 
-import { useActionState, useId, useRef, useState } from "react";
+import { useActionState, useEffect, useId, useRef, useState } from "react";
 import { sendBrief } from "@/app/actions/send-brief";
 import { Field, TextField } from "@/components/ui/Field";
 import { CONTACT, SITE, type Channel } from "@/content/site";
+import { track } from "@/lib/analytics";
 import { initialBriefState, type BriefField } from "@/lib/brief";
 import { focus } from "@/lib/styles";
 import { cn } from "@/lib/utils";
@@ -35,6 +36,12 @@ function Form({ onReset }: { onReset: () => void }) {
   const id = (f: BriefField) => `${uid}-${f}`;
   const err = (f: BriefField) => state.fieldErrors?.[f]?.[0];
   const value = (f: BriefField) => state.values?.[f] ?? "";
+
+  // One conversion event per successful send. The sent view replaces the
+  // form, so the chips can't change afterwards and this can't fire twice.
+  useEffect(() => {
+    if (state.status === "sent") track("Brief sent", { service: pick || "unspecified", channel });
+  }, [state.status, pick, channel]);
 
   if (state.status === "sent") {
     return (

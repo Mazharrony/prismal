@@ -12,15 +12,22 @@
  */
 
 export const SITE = {
+  /** The wordmark, as set in the header, footer and splash. */
   name: "PRISMAL",
+  /** The name in running text, titles and structured data. */
+  brand: "Prismal",
   url: "https://prismal.ae",
   title: "Prismal — Websites, software & AI automation, Dubai",
   description:
     "Websites that win clients. Software that does the admin. AI that keeps both running while you sleep. Built in Dubai for the UAE and GCC.",
   location: "Dubai, UAE — working across the UAE & GCC",
   email: "hello@prismal.ae",
+  /* One number, held three ways on purpose: the display form is what a person
+   * reads, wa.me only accepts digits, and tel: links and structured data want
+   * E.164. Deriving one from another at each call site invites a broken link. */
   whatsappNumber: "+971 50 721 7156",
   whatsappHref: "https://wa.me/971507217156",
+  phone: "+971507217156",
   copyright: "© 2026 PRISMAL — NOISE IN. SPECTRUM OUT.",
 } as const;
 
@@ -49,8 +56,11 @@ export const FOOTER_NAV: readonly NavLink[] = [
 /* ── Hero ─────────────────────────────────────────────────────────────── */
 
 export const HERO = {
-  /** The offer in three words, so the label above the headline doesn't just repeat it. */
-  eyebrow: "Websites · Software · AI automation",
+  /**
+   * The offer, in words, above the slogan. This line is the page's h1 — the
+   * slogan is display copy — so it names what the studio does and where.
+   */
+  eyebrow: "Websites · Software · AI automation · Dubai",
   sceneLabel:
     "Operational noise entering a prism and refracting into three rays",
   /** The flickering phrases in the SVG scene, with their `x`/`y` in viewBox units. */
@@ -204,7 +214,7 @@ export const KITS: readonly Kit[] = [
 
 export const WORK_HEAD = {
   eyebrow: "03 · SELECTED WORK",
-  title: "Thirteen builds, one method.",
+  title: "Twelve builds, one method.",
   intro: "All live, all clickable. Go and poke around.",
   note: "All live — click through ↓",
   swipe: "SWIPE →",
@@ -227,6 +237,8 @@ export const CAPABILITY_LABEL: Record<Capability, string> = {
  */
 export type WorkItem = {
   name: string;
+  /** URL segment for the build's own page, once it has one. Stable: it will be linked to. */
+  slug: string;
   url: string;
   /** What we built, in features a visitor can see on the page. */
   built: string;
@@ -235,6 +247,8 @@ export type WorkItem = {
   capability: Capability;
   /** 800×500 screenshot under /public/work. */
   image: string;
+  /** What the screenshot shows, for people who can't see it and for image search. */
+  alt: string;
   /** Spans the full grid width. Keep to one, at the end, or the grid goes ragged. */
   featured?: boolean;
   /** A second paragraph, shown on a featured card only. Same rule as `built`:
@@ -245,103 +259,121 @@ export type WorkItem = {
 export const WORK: readonly WorkItem[] = [
   {
     name: "JNK Nutrition",
+    slug: "jnk-nutrition",
     url: "https://jnknutrition.com",
     built: "Bilingual supplement store with brand pages, blog and app sign-up",
     location: "Dubai",
     capability: "websites",
     image: "/work/jnk-nutrition.jpg",
+    alt: "The JNK Nutrition supplement store homepage",
   },
   {
     name: "Core Champs",
+    slug: "core-champs",
     url: "https://corechamps.us",
     built: "Authentication tool where buyers verify a code printed on the pack",
     capability: "custom-software",
     image: "/work/core-champs.jpg",
+    alt: "The Core Champs pack-code verification screen",
   },
   {
     name: "Avion Realty",
+    slug: "avion-realty",
     // The apex avionrealty.ae does not resolve; only the www host does.
     url: "https://www.avionrealty.ae",
     built: "Property portal with search by type, bedrooms, price and currency",
     location: "Dubai",
     capability: "websites",
     image: "/work/avion-realty.jpg",
+    alt: "The Avion Realty property portal with its listing search",
   },
   {
     name: "Shobkichu",
+    slug: "shobkichu",
     url: "https://www.shobkichu.com.bd",
     built: "Bengali marketplace with category browsing, deals and cash on delivery",
     location: "Bangladesh",
     capability: "websites",
     image: "/work/shobkichu.jpg",
+    alt: "The Shobkichu marketplace homepage",
   },
   {
     name: "Glow & Lean",
+    slug: "glow-and-lean",
     url: "https://www.glownlean.com",
     built: "Cosmetics store with category browsing, timed deals and a journal",
     location: "Bangladesh",
     capability: "websites",
     image: "/work/glow-n-lean.jpg",
+    alt: "The Glow & Lean cosmetics store homepage",
   },
   {
     name: "Scoops Monster",
+    slug: "scoops-monster",
     url: "https://scoopsmonster.com",
     built: "Supplement brand site with a shop and pack verification",
     location: "United States",
     capability: "websites",
     image: "/work/scoops-monster.jpg",
+    alt: "The Scoops Monster supplement brand homepage",
   },
   {
     name: "HENJ Trading",
+    slug: "henj-trading",
     // henj-uae.com serves a holding page; the finished site is on Vercel.
     url: "https://henj.vercel.app",
     built: "Product catalogue with call, WhatsApp and enquiry actions",
     location: "Dubai",
     capability: "websites",
     image: "/work/henj.jpg",
+    alt: "The HENJ Trading product catalogue",
   },
   {
     name: "Distinct Solutions",
+    slug: "distinct-solutions",
     url: "https://www.distinct-solutions.ae",
     built: "Maintenance and fit-out site with quote requests and WhatsApp contact",
     location: "Dubai",
     capability: "websites",
     image: "/work/distinct.jpg",
+    alt: "The Distinct Solutions maintenance and fit-out homepage",
   },
   {
     name: "Eva Design Furniture",
+    slug: "eva-design-furniture",
     url: "https://www.evafurniture.ae",
     built: "Atelier site with collections, journal and consultation booking",
     location: "Dubai",
     capability: "websites",
     image: "/work/eva-furniture.jpg",
+    alt: "The Eva Design Furniture atelier homepage",
   },
   {
     name: "One Ton Pickup",
+    slug: "one-ton-pickup",
     url: "https://www.onetonpickup.com",
     built: "Rental site with vehicle specs, coverage areas, FAQ and one-tap calling",
     location: "Dubai",
     capability: "websites",
     image: "/work/one-ton-pickup.jpg",
+    alt: "The One Ton Pickup vehicle rental homepage",
   },
   {
     name: "Digital Point Real Estate",
+    slug: "digital-point-real-estate",
     url: "https://digitalpointrealty-eight.vercel.app",
     built: "Property site covering leasing, management and sales enquiries",
     location: "Abu Dhabi",
     capability: "websites",
     image: "/work/digital-point.jpg",
+    alt: "The Digital Point Real Estate homepage",
   },
-  {
-    name: "Ravenala Beach Bungalows",
-    url: "https://ravenala-tau.vercel.app",
-    built: "Resort site with rooms, amenities, gallery and booking",
-    location: "Moalboal, Cebu",
-    capability: "websites",
-    image: "/work/ravenala.jpg",
-  },
+  // Ravenala Beach Bungalows (Moalboal, Cebu) is out of the list while its
+  // Vercel host answers 402: a dead link is worse than a short list. The
+  // screenshot stays in /public/work for when the resort is live again.
   {
     name: "Mali the FirmBot",
+    slug: "mali-the-firmbot",
     // Mali itself is not public yet, so the link goes to the Bangla language
     // model it runs on — the only part a visitor can actually inspect today.
     // Swap this for Mali's own URL once it ships, per the `built` rule above.
@@ -352,6 +384,7 @@ export const WORK: readonly WorkItem[] = [
     built: "Firm automation that takes on up to 70% of routine admin, in Bangla",
     capability: "ai-automation",
     image: "/work/mali-firmbot.jpg",
+    alt: "Diagram of the BanglaLM stack behind Mali: a prism splitting one beam into tokenizer, transformer and training loop",
     featured: true,
     // Every number here is stated in the BanglaLM README; nothing is inferred.
     detail:
@@ -533,6 +566,7 @@ export const CONTACT = {
   rail: {
     email: "Email",
     whatsapp: "WhatsApp",
+    call: "Call",
     based: "Based in",
     hours: "We reply within 1 hour",
   },

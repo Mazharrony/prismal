@@ -21,7 +21,9 @@ const NODES = [0.1, 0.32, 0.5, 0.66, 0.84];
 /**
  * The opening screen: the beam draws itself through the headline while the
  * trust stickers float around it. Stickers sit absolutely on desktop and drop
- * into a wrapped row under the headline on phones.
+ * into a wrapped row under the headline on phones. The small line above the
+ * headline is the page's h1 — the offer in words a search engine can use —
+ * and the giant slogan is display copy, so it stays a paragraph.
  */
 export default function Hero() {
   const [line1, line2] = HERO.headline;
@@ -48,7 +50,7 @@ export default function Hero() {
               <path key={d} d={d} fill={RAY_FILL[i]} />
             ))}
           </svg>
-          <span className={cn(eyebrow, "text-muted")}>{HERO.eyebrow}</span>
+          <h1 className={cn(eyebrow, "m-0 text-muted")}>{HERO.eyebrow}</h1>
         </div>
 
         <div className="relative mt-8">
@@ -122,7 +124,7 @@ export default function Hero() {
           </div>
 
           <Headline
-            as="h1"
+            as="p"
             className="display relative m-0 text-[clamp(64px,12.5vw,196px)] [&>span:last-child]:min-[861px]:ml-[10vw]"
             lines={[line1, line2]}
           />

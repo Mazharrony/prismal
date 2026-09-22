@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Build from "@/components/Build";
 import Contact from "@/components/Contact";
 import Cursor from "@/components/Cursor";
@@ -16,10 +17,22 @@ import Services from "@/components/Services";
 import SmoothScroll from "@/components/SmoothScroll";
 import Splash from "@/components/Splash";
 import Work from "@/components/Work";
+import JsonLd from "@/components/seo/JsonLd";
+import { FAQS, SITE } from "@/content/site";
+import { faqPage } from "@/lib/schema";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = {
+  ...pageMetadata({ title: SITE.title, description: SITE.description, path: "/" }),
+  // The homepage carries the full site title as is; the " — Prismal" template is for sub-pages.
+  title: { absolute: SITE.title },
+};
 
 export default function Page() {
   return (
     <>
+      {/* The six questions the FAQ band shows, as data. */}
+      <JsonLd data={[faqPage(FAQS)]} />
       <a href="#top" className="skip-link">
         Skip to content
       </a>

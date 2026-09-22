@@ -6,29 +6,21 @@ import {
   PDF_TOOLKIT_PRIVACY as POLICY,
   type PolicyTable,
 } from "@/content/pdf-toolkit-privacy";
-import { SITE } from "@/content/site";
+import { pageMetadata } from "@/lib/seo";
 import { eyebrow, focus } from "@/lib/styles";
 import { cn } from "@/lib/utils";
 
-export const metadata: Metadata = {
-  title: `${POLICY.metaTitle} — ${SITE.name}`,
+/**
+ * Kept live because the app's store listing links here, but out of the index:
+ * it is a third-party app's policy, not a Prismal page.
+ */
+export const metadata: Metadata = pageMetadata({
+  title: POLICY.metaTitle,
   description: POLICY.metaDescription,
-  alternates: { canonical: "/pdf-toolkit/privacy" },
-  openGraph: {
-    type: "article",
-    siteName: SITE.name,
-    locale: "en_AE",
-    url: `${SITE.url}/pdf-toolkit/privacy`,
-    title: `${POLICY.metaTitle} — ${SITE.name}`,
-    description: POLICY.metaDescription,
-  },
-  twitter: {
-    card: "summary",
-    title: `${POLICY.metaTitle} — ${SITE.name}`,
-    description: POLICY.metaDescription,
-  },
-  robots: { index: true, follow: true },
-};
+  path: "/pdf-toolkit/privacy",
+  type: "article",
+  noindex: true,
+});
 
 /** Two-digit section index: 01, 02, … */
 const n = (i: number) => String(i + 1).padStart(2, "0");

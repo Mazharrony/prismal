@@ -1,13 +1,12 @@
 import type { MetadataRoute } from "next";
-import { SITE } from "@/content/site";
+import { indexableRoutes } from "@/lib/routes";
+import { absolute } from "@/lib/seo";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
-    { url: SITE.url, changeFrequency: "monthly", priority: 1 },
-    {
-      url: `${SITE.url}/pdf-toolkit/privacy`,
-      changeFrequency: "yearly",
-      priority: 0.3,
-    },
-  ];
+  return indexableRoutes().map((r) => ({
+    url: absolute(r.path),
+    lastModified: new Date(r.updated),
+    changeFrequency: r.changeFrequency,
+    priority: r.priority,
+  }));
 }

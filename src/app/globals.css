@@ -296,42 +296,56 @@
   .hl .w > span {
     display: inline-block;
   }
-  .has-js [data-rv="words"] {
-    opacity: 1;
-    translate: 0;
-  }
-  .has-js [data-rv="words"] .w > span,
-  .has-js [data-rv]:not([data-rv="words"]) .hl .w > span {
+  /* Words sit clipped below their line until their block is armed and enters
+     the viewport (`rv-armed` → `is-in`), or ride the entrance animation when
+     the block starts on the first screen (`rv-enter`). */
+  .rv-armed[data-rv="words"] .w > span,
+  .rv-armed:not([data-rv="words"]) .hl .w > span {
     translate: 0 110%;
     transition: translate 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) calc(var(--d, 0s) + var(--i, 0) * 55ms);
   }
-  .has-js [data-rv="words"].is-in .w > span,
-  .has-js [data-rv].is-in .hl .w > span {
+  .rv-armed.is-in[data-rv="words"] .w > span,
+  .rv-armed.is-in .hl .w > span {
     translate: 0;
+  }
+  .rv-enter[data-rv="words"] .w > span,
+  .rv-enter:not([data-rv="words"]) .hl .w > span {
+    animation: rv-word 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) calc(var(--d, 0s) + var(--i, 0) * 55ms) both;
   }
 
   /* ── Scroll reveal ───────────────────────────────────────────────────── */
-  .has-js [data-rv] {
+  /* Nothing is hidden by default: the HTML paints visible. Reveal.tsx gives a
+     block `rv-armed` only once a person has moved, scrolled or typed, and only
+     if the block is still below the fold, so a renderer that never sends input
+     (a crawler, a link preview, a screenshot) reads the whole page. Blocks on
+     the first screen get `rv-enter` and animate in from the same start state. */
+  .rv-armed:not([data-rv="words"]) {
     opacity: 0;
     translate: 0 28px;
     transition:
       opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) var(--d, 0s),
       translate 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) var(--d, 0s);
   }
-  .has-js [data-rv].is-in {
+  .rv-armed.is-in {
     opacity: 1;
     translate: 0;
   }
   /* Cards add a touch of scale to the rise, so a grid settles rather than slides. */
-  .has-js [data-rv="pop"] {
+  .rv-armed[data-rv="pop"] {
     scale: 0.96;
     transition:
       opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) var(--d, 0s),
       translate 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) var(--d, 0s),
       scale 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) var(--d, 0s);
   }
-  .has-js [data-rv="pop"].is-in {
+  .rv-armed.is-in[data-rv="pop"] {
     scale: 1;
+  }
+  .rv-enter:not([data-rv="words"]) {
+    animation: rv-in 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) var(--d, 0s) both;
+  }
+  .rv-enter[data-rv="pop"] {
+    animation-name: rv-in-pop;
   }
 
   /* ── Scroll-driven drift ─────────────────────────────────────────────── */
@@ -747,11 +761,15 @@
     .hero-beam {
       translate: 0;
     }
-    .has-js [data-rv] {
+    [data-rv],
+    .rv-armed,
+    .rv-enter,
+    .hl .w > span {
       opacity: 1;
       translate: 0;
       scale: 1;
       transition: none;
+      animation: none;
     }
     .deck-burst-a,
     .deck-burst-b {
@@ -894,5 +912,26 @@
   }
   100% {
     transform: translateY(-101%);
+  }
+}
+
+/* Scroll-reveal entrance for blocks already on screen when the page loads
+   (Reveal.tsx adds `rv-enter`): the same start state the armed blocks use. */
+@keyframes rv-in {
+  from {
+    opacity: 0;
+    translate: 0 28px;
+  }
+}
+@keyframes rv-in-pop {
+  from {
+    opacity: 0;
+    translate: 0 28px;
+    scale: 0.96;
+  }
+}
+@keyframes rv-word {
+  from {
+    translate: 0 110%;
   }
 }

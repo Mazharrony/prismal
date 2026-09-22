@@ -47,6 +47,15 @@ export default function Contact() {
               </a>
             </dd>
           </div>
+          {/* Same number, as a call: one tap on a phone, and a tel: link for search engines. */}
+          <div className={route}>
+            <dt className={routeLabel}>{CONTACT.rail.call}</dt>
+            <dd className="m-0">
+              <a href={`tel:${SITE.phone}`} className={cn(routeValue, focus, "rounded")}>
+                {SITE.whatsappNumber} <span aria-hidden="true">→</span>
+              </a>
+            </dd>
+          </div>
           <div className={cn(route, "group-hover:text-paper")}>
             <dt className={routeLabel}>{CONTACT.rail.based}</dt>
             <dd className="m-0 font-brand text-[clamp(18px,1.6vw,22px)] font-medium text-paper">{SITE.location.split(" — ")[0]}</dd>

@@ -107,7 +107,7 @@ export default function WorkGrid() {
                 <div data-drift="" className="absolute -inset-y-3.5 inset-x-0">
                   <Image
                     src={w.image}
-                    alt=""
+                    alt={w.alt}
                     fill
                     sizes={w.featured ? "(max-width:860px) 100vw, 660px" : "(max-width:640px) 100vw, (max-width:1024px) 50vw, 400px"}
                     className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.04]"

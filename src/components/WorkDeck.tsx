@@ -114,7 +114,7 @@ export default function WorkDeck() {
               aria-hidden={!isActive}
             >
               <div className="deck-face">
-                <Image src={w.image} alt="" fill sizes="560px" className="object-cover" draggable={false} />
+                <Image src={w.image} alt={w.alt} fill sizes="560px" className="object-cover" draggable={false} />
                 <span className="deck-shade" aria-hidden="true" />
                 <Sticker tone={STICKER[w.capability]} shape="pill" rotate={-4} className="!absolute left-4 top-4 !animate-none text-[11px]">
                   {CAPABILITY_LABEL[w.capability]}
