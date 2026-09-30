@@ -9,22 +9,7 @@
  * and the policy promises it.
  */
 
-export type PolicyTable = {
-  /** Column headings, in order. */
-  head: readonly string[];
-  /** Rows, each as many cells as there are headings. */
-  rows: readonly (readonly string[])[];
-};
-
-export type PolicySection = {
-  /** Section heading. */
-  title: string;
-  /** Paragraphs under it. */
-  body?: readonly string[];
-  table?: PolicyTable;
-  /** Trailing paragraphs, printed after the table. */
-  after?: readonly string[];
-};
+import type { PolicySection } from "./policy";
 
 export const PDF_TOOLKIT_PRIVACY = {
   app: "PDF Toolkit",

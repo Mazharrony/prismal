@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import PrivacyPolicy from "@/components/PrivacyPolicy";
-import { PDF_TOOLKIT_PRIVACY as POLICY } from "@/content/pdf-toolkit-privacy";
+import { POUR_PARTY_PRIVACY as POLICY } from "@/content/pour-party-privacy";
 import { pageMetadata } from "@/lib/seo";
 
 /**
@@ -10,7 +10,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata: Metadata = pageMetadata({
   title: POLICY.metaTitle,
   description: POLICY.metaDescription,
-  path: "/pdf-toolkit/privacy",
+  path: "/pour-party/privacy",
   type: "article",
   noindex: true,
 });

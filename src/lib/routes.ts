@@ -19,8 +19,9 @@ export type SiteRoute = {
  */
 export const STATIC_ROUTES: readonly SiteRoute[] = [
   { path: "/", updated: "2026-09-22", changeFrequency: "weekly", priority: 1 },
-  // A third-party app's policy hosted here; kept live for its store listing, kept out of search.
+  // Third-party app policies hosted here; kept live for their store listings, kept out of search.
   { path: "/pdf-toolkit/privacy", updated: "2026-09-04", changeFrequency: "yearly", priority: 0.2, noindex: true },
+  { path: "/pour-party/privacy", updated: "2026-09-30", changeFrequency: "yearly", priority: 0.2, noindex: true },
 ];
 
 export function indexableRoutes(): SiteRoute[] {
