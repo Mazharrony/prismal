@@ -22,6 +22,7 @@ export const STATIC_ROUTES: readonly SiteRoute[] = [
   // Third-party app policies hosted here; kept live for their store listings, kept out of search.
   { path: "/pdf-toolkit/privacy", updated: "2026-09-04", changeFrequency: "yearly", priority: 0.2, noindex: true },
   { path: "/pour-party/privacy", updated: "2026-09-30", changeFrequency: "yearly", priority: 0.2, noindex: true },
+  { path: "/khatabook/privacy", updated: "2026-10-01", changeFrequency: "yearly", priority: 0.2, noindex: true },
 ];
 
 export function indexableRoutes(): SiteRoute[] {
