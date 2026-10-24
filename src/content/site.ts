@@ -46,6 +46,7 @@ export const NAV_CTA: NavLink = { label: "Start a project →", href: "#contact"
 export const FOOTER_NAV: readonly NavLink[] = [
   { label: "Services", href: "#services" },
   { label: "Site kits", href: "#build" },
+  { label: "Ad creatives", href: "/ad-creatives" },
   { label: "Work", href: "#work" },
   { label: "Method", href: "#method" },
   { label: "Pricing", href: "#engage" },
@@ -105,6 +106,12 @@ export const SERVICES_HEAD = {
   intro:
     "Tell us the problem. We'll tell you which of the three it needs — usually a mix.",
   note: "Keep scrollin'…",
+  /** The way out to the ads offer, under the three cards. */
+  ads: {
+    text: "Running paid social? We make the ads too.",
+    label: "Ad Creative Engine →",
+    href: "/ad-creatives",
+  },
 } as const;
 
 export const SERVICES: readonly Service[] = [

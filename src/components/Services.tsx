@@ -1,7 +1,7 @@
 import Band from "@/components/Band";
 import Headline from "@/components/Headline";
 import { SERVICES, SERVICES_HEAD } from "@/content/site";
-import { eyebrow, focus, h2 } from "@/lib/styles";
+import { eyebrow, focus, h2, pillInk } from "@/lib/styles";
 import { cn } from "@/lib/utils";
 
 const CARD = [
@@ -62,6 +62,13 @@ export default function Services() {
           </a>
         ))}
       </div>
+
+      <p className="m-0 mt-8 flex flex-wrap items-center gap-x-4 gap-y-3 text-[17px] leading-[1.55] text-muted-2" data-rv>
+        {SERVICES_HEAD.ads.text}
+        <a href={SERVICES_HEAD.ads.href} className={cn(pillInk, focus, "px-5 py-3 text-[15px]")}>
+          {SERVICES_HEAD.ads.label}
+        </a>
+      </p>
     </Band>
   );
 }

@@ -15,17 +15,25 @@ const chipOff = "border-white/20 bg-transparent text-paper/85 hover:border-paper
 const chipOn = "border-accent bg-accent text-ink";
 const groupLabel = "mb-3 block font-mono text-[11px] uppercase tracking-[.2em] text-muted";
 
+type Pick = { readonly label: string; readonly prefill: string };
+type Picks = { picks?: readonly Pick[]; pickLabel?: string };
+
 /**
  * The brief, as a letter: underline fields, service chips, a reply-channel
  * toggle that asks for a number only when it needs one, and one send button.
- * `key` remounts a fresh form for "Send another".
+ * `key` remounts a fresh form for "Send another". A page with its own offer
+ * passes its own `picks`; the homepage uses the four in `CONTACT`.
  */
-export default function BriefForm() {
+export default function BriefForm(props: Picks) {
   const [round, setRound] = useState(0);
-  return <Form key={round} onReset={() => setRound((r) => r + 1)} />;
+  return <Form key={round} onReset={() => setRound((r) => r + 1)} {...props} />;
 }
 
-function Form({ onReset }: { onReset: () => void }) {
+function Form({
+  onReset,
+  picks = CONTACT.form.picks,
+  pickLabel = CONTACT.form.pickLabel,
+}: Picks & { onReset: () => void }) {
   const [state, action, pending] = useActionState(sendBrief, initialBriefState);
   const [pick, setPick] = useState(state.values?.service ?? "");
   const [channel, setChannel] = useState<Channel>(
@@ -59,11 +67,11 @@ function Form({ onReset }: { onReset: () => void }) {
     );
   }
 
-  const choose = (c: (typeof CONTACT.form.picks)[number]) => {
+  const choose = (c: Pick) => {
     setPick(c.label);
     const t = brief.current;
     // Only overwrite an empty textarea or an untouched prefill from another chip.
-    if (t && (!t.value.trim() || CONTACT.form.picks.some((p) => t.value.trim() === p.prefill.trim()))) {
+    if (t && (!t.value.trim() || picks.some((p) => t.value.trim() === p.prefill.trim()))) {
       t.value = c.prefill;
       t.focus();
       t.setSelectionRange(t.value.length, t.value.length);
@@ -73,9 +81,9 @@ function Form({ onReset }: { onReset: () => void }) {
   return (
     <form action={action} noValidate className="grid gap-9">
       <fieldset className="m-0 border-0 p-0">
-        <legend className={groupLabel}>{CONTACT.form.pickLabel}</legend>
+        <legend className={groupLabel}>{pickLabel}</legend>
         <div className="flex flex-wrap gap-2">
-          {CONTACT.form.picks.map((c) => (
+          {picks.map((c) => (
             <button
               key={c.label}
               type="button"

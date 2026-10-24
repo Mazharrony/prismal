@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 /**
  * `base` prefixes the in-page links so the footer also works away from the
  * one-pager: pass "/" on a sub-route and "#services" becomes "/#services".
+ * Links to other routes ("/ad-creatives") are already absolute and stay as is.
  */
 export default function Footer({ base = "" }: { base?: string }) {
   return (
@@ -16,7 +17,7 @@ export default function Footer({ base = "" }: { base?: string }) {
       </a>
       <nav aria-label="Footer" className="flex flex-wrap gap-x-6 gap-y-2 text-[14px] font-semibold">
         {FOOTER_NAV.map((l) => (
-          <a key={l.href} href={`${base}${l.href}`} className={cn("whitespace-nowrap rounded text-muted transition-colors hover:text-accent", focus)}>
+          <a key={l.href} href={l.href.startsWith("#") ? `${base}${l.href}` : l.href} className={cn("whitespace-nowrap rounded text-muted transition-colors hover:text-accent", focus)}>
             {l.label}
           </a>
         ))}

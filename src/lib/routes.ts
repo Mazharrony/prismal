@@ -18,7 +18,8 @@ export type SiteRoute = {
  * from one place.
  */
 export const STATIC_ROUTES: readonly SiteRoute[] = [
-  { path: "/", updated: "2026-09-22", changeFrequency: "weekly", priority: 1 },
+  { path: "/", updated: "2026-10-24", changeFrequency: "weekly", priority: 1 },
+  { path: "/ad-creatives", updated: "2026-10-24", changeFrequency: "monthly", priority: 0.8 },
   // Third-party app policies hosted here; kept live for their store listings, kept out of search.
   { path: "/pdf-toolkit/privacy", updated: "2026-09-04", changeFrequency: "yearly", priority: 0.2, noindex: true },
   { path: "/pour-party/privacy", updated: "2026-09-30", changeFrequency: "yearly", priority: 0.2, noindex: true },
